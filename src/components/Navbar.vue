@@ -335,25 +335,29 @@ onUnmounted(() => {
   .navbar {
     max-width: 100vw;
     overflow-x: hidden;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
   }
-  
+
   .nav-wrapper {
     padding: 0 16px;
   }
-  
+
   .menu-toggle {
     display: flex;
     position: relative;
     z-index: 1000;
   }
-  
+
   .nav-links {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 70px;
     left: 0;
     width: 100%;
-    min-height: calc(100vh - 70px);
+    height: calc(100vh - 70px);
+    max-height: calc(100vh - 70px);
     background: rgba(15, 23, 42, 0.98);
     flex-direction: column;
     padding: 20px;
