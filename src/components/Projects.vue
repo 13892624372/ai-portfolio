@@ -167,7 +167,7 @@ const projectsData = {
     techStack: 'HTML5, CSS3, JavaScript, HLS.js, Vercel Serverless, CORS Proxy',
     duration: '2025.03 - 2025.03',
     tags: ['JavaScript', '影视网站', 'HLS播放', 'CORS代理', 'Vercel部署'],
-    demoUrl: 'https://filmhub-rose.vercel.app/#/',
+    demoUrl: 'https://13892624372.github.io/FilmHub/',
     githubUrl: 'https://github.com/13892624372/FilmHub'
   },
   project3: {
