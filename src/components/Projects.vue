@@ -145,7 +145,7 @@ const projectsData = {
     techStack: 'Vue3, TypeScript, Pinia, Element Plus, Tailwind CSS, html2canvas, jsPDF, Vite',
     duration: '2025.03 - 至今',
     tags: ['Vue3', 'TypeScript', 'AI应用', '简历生成', 'PDF导出'],
-    demoUrl: 'https://resume-teal-seven-85.vercel.app/',
+    demoUrl: 'https://13892624372.github.io/resume/',
     githubUrl: 'https://github.com/13892624372/resume'
   },
   project2: {
@@ -153,7 +153,7 @@ const projectsData = {
     title: '影视大全网站',
     subtitle: '基于原生JS的在线影视资源聚合与播放平台',
     gradient: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
-    description: '一个功能完善的在线影视资源聚合平台，整合多个第三方数据源，提供电影、电视剧、综艺、动漫等海量影视内容的搜索、浏览和播放服务。采用原生JavaScript开发，通过公共CORS代理解决跨域问题，部署于Vercel平台。',
+    description: '一个功能完善的在线影视资源聚合平台，整合多个第三方数据源，提供电影、电视剧、综艺、动漫等海量影视内容的搜索、浏览和播放服务。采用原生JavaScript开发，通过公共CORS代理解决跨域问题，部署于GitHub Pages。',
     features: [
       '多数据源支持：支持配置多个影视数据源，自动切换可用源',
       '智能搜索：支持按名称、类型、年份等多维度搜索影视资源',
@@ -164,10 +164,10 @@ const projectsData = {
       'CORS代理方案：使用公共CORS代理服务解决浏览器跨域限制',
       '响应式设计：完美适配桌面端和移动端，支持深色主题'
     ],
-    techStack: 'HTML5, CSS3, JavaScript, HLS.js, Vercel Serverless, CORS Proxy',
+    techStack: 'HTML5, CSS3, JavaScript, HLS.js, GitHub Pages, CORS Proxy',
     duration: '2025.03 - 2025.03',
-    tags: ['JavaScript', '影视网站', 'HLS播放', 'CORS代理', 'Vercel部署'],
-    demoUrl: 'https://filmhub-rose.vercel.app/#/',
+    tags: ['JavaScript', '影视网站', 'HLS播放', 'CORS代理', 'GitHub部署'],
+    demoUrl: 'https://13892624372.github.io/FilmHub/',
     githubUrl: 'https://github.com/13892624372/FilmHub'
   },
   project3: {
