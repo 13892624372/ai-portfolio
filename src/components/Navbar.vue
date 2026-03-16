@@ -335,6 +335,7 @@ onUnmounted(() => {
   .navbar {
     max-width: 100vw;
     overflow-x: hidden;
+    position: absolute;
   }
   
   .nav-wrapper {
@@ -348,12 +349,11 @@ onUnmounted(() => {
   }
   
   .nav-links {
-    position: fixed;
-    top: 70px;
+    position: absolute;
+    top: 100%;
     left: 0;
     width: 100%;
-    height: calc(100dvh - 70px);
-    max-height: calc(100dvh - 70px);
+    min-height: calc(100vh - 70px);
     background: rgba(15, 23, 42, 0.98);
     flex-direction: column;
     padding: 20px;
