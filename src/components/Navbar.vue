@@ -314,10 +314,12 @@ onUnmounted(() => {
     top: 70px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100dvh - 70px);
+    max-height: calc(100dvh - 70px);
     background: rgba(15, 23, 42, 0.98);
     flex-direction: column;
     padding: 20px;
+    padding-bottom: 100px;
     gap: 8px;
     opacity: 0;
     pointer-events: none;
@@ -326,7 +328,9 @@ onUnmounted(() => {
     z-index: 998;
     backdrop-filter: blur(10px);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     display: flex;
+    overscroll-behavior: contain;
   }
   
   .nav-links.active {
