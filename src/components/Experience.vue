@@ -498,25 +498,27 @@ const education = [
 
   .timeline-item {
     cursor: pointer;
+  }
+
+  .timeline-card {
     position: relative;
   }
 
-  .timeline-item::after {
+  .timeline-card::after {
     content: '';
     position: absolute;
     right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 28px;
     width: 8px;
     height: 8px;
     border-right: 2px solid var(--text-muted);
     border-bottom: 2px solid var(--text-muted);
-    transform: translateY(-50%) rotate(45deg);
+    transform: rotate(45deg);
     transition: transform 0.3s ease;
   }
 
-  .timeline-item.active::after {
-    transform: translateY(-50%) rotate(-135deg);
+  .timeline-item.active .timeline-card::after {
+    transform: rotate(-135deg);
     border-color: var(--primary-color);
   }
   
