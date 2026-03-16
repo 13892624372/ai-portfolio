@@ -371,13 +371,14 @@ onUnmounted(() => {
     backdrop-filter: blur(10px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    display: flex;
+    display: none;
     overscroll-behavior: contain;
   }
-  
+
   .nav-links.active {
     opacity: 1;
     pointer-events: auto;
+    display: flex;
   }
   
   .nav-link {
