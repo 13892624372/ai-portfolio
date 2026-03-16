@@ -2,16 +2,16 @@
   <section id="projects" class="section projects">
     <div class="container">
       <h2 class="section-title">项目作品</h2>
-      <p class="section-subtitle">AI开发与嵌入式系统项目案例</p>
+      <p class="section-subtitle">AI开发与前端工程项目案例</p>
       
       <div class="projects-list">
-        <!-- 项目 1 -->
+        <!-- 项目 1 - AI智能简历助手 -->
         <div id="project1" class="project-item" @click="openModal('project1')">
           <div class="project-header">
             <div class="project-number" style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);">1</div>
             <div class="project-info">
-              <h3 class="project-title">项目 1</h3>
-              <p class="project-subtitle">项目简介描述</p>
+              <h3 class="project-title">AI智能简历助手</h3>
+              <p class="project-subtitle">基于Vue3 + TypeScript的智能简历生成与优化平台，支持多模板、AI优化、PDF导出</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -21,13 +21,13 @@
           </div>
         </div>
         
-        <!-- 项目 2 -->
+        <!-- 项目 2 - 影视大全网站 -->
         <div id="project2" class="project-item" @click="openModal('project2')">
           <div class="project-header">
             <div class="project-number" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">2</div>
             <div class="project-info">
-              <h3 class="project-title">项目 2</h3>
-              <p class="project-subtitle">项目简介描述</p>
+              <h3 class="project-title">影视大全网站</h3>
+              <p class="project-subtitle">基于原生JS的在线影视资源聚合与播放平台，支持多数据源、HLS播放、CORS代理</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -37,13 +37,13 @@
           </div>
         </div>
         
-        <!-- 项目 3 -->
+        <!-- 项目 3 - 个人作品集网站 -->
         <div id="project3" class="project-item" @click="openModal('project3')">
           <div class="project-header">
             <div class="project-number" style="background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);">3</div>
             <div class="project-info">
-              <h3 class="project-title">项目 3</h3>
-              <p class="project-subtitle">项目简介描述</p>
+              <h3 class="project-title">个人作品集网站</h3>
+              <p class="project-subtitle">基于Vue3的现代化响应式个人展示平台，展示技能、项目经历和作品</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -97,6 +97,23 @@
           <div class="modal-tags">
             <span v-for="(tag, index) in currentProject?.tags" :key="index" class="tag">{{ tag }}</span>
           </div>
+          
+          <div class="modal-actions" v-if="currentProject?.demoUrl">
+            <a :href="currentProject.demoUrl" target="_blank" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              在线预览
+            </a>
+            <a v-if="currentProject?.githubUrl" :href="currentProject.githubUrl" target="_blank" class="btn btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -111,59 +128,69 @@ const activeModal = ref(null)
 const projectsData = {
   project1: {
     number: '1',
-    title: '个人网站项目',
-    subtitle: '基于Vue3的响应式个人作品集网站',
+    title: 'AI智能简历助手',
+    subtitle: '基于Vue3 + TypeScript的智能简历生成与优化平台',
     gradient: 'linear-gradient(135deg, #ec4899 0%, #f472b6 100%)',
-    description: '这是一个使用Vue3 + Vite构建的现代化个人网站项目，展示个人技能、工作经历和项目作品。网站采用深色主题设计，具有响应式布局和流畅的动画效果。',
+    description: '一个功能完善的智能化简历生成平台，集成AI技术帮助用户快速创建专业简历。支持多种精美模板、实时预览、智能JD解析、一键PDF导出等功能，提供从编辑到投递的完整简历制作解决方案。',
     features: [
-      '首页展示：个人简介、职位定位和核心优势',
-      '关于页面：教育背景、个人照片和职业目标',
-      '技能展示：技术能力分类展示，支持弹窗查看详情',
-      '项目作品：项目案例展示，点击可查看完整项目信息',
-      '工作经历：时间线形式展示职业发展历程',
-      '联系方式：邮箱、电话、地址等联系信息',
-      '响应式设计：适配桌面端和移动端设备',
-      '流畅动画：页面滚动、悬停、弹窗等交互动画'
+      '可视化编辑器：支持基本信息、工作经历、教育背景、项目经验等模块编辑',
+      '多模板系统：提供经典、现代、创意、极简四种专业简历模板',
+      'AI智能优化：集成AI服务自动优化简历内容，提升简历质量',
+      '实时预览：编辑内容实时同步预览，所见即所得',
+      'JD智能解析：解析职位描述，自动提取关键技能要求并匹配简历',
+      'PDF导出：基于html2canvas和jsPDF实现高质量PDF导出',
+      '数据持久化：使用Pinia状态管理，本地存储简历数据',
+      '响应式设计：基于Element Plus和Tailwind CSS，完美适配多端设备'
     ],
-    techStack: 'Vue3, Vite, CSS3, JavaScript, Responsive Design',
+    techStack: 'Vue3, TypeScript, Pinia, Element Plus, Tailwind CSS, html2canvas, jsPDF, Vite',
     duration: '2025.03 - 至今',
-    tags: ['Vue3', '前端开发', '响应式设计', '个人作品']
+    tags: ['Vue3', 'TypeScript', 'AI应用', '简历生成', 'PDF导出'],
+    demoUrl: 'https://resume-teal-seven-85.vercel.app/',
+    githubUrl: 'https://github.com/13892624372/resume'
   },
   project2: {
     number: '2',
     title: '影视大全网站',
-    subtitle: '在线影视资源聚合平台',
+    subtitle: '基于原生JS的在线影视资源聚合与播放平台',
     gradient: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
-    description: '一个功能完善的在线影视资源聚合平台，提供电影、电视剧、综艺等多种类型的影视内容搜索和播放服务。采用现代化的前端技术栈，具有响应式设计和流畅的用户体验。',
+    description: '一个功能完善的在线影视资源聚合平台，整合多个第三方数据源，提供电影、电视剧、综艺、动漫等海量影视内容的搜索、浏览和播放服务。采用原生JavaScript开发，通过公共CORS代理解决跨域问题，部署于Vercel平台。',
     features: [
-      '影视搜索：支持按名称、类型、年份等多维度搜索影视资源',
-      '分类浏览：电影、电视剧、综艺、动漫等分类展示',
-      '详情页面：展示影视作品的详细信息、剧情简介、演员阵容',
-      '播放功能：集成视频播放器，支持在线观看',
-      '收藏功能：用户可以收藏喜欢的影视作品',
-      '历史记录：记录用户的观看历史，方便续看',
-      '响应式设计：适配桌面端和移动端设备',
-      '深色模式：支持亮色/深色主题切换'
+      '多数据源支持：支持配置多个影视数据源，自动切换可用源',
+      '智能搜索：支持按名称、类型、年份等多维度搜索影视资源',
+      '分类浏览：电影、电视剧、综艺、动漫等分类筛选展示',
+      '详情展示：展示影视作品的详细信息、剧情简介、演员阵容',
+      '在线播放：集成HLS.js播放器，支持M3U8格式视频在线播放',
+      '收藏与历史：本地存储收藏列表和观看历史，方便续看',
+      'CORS代理方案：使用公共CORS代理服务解决浏览器跨域限制',
+      '响应式设计：完美适配桌面端和移动端，支持深色主题'
     ],
-    techStack: 'HTML5, CSS3, JavaScript, Vue3, Video Player API',
+    techStack: 'HTML5, CSS3, JavaScript, HLS.js, Vercel Serverless, CORS Proxy',
     duration: '2025.03 - 2025.03',
-    tags: ['Vue3', '影视网站', '响应式设计', '视频播放']
+    tags: ['JavaScript', '影视网站', 'HLS播放', 'CORS代理', 'Vercel部署'],
+    demoUrl: 'https://filmhub-rose.vercel.app/#/',
+    githubUrl: 'https://github.com/13892624372/FilmHub'
   },
   project3: {
     number: '3',
-    title: '项目 3',
-    subtitle: '项目简介描述',
+    title: '个人作品集网站',
+    subtitle: '基于Vue3的现代化响应式个人展示平台',
     gradient: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)',
-    description: '这里是项目3的详细描述。您可以在此处添加关于该项目的详细介绍，包括项目背景、技术栈、实现功能、项目成果等信息。',
+    description: '一个精心设计的个人作品集网站，用于展示个人技能、项目经历和专业能力。采用Vue3 + Vite技术栈构建，具有现代化的UI设计、流畅的动画效果和完美的响应式适配。',
     features: [
-      '核心功能1：描述项目的主要功能模块',
-      '核心功能2：描述技术实现方案',
-      '核心功能3：描述项目亮点和创新点',
-      '核心功能4：描述项目成果和收益'
+      '现代化设计：采用深色主题，配合渐变色和毛玻璃效果',
+      '项目展示：卡片式项目展示，支持点击查看详细信息和在线预览',
+      '技能展示：分类展示技术能力，支持展开查看详细技能点',
+      '响应式布局：完美适配桌面端、平板和移动设备',
+      '流畅动画：页面滚动、悬停效果、弹窗动画等交互动画',
+      '路由集成：支持URL hash路由，可直接分享特定项目',
+      'GitHub集成：项目卡片直接链接到GitHub仓库和在线演示',
+      '性能优化：基于Vite构建，快速加载和渲染'
     ],
-    techStack: '技术1, 技术2, 技术3, 技术4',
-    duration: '2024.06 - 2024.11',
-    tags: ['标签1', '标签2', '标签3', '标签4']
+    techStack: 'Vue3, Vite, JavaScript, CSS3, Responsive Design, GitHub Actions',
+    duration: '2025.03 - 至今',
+    tags: ['Vue3', '个人网站', '响应式设计', '作品集'],
+    demoUrl: 'https://13892624372.github.io/ai-portfolio/',
+    githubUrl: 'https://github.com/13892624372/ai-portfolio'
   }
 }
 
@@ -466,6 +493,49 @@ onMounted(() => {
   color: var(--primary-color);
 }
 
+.modal-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--gradient-1);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
 /* 滚动条样式 */
 .modal-content::-webkit-scrollbar {
   width: 8px;
@@ -486,6 +556,11 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .projects {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
   .project-item {
     padding: 16px 20px;
   }
