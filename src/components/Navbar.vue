@@ -335,7 +335,11 @@ onUnmounted(() => {
   .navbar {
     max-width: 100vw;
     overflow-x: hidden;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
   }
 
   .nav-wrapper {
@@ -345,25 +349,25 @@ onUnmounted(() => {
   .menu-toggle {
     display: flex;
     position: relative;
-    z-index: 1000;
+    z-index: 1002;
   }
 
   .nav-links {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    max-height: 100vh;
     background: rgba(15, 23, 42, 0.98);
     flex-direction: column;
-    padding: 20px;
-    padding-bottom: 100px;
+    padding: 80px 20px 100px;
     gap: 8px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
     align-items: stretch;
-    z-index: 998;
+    z-index: 1001;
     backdrop-filter: blur(10px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
