@@ -595,6 +595,7 @@ onMounted(() => {
   }
   
   .modal-close {
+    position: absolute;
     top: 15px;
     right: 15px;
     width: 36px;
