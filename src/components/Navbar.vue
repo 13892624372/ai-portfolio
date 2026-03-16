@@ -12,9 +12,14 @@
           
           <!-- 技能下拉菜单 -->
           <div class="nav-dropdown"
-               @mouseenter="showSkillsDropdown = true"
-               @mouseleave="showSkillsDropdown = false">
-            <a href="#skills" @click="closeMenu" class="nav-link">技能</a>
+               @mouseenter="!isMobile && (showSkillsDropdown = true)"
+               @mouseleave="!isMobile && (showSkillsDropdown = false)">
+            <a href="#skills" @click.prevent="toggleSkillsDropdown" class="nav-link nav-dropdown-toggle">
+              <span>技能</span>
+              <svg class="dropdown-arrow" :class="{ 'rotated': showSkillsDropdown }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
             <div class="dropdown-menu" :class="{ 'show': showSkillsDropdown }">
               <a href="#skill1" @click="closeMenu" class="dropdown-item">
                 <span class="dropdown-number" style="background: linear-gradient(135deg, #42b883 0%, #35495e 100%);">1</span>
@@ -53,9 +58,14 @@
 
           <!-- 项目下拉菜单 -->
           <div class="nav-dropdown"
-               @mouseenter="showProjectsDropdown = true"
-               @mouseleave="showProjectsDropdown = false">
-            <a href="#projects" @click="closeMenu" class="nav-link">项目</a>
+               @mouseenter="!isMobile && (showProjectsDropdown = true)"
+               @mouseleave="!isMobile && (showProjectsDropdown = false)">
+            <a href="#projects" @click.prevent="toggleProjectsDropdown" class="nav-link nav-dropdown-toggle">
+              <span>项目</span>
+              <svg class="dropdown-arrow" :class="{ 'rotated': showProjectsDropdown }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
             <div class="dropdown-menu" :class="{ 'show': showProjectsDropdown }">
               <a href="#project1" @click="closeMenu" class="dropdown-item">
                 <span class="dropdown-number" style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);">1</span>
@@ -93,13 +103,38 @@ const isScrolled = ref(false)
 const isMenuOpen = ref(false)
 const showSkillsDropdown = ref(false)
 const showProjectsDropdown = ref(false)
+const isMobile = ref(false)
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+const toggleSkillsDropdown = () => {
+  if (isMobile.value) {
+    showSkillsDropdown.value = !showSkillsDropdown.value
+    showProjectsDropdown.value = false
+  } else {
+    window.location.href = '#skills'
+    closeMenu()
+  }
+}
+
+const toggleProjectsDropdown = () => {
+  if (isMobile.value) {
+    showProjectsDropdown.value = !showProjectsDropdown.value
+    showSkillsDropdown.value = false
+  } else {
+    window.location.href = '#projects'
+    closeMenu()
+  }
 }
 
 const closeMenu = () => {
@@ -110,10 +145,13 @@ const closeMenu = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', checkMobile)
+  checkMobile()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', checkMobile)
 })
 </script>
 
@@ -401,6 +439,23 @@ onUnmounted(() => {
     height: 28px;
     font-size: 0.85rem;
     flex-shrink: 0;
+  }
+
+  .nav-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .dropdown-arrow {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+  .dropdown-arrow.rotated {
+    transform: rotate(180deg);
   }
 }
 </style>
