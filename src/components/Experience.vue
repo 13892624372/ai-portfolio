@@ -68,18 +68,54 @@
       <div class="education-section">
         <h3 class="education-title">教育背景</h3>
         <div class="education-grid">
-          <div v-for="edu in education" :key="edu.id" class="education-card">
-            <div class="edu-icon" :style="{ background: edu.gradient }">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-              </svg>
+          <div
+            v-for="(edu, index) in education"
+            :key="edu.id"
+            class="education-card"
+            :class="{ 'expanded': expandedEduIndex === index }"
+            @click="toggleEduExpand(index)"
+          >
+            <div class="edu-header">
+              <div class="edu-icon" :style="{ background: edu.gradient }">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+              <div class="edu-content">
+                <h4 class="edu-degree">{{ edu.degree }}</h4>
+                <p class="edu-school">{{ edu.school }}</p>
+                <p class="edu-major">{{ edu.major }}</p>
+                <span class="edu-year">{{ edu.year }}</span>
+              </div>
+              <div class="edu-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="{ 'rotated': expandedEduIndex === index }">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
             </div>
-            <div class="edu-content">
-              <h4 class="edu-degree">{{ edu.degree }}</h4>
-              <p class="edu-school">{{ edu.school }}</p>
-              <p class="edu-major">{{ edu.major }}</p>
-              <span class="edu-year">{{ edu.year }}</span>
+            
+            <div class="edu-expand" :class="{ 'show': expandedEduIndex === index }">
+              <div class="edu-expand-content">
+                <div class="edu-details">
+                  <h5 class="details-title">大学经历</h5>
+                  <ul class="details-list">
+                    <li v-for="detail in edu.details" :key="detail">{{ detail }}</li>
+                  </ul>
+                </div>
+                <div class="edu-courses">
+                  <h5 class="details-title">主修课程</h5>
+                  <div class="course-tags">
+                    <span v-for="course in edu.courses" :key="course" class="course-tag">{{ course }}</span>
+                  </div>
+                </div>
+                <div class="edu-achievements">
+                  <h5 class="details-title">在校成就</h5>
+                  <ul class="details-list">
+                    <li v-for="achievement in edu.achievements" :key="achievement">{{ achievement }}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -92,6 +128,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const activeIndex = ref(null)
+const expandedEduIndex = ref(null)
 const isMobile = ref(false)
 
 const checkMobile = () => {
@@ -102,6 +139,10 @@ const toggleExpand = (index) => {
   if (isMobile.value) {
     activeIndex.value = activeIndex.value === index ? null : index
   }
+}
+
+const toggleEduExpand = (index) => {
+  expandedEduIndex.value = expandedEduIndex.value === index ? null : index
 }
 
 onMounted(() => {
@@ -174,7 +215,25 @@ const education = [
     school: '西安信息职业大学',
     major: '软件工程技术',
     year: '2021.09 - 2025.07',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)'
+    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+    details: [
+      '系统学习软件开发核心技术，包括前端开发、后端开发、数据库设计等',
+      '积极参与课程项目和实验，培养扎实的编程能力和问题解决能力',
+      '主动学习人工智能相关知识，包括机器学习、深度学习等前沿技术',
+      '参加校内外技术交流活动，拓展技术视野和行业认知',
+      '通过实习和项目实践，将理论知识应用于实际开发场景'
+    ],
+    courses: [
+      'Java程序设计', '数据结构与算法', '数据库原理', 'Web前端开发',
+      'Vue.js框架', 'Python编程', '软件工程', '计算机网络',
+      '操作系统', 'Linux系统', 'Git版本控制', '软件测试'
+    ],
+    achievements: [
+      '完成多个课程设计项目，获得优秀成绩',
+      '熟练掌握前后端开发技术栈',
+      '具备良好的代码规范和团队协作能力',
+      '通过自学掌握AI相关技术，为转型AI产品经理打下基础'
+    ]
   }
 ]
 </script>
@@ -399,13 +458,23 @@ const education = [
 }
 
 .education-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
   background: var(--bg-card);
   padding: 24px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.education-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+}
+
+.edu-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .edu-icon {
@@ -417,6 +486,10 @@ const education = [
   justify-content: center;
   color: white;
   flex-shrink: 0;
+}
+
+.edu-content {
+  flex: 1;
 }
 
 .edu-degree {
@@ -440,6 +513,85 @@ const education = [
 .edu-year {
   font-size: 0.8rem;
   color: var(--primary-color);
+  font-weight: 500;
+}
+
+.edu-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+}
+
+.edu-arrow svg {
+  transition: transform 0.3s ease;
+}
+
+.edu-arrow svg.rotated {
+  transform: rotate(180deg);
+}
+
+.edu-expand {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.edu-expand.show {
+  max-height: 800px;
+  opacity: 1;
+}
+
+.edu-expand-content {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.details-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.details-list li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.details-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+}
+
+.course-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.course-tag {
+  padding: 4px 12px;
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary-color);
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
