@@ -145,7 +145,7 @@ const projectsData = {
     techStack: 'Vue3, TypeScript, Pinia, Element Plus, Tailwind CSS, html2canvas, jsPDF, Vite',
     duration: '2025.03 - 至今',
     tags: ['Vue3', 'TypeScript', 'AI应用', '简历生成', 'PDF导出'],
-    demoUrl: 'https://resume-teal-seven-85.vercel.app/',
+    demoUrl: 'https://13892624372.github.io/resume/',
     githubUrl: 'https://github.com/13892624372/resume'
   },
   project2: {
