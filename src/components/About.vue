@@ -1,95 +1,100 @@
 <template>
   <section id="about" class="section about">
     <div class="container">
-      <h2 class="section-title">关于</h2>
-      <p class="section-subtitle">探索个人背景与人工智能的无限可能</p>
+      <!-- 关于我部分 -->
+      <h2 class="section-title">关于我</h2>
+      <p class="section-subtitle">致力于AI开发与智能应用解决方案</p>
       
-      <div class="about-grid">
-        <!-- 关于我卡片 -->
-        <div class="about-card" @click="openModal('profile')">
-          <div class="card-header">
-            <div class="card-icon" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
-              <span>👤</span>
-            </div>
-            <div class="card-info">
-              <h3 class="card-title">关于我</h3>
-              <p class="card-subtitle">个人背景与职业愿景</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            2025届软件工程技术专业毕业生，致力于AI产品开发，
-            具备扎实的技术功底和对人工智能的深刻理解。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">软件工程</span>
-            <span class="card-tag">AI转型</span>
-            <span class="card-tag">产品经理</span>
+      <div class="about-content">
+        <div class="about-image">
+          <div class="image-wrapper">
+            <img src="/photo.jpg.png" alt="田雨" class="profile-photo" />
           </div>
         </div>
         
-        <!-- AI发展史卡片 -->
-        <div class="about-card" @click="openModal('history')">
-          <div class="card-header">
-            <div class="card-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-              <span>📜</span>
-            </div>
-            <div class="card-info">
-              <h3 class="card-title">AI发展史</h3>
-              <p class="card-subtitle">从诞生到爆发的技术演进</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            从1956年达特茅斯会议到2024年AI Agent元年，
-            回顾人工智能70年的发展历程与里程碑事件。
+        <div class="about-text">
+          <h3 class="about-title">我是田雨</h3>
+          <p class="about-description">
+            2025届软件工程技术专业毕业生，毕业于西安信息职业大学。在校期间系统学习了软件开发的核心技术，
+            具备扎实的编程功底和良好的代码规范意识。对人工智能领域充满热情，主动学习了机器学习、深度学习等相关知识。
           </p>
-          <div class="card-tags">
-            <span class="card-tag">10个里程碑</span>
-            <span class="card-tag">时间轴</span>
-            <span class="card-tag">技术演进</span>
-          </div>
+          <p class="about-description">
+            善于学习新知识，能快速融入团队并推动项目落地，具有强烈的责任心和团队协作精神。
+            目前正积极向AI行业转型，期待在AI产品经理岗位上将技术能力与产品思维相结合，创造用户价值。
+          </p>
         </div>
+      </div>
+      
+      <!-- 关于AI部分 -->
+      <div class="ai-section">
+        <h2 class="section-title ai-section-title">关于AI</h2>
+        <p class="section-subtitle ai-section-subtitle">探索人工智能的发展历程与未来趋势</p>
         
-        <!-- 主流大模型卡片 -->
-        <div class="about-card" @click="openModal('models')">
-          <div class="card-header">
-            <div class="card-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-              <span>🤖</span>
+        <div class="about-grid">
+          <!-- AI发展史卡片 -->
+          <div class="about-card" @click="openModal('history')">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <span>📜</span>
+              </div>
+              <div class="card-info">
+                <h3 class="card-title">AI发展史</h3>
+                <p class="card-subtitle">从诞生到爆发的技术演进</p>
+              </div>
             </div>
-            <div class="card-info">
-              <h3 class="card-title">主流大模型</h3>
-              <p class="card-subtitle">当前最热门的LLM对比</p>
-            </div>
-          </div>
-          <p class="card-desc">
-            GPT-4o、Claude 3.5、Gemini 1.5、Llama 3等
-            国内外主流大语言模型的特点与应用场景分析。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">6大模型</span>
-            <span class="card-tag">对比分析</span>
-            <span class="card-tag">选型参考</span>
-          </div>
-        </div>
-        
-        <!-- AI智能体卡片 -->
-        <div class="about-card" @click="openModal('agents')">
-          <div class="card-header">
-            <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-              <span>🧠</span>
-            </div>
-            <div class="card-info">
-              <h3 class="card-title">AI智能体</h3>
-              <p class="card-subtitle">从工具到助手的进化</p>
+            <p class="card-desc">
+              从1956年达特茅斯会议到2024年AI Agent元年，
+              回顾人工智能70年的发展历程与里程碑事件。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">10个里程碑</span>
+              <span class="card-tag">时间轴</span>
+              <span class="card-tag">技术演进</span>
             </div>
           </div>
-          <p class="card-desc">
-            AutoGPT、Devin、Copilot等AI Agent生态介绍，
-            探索能够自主决策、执行任务的智能系统。
-          </p>
-          <div class="card-tags">
-            <span class="card-tag">6类智能体</span>
-            <span class="card-tag">应用场景</span>
-            <span class="card-tag">未来趋势</span>
+          
+          <!-- 主流大模型卡片 -->
+          <div class="about-card" @click="openModal('models')">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <span>🤖</span>
+              </div>
+              <div class="card-info">
+                <h3 class="card-title">主流大模型</h3>
+                <p class="card-subtitle">当前最热门的LLM对比</p>
+              </div>
+            </div>
+            <p class="card-desc">
+              GPT-4o、Claude 3.5、Gemini 1.5、Llama 3等
+              国内外主流大语言模型的特点与应用场景分析。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">6大模型</span>
+              <span class="card-tag">对比分析</span>
+              <span class="card-tag">选型参考</span>
+            </div>
+          </div>
+          
+          <!-- AI智能体卡片 -->
+          <div class="about-card" @click="openModal('agents')">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <span>🧠</span>
+              </div>
+              <div class="card-info">
+                <h3 class="card-title">AI智能体</h3>
+                <p class="card-subtitle">从工具到助手的进化</p>
+              </div>
+            </div>
+            <p class="card-desc">
+              AutoGPT、Devin、Copilot等AI Agent生态介绍，
+              探索能够自主决策、执行任务的智能系统。
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">6类智能体</span>
+              <span class="card-tag">应用场景</span>
+              <span class="card-tag">未来趋势</span>
+            </div>
           </div>
         </div>
       </div>
@@ -97,61 +102,6 @@
     
     <!-- 弹窗 -->
     <div class="modal-overlay" v-if="activeModal" @click="closeModal">
-      <!-- 关于我弹窗 -->
-      <div v-if="activeModal === 'profile'" class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        
-        <div class="modal-header">
-          <div class="modal-icon" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">👤</div>
-          <div>
-            <h3 class="modal-title">关于我</h3>
-            <p class="modal-subtitle">个人背景与职业愿景</p>
-          </div>
-        </div>
-        
-        <div class="modal-body">
-          <div class="profile-section">
-            <div class="profile-image-wrapper">
-              <img src="/photo.jpg.png" alt="田雨" class="profile-image" />
-            </div>
-            <div class="profile-info">
-              <h4 class="info-title">我是田雨</h4>
-              <p class="info-text">
-                2025届软件工程技术专业毕业生，毕业于西安信息职业大学。在校期间系统学习了软件开发的核心技术，
-                具备扎实的编程功底和良好的代码规范意识。对人工智能领域充满热情，主动学习了机器学习、深度学习等相关知识。
-              </p>
-              <p class="info-text">
-                善于学习新知识，能快速融入团队并推动项目落地，具有强烈的责任心和团队协作精神。
-                目前正积极向AI行业转型，期待在AI产品经理岗位上将技术能力与产品思维相结合，创造用户价值。
-              </p>
-            </div>
-          </div>
-          
-          <div class="info-grid">
-            <div class="info-item">
-              <span class="info-label">教育背景</span>
-              <span class="info-value">软件工程技术 · 本科</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">毕业院校</span>
-              <span class="info-value">西安信息职业大学</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">目标岗位</span>
-              <span class="info-value">AI产品经理</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">技术方向</span>
-              <span class="info-value">前端开发 · AI应用</span>
-            </div>
-          </div>
-        </div>
-      </div>
       
       <!-- AI发展史弹窗 -->
       <div v-if="activeModal === 'history'" class="modal-content" @click.stop>
@@ -425,11 +375,93 @@ const aiAgents = ref([
   background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(30, 41, 59, 0.5) 100%);
 }
 
+/* 关于我部分样式 */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 60px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+
+.about-image {
+  position: relative;
+}
+
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.profile-photo {
+  width: 350px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+
+.image-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 70%,
+    var(--bg-primary) 100%
+  );
+  pointer-events: none;
+}
+
+.image-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 60px rgba(99, 102, 241, 0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.about-description {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+/* 关于AI部分样式 */
+.ai-section {
+  padding-top: 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-section-title {
+  margin-top: 0;
+}
+
+.ai-section-subtitle {
+  margin-bottom: 40px;
+}
+
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 40px;
 }
 
 .about-card {
@@ -603,44 +635,7 @@ const aiAgents = ref([
   font-size: 1rem;
 }
 
-/* 关于我弹窗内容 */
-.profile-section {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 32px;
-  margin-bottom: 32px;
-}
-
-.profile-image-wrapper {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.profile-image {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  display: block;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.info-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.info-text {
-  color: var(--text-secondary);
-  line-height: 1.8;
-  margin-bottom: 12px;
-}
-
+/* 信息网格 */
 .info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -829,17 +824,22 @@ const aiAgents = ref([
 }
 
 @media (max-width: 968px) {
-  .about-grid {
+  .about-content {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
   
-  .profile-section {
-    grid-template-columns: 1fr;
+  .about-image {
     text-align: center;
   }
   
-  .profile-image {
-    height: 200px;
+  .profile-photo {
+    width: 280px;
+    height: 360px;
+  }
+  
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .agents-list {
@@ -851,6 +851,33 @@ const aiAgents = ref([
   .about {
     max-width: 100vw;
     overflow-x: hidden;
+  }
+  
+  .about-content {
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+  
+  .profile-photo {
+    width: 200px;
+    height: 260px;
+  }
+  
+  .about-title {
+    font-size: 1.4rem;
+  }
+  
+  .about-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  
+  .ai-section {
+    padding-top: 40px;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
   }
   
   .about-card {
