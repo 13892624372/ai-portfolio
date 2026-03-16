@@ -143,15 +143,27 @@ const closeMenu = () => {
   showProjectsDropdown.value = false
 }
 
+// 点击外部关闭菜单
+const handleClickOutside = (event) => {
+  if (isMobile.value && isMenuOpen.value) {
+    const nav = document.querySelector('.navbar')
+    if (nav && !nav.contains(event.target)) {
+      closeMenu()
+    }
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('resize', checkMobile)
+  document.addEventListener('click', handleClickOutside)
   checkMobile()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
   window.removeEventListener('resize', checkMobile)
+  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 
