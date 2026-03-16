@@ -344,12 +344,20 @@ onUnmounted(() => {
   .nav-dropdown {
     display: flex;
     flex-direction: column;
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
-  
+
+  .nav-dropdown::before {
+    display: none;
+  }
+
   .dropdown-menu {
     position: static;
     transform: none;
     margin-top: 8px;
+    margin-left: 0;
+    margin-right: 0;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: none;
     animation: none;
@@ -357,31 +365,37 @@ onUnmounted(() => {
     visibility: visible;
     display: none;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
+    min-width: unset;
+    max-width: 100%;
     padding: 8px;
     border-radius: 8px;
+    left: auto;
   }
-  
+
   .dropdown-menu.show {
     display: flex;
+    transform: none;
   }
-  
+
   .dropdown-item {
-    padding: 12px;
-    font-size: 0.95rem;
+    padding: 10px 12px;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     gap: 10px;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     width: 100%;
+    white-space: normal;
+    word-break: break-word;
   }
-  
+
   .dropdown-number {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
     flex-shrink: 0;
   }
 }
