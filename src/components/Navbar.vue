@@ -11,43 +11,63 @@
           <a href="#about" @click="closeMenu" class="nav-link">关于</a>
           
           <!-- 技能下拉菜单 -->
-          <div class="nav-dropdown" 
-               @mouseenter="showSkillsDropdown = true" 
+          <div class="nav-dropdown"
+               @mouseenter="showSkillsDropdown = true"
                @mouseleave="showSkillsDropdown = false">
             <a href="#skills" @click="closeMenu" class="nav-link">技能</a>
             <div class="dropdown-menu" :class="{ 'show': showSkillsDropdown }">
               <a href="#skill1" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">1</span>
-                <span>技能 1</span>
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #42b883 0%, #35495e 100%);">1</span>
+                <span>Vue3生态系统</span>
               </a>
               <a href="#skill2" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%);">2</span>
-                <span>技能 2</span>
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #3178c6 0%, #235a97 100%);">2</span>
+                <span>TypeScript开发</span>
               </a>
               <a href="#skill3" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);">3</span>
-                <span>技能 3</span>
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #409eff 0%, #66b1ff 100%);">3</span>
+                <span>UI框架与样式</span>
+              </a>
+              <a href="#skill4" @click="closeMenu" class="dropdown-item">
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #f7df1e 0%, #e6c200 100%);">4</span>
+                <span>原生JavaScript</span>
+              </a>
+              <a href="#skill5" @click="closeMenu" class="dropdown-item">
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">5</span>
+                <span>多媒体与API</span>
+              </a>
+              <a href="#skill6" @click="closeMenu" class="dropdown-item">
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #646cff 0%, #8f94fb 100%);">6</span>
+                <span>构建工具</span>
+              </a>
+              <a href="#skill7" @click="closeMenu" class="dropdown-item">
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #2088ff 0%, #79b8ff 100%);">7</span>
+                <span>部署与CI/CD</span>
+              </a>
+              <a href="#skill8" @click="closeMenu" class="dropdown-item">
+                <span class="dropdown-number" style="background: linear-gradient(135deg, #f05032 0%, #ff6b4a 100%);">8</span>
+                <span>版本控制</span>
               </a>
             </div>
           </div>
-          
+
           <!-- 项目下拉菜单 -->
-          <div class="nav-dropdown" 
-               @mouseenter="showProjectsDropdown = true" 
+          <div class="nav-dropdown"
+               @mouseenter="showProjectsDropdown = true"
                @mouseleave="showProjectsDropdown = false">
             <a href="#projects" @click="closeMenu" class="nav-link">项目</a>
             <div class="dropdown-menu" :class="{ 'show': showProjectsDropdown }">
               <a href="#project1" @click="closeMenu" class="dropdown-item">
                 <span class="dropdown-number" style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);">1</span>
-                <span>项目 1</span>
+                <span>AI智能简历助手</span>
               </a>
               <a href="#project2" @click="closeMenu" class="dropdown-item">
                 <span class="dropdown-number" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">2</span>
-                <span>项目 2</span>
+                <span>影视大全网站</span>
               </a>
               <a href="#project3" @click="closeMenu" class="dropdown-item">
                 <span class="dropdown-number" style="background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);">3</span>
-                <span>项目 3</span>
+                <span>个人作品集网站</span>
               </a>
             </div>
           </div>
