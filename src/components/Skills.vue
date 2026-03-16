@@ -137,7 +137,7 @@
     
     <!-- 弹窗 -->
     <div class="modal-overlay" v-if="activeModal" @click="closeModal">
-      <div class="modal-content" @click.stop>
+      <div class="modal-content" @click.stop @wheel.stop @touchmove.stop>
         <button class="modal-close" @click="closeModal">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -446,6 +446,7 @@ onMounted(() => {
   padding: 40px;
   padding-top: 80px;
   animation: slideUp 0.3s ease;
+  overscroll-behavior: contain;
 }
 
 @keyframes slideUp {
