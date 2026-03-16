@@ -5,13 +5,13 @@
       <p class="section-subtitle">AI开发与通信技术专业技能</p>
       
       <div class="skills-list">
-        <!-- 技能 1 -->
+        <!-- 技能 1 - 前端开发 -->
         <div id="skill1" class="skill-item" @click="openModal('skill1')">
           <div class="skill-header">
             <div class="skill-number" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">1</div>
             <div class="skill-info">
-              <h3 class="skill-title">技能 1</h3>
-              <p class="skill-subtitle">核心能力描述</p>
+              <h3 class="skill-title">前端开发</h3>
+              <p class="skill-subtitle">Vue3 + TypeScript + 现代化前端工程化</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -21,13 +21,13 @@
           </div>
         </div>
         
-        <!-- 技能 2 -->
+        <!-- 技能 2 - 原生JavaScript与多媒体开发 -->
         <div id="skill2" class="skill-item" @click="openModal('skill2')">
           <div class="skill-header">
             <div class="skill-number" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%);">2</div>
             <div class="skill-info">
-              <h3 class="skill-title">技能 2</h3>
-              <p class="skill-subtitle">核心能力描述</p>
+              <h3 class="skill-title">原生JavaScript与多媒体开发</h3>
+              <p class="skill-subtitle">原生JS + HLS播放 + API集成</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -37,13 +37,13 @@
           </div>
         </div>
         
-        <!-- 技能 3 -->
+        <!-- 技能 3 - 部署与DevOps -->
         <div id="skill3" class="skill-item" @click="openModal('skill3')">
           <div class="skill-header">
             <div class="skill-number" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);">3</div>
             <div class="skill-info">
-              <h3 class="skill-title">技能 3</h3>
-              <p class="skill-subtitle">核心能力描述</p>
+              <h3 class="skill-title">部署与DevOps</h3>
+              <p class="skill-subtitle">GitHub Pages + GitHub Actions + CI/CD</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -100,45 +100,51 @@ const activeModal = ref(null)
 const skillsData = {
   skill1: {
     number: '1',
-    title: '技能 1',
-    subtitle: '核心能力描述',
+    title: '前端开发',
+    subtitle: 'Vue3 + TypeScript + 现代化前端工程化',
     gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-    description: '这里是技能1的详细描述。您可以在此处添加关于该技能的详细介绍，包括技术栈、应用场景、掌握程度等信息。',
+    description: '熟练掌握现代前端技术栈，能够独立开发复杂的单页应用。在AI简历助手和个人作品集项目中深入实践了Vue3生态系统，具备完整的前端工程化能力。',
     details: [
-      '详细说明点1：描述该技能的具体应用场景',
-      '详细说明点2：描述掌握程度和实际经验',
-      '详细说明点3：描述相关的项目经历',
-      '详细说明点4：描述学习路径和成长历程'
+      'Vue3生态系统：熟练使用Composition API、Vue Router、Pinia状态管理，开发AI简历助手和个人作品集网站',
+      'TypeScript：在AI简历助手项目中全面使用TS，提升代码质量和可维护性',
+      'UI框架：掌握Element Plus组件库，快速构建美观的用户界面',
+      '样式技术：熟练使用Tailwind CSS、CSS3、响应式设计，实现现代化UI效果',
+      '构建工具：使用Vite进行项目构建，优化开发体验和打包性能',
+      'PDF生成：集成html2canvas和jsPDF实现简历PDF导出功能'
     ],
-    tags: ['标签1', '标签2', '标签3', '标签4']
+    tags: ['Vue3', 'TypeScript', 'Pinia', 'Element Plus', 'Tailwind CSS', 'Vite']
   },
   skill2: {
     number: '2',
-    title: '技能 2',
-    subtitle: '核心能力描述',
+    title: '原生JavaScript与多媒体开发',
+    subtitle: '原生JS + HLS播放 + API集成',
     gradient: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
-    description: '这里是技能2的详细描述。您可以在此处添加关于该技能的详细介绍，包括技术栈、应用场景、掌握程度等信息。',
+    description: '精通原生JavaScript开发，能够处理复杂的DOM操作和多媒体播放需求。在影视网站项目中实现了视频播放、数据源切换、跨域代理等功能。',
     details: [
-      '详细说明点1：描述该技能的具体应用场景',
-      '详细说明点2：描述掌握程度和实际经验',
-      '详细说明点3：描述相关的项目经历',
-      '详细说明点4：描述学习路径和成长历程'
+      '原生JavaScript：开发影视大全网站，实现路由管理、状态管理、事件处理等核心功能',
+      'HLS视频播放：集成HLS.js播放器，支持M3U8格式视频的在线播放',
+      'API集成：对接多个第三方影视数据源，实现数据聚合和智能切换',
+      '跨域处理：使用公共CORS代理解决浏览器跨域限制，确保数据正常获取',
+      '本地存储：实现收藏列表和观看历史的本地存储功能',
+      '响应式设计：完美适配桌面端和移动端，支持深色主题切换'
     ],
-    tags: ['标签1', '标签2', '标签3', '标签4']
+    tags: ['JavaScript', 'HLS.js', 'CORS代理', 'LocalStorage', '响应式设计']
   },
   skill3: {
     number: '3',
-    title: '技能 3',
-    subtitle: '核心能力描述',
+    title: '部署与DevOps',
+    subtitle: 'GitHub Pages + GitHub Actions + CI/CD',
     gradient: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
-    description: '这里是技能3的详细描述。您可以在此处添加关于该技能的详细介绍，包括技术栈、应用场景、掌握程度等信息。',
+    description: '掌握项目部署和持续集成流程，能够将项目部署到多个平台。成功将三个项目从Vercel迁移到GitHub Pages，并配置自动化部署工作流。',
     details: [
-      '详细说明点1：描述该技能的具体应用场景',
-      '详细说明点2：描述掌握程度和实际经验',
-      '详细说明点3：描述相关的项目经历',
-      '详细说明点4：描述学习路径和成长历程'
+      'GitHub Pages：将三个项目成功部署到GitHub Pages，实现静态网站托管',
+      'GitHub Actions：配置自动化部署工作流，实现代码推送后自动构建和部署',
+      'Vercel部署：熟悉Vercel平台部署，了解Serverless Functions的使用',
+      '构建优化：配置Vite构建参数，处理资源路径和base路径配置',
+      '版本控制：熟练使用Git进行版本管理，掌握分支管理和代码合并',
+      '项目迁移：成功将项目从Vercel迁移到GitHub Pages，更新所有相关配置'
     ],
-    tags: ['标签1', '标签2', '标签3', '标签4']
+    tags: ['GitHub Pages', 'GitHub Actions', 'CI/CD', 'Vercel', 'Git', 'Vite构建']
   }
 }
 
