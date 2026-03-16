@@ -7,13 +7,14 @@
       <div class="timeline-wrapper">
         <div class="timeline-line"></div>
         <div class="timeline-container">
-          <div 
-            v-for="(job, index) in experiences" 
+          <div
+            v-for="(job, index) in experiences"
             :key="job.id"
             class="timeline-item"
             :class="{ 'active': activeIndex === index }"
-            @mouseenter="activeIndex = index"
-            @mouseleave="activeIndex = null"
+            @mouseenter="!isMobile && (activeIndex = index)"
+            @mouseleave="!isMobile && (activeIndex = null)"
+            @click="toggleExpand(index)"
           >
             <div class="timeline-dot" :style="{ background: job.gradient }"></div>
             
@@ -88,9 +89,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const activeIndex = ref(null)
+const isMobile = ref(false)
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+const toggleExpand = (index) => {
+  if (isMobile.value) {
+    activeIndex.value = activeIndex.value === index ? null : index
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('resize', checkMobile)
+  checkMobile()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 
 const experiences = [
   {
@@ -466,13 +487,37 @@ const education = [
   .job-title {
     font-size: 0.95rem;
   }
-  
+
   .company-name {
     font-size: 0.8rem;
   }
-  
+
   .job-period {
     font-size: 0.7rem;
+  }
+
+  .timeline-item {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--text-muted);
+    border-bottom: 2px solid var(--text-muted);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.3s ease;
+  }
+
+  .timeline-item.active::after {
+    transform: translateY(-50%) rotate(-135deg);
+    border-color: var(--primary-color);
   }
   
   .expand-content {
