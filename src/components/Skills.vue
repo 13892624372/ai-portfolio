@@ -432,6 +432,11 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .skills {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
   .skill-item {
     padding: 16px 20px;
   }

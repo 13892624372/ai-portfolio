@@ -423,6 +423,15 @@ const education = [
 }
 
 @media (max-width: 768px) {
+  .experience {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .timeline-wrapper {
+    max-width: 100%;
+  }
+  
   .timeline-line {
     display: none;
   }
@@ -431,6 +440,7 @@ const education = [
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    width: 100%;
   }
   
   .timeline-item {
@@ -450,6 +460,7 @@ const education = [
     width: 40px;
     height: 40px;
     font-size: 0.9rem;
+    flex-shrink: 0;
   }
   
   .job-title {
@@ -485,8 +496,13 @@ const education = [
     padding: 4px 10px;
   }
   
+  .education-section {
+    max-width: 100%;
+  }
+  
   .education-grid {
     grid-template-columns: 1fr;
+    width: 100%;
   }
   
   .education-card {

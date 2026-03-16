@@ -119,6 +119,11 @@
 }
 
 @media (max-width: 768px) {
+  .about {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
   .about-content {
     gap: 30px;
   }

@@ -106,6 +106,7 @@ onUnmounted(() => {
   z-index: 1000;
   padding: 20px 0;
   transition: all 0.3s ease;
+  transform: none;
 }
 
 .navbar.scrolled {
@@ -273,37 +274,51 @@ onUnmounted(() => {
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .nav-wrapper {
+    padding: 0 16px;
+  }
+  
   .menu-toggle {
     display: flex;
+    position: relative;
+    z-index: 1000;
   }
   
   .nav-links {
     position: fixed;
     top: 70px;
     left: 0;
-    right: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
     background: rgba(15, 23, 42, 0.98);
     flex-direction: column;
     padding: 20px;
-    gap: 12px;
-    transform: translateY(-100%);
+    gap: 8px;
     opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
     align-items: stretch;
-    max-height: calc(100vh - 70px);
+    z-index: 998;
+    backdrop-filter: blur(10px);
     overflow-y: auto;
+    display: flex;
   }
   
   .nav-links.active {
-    transform: translateY(0);
     opacity: 1;
-    visibility: visible;
+    pointer-events: auto;
   }
   
   .nav-link {
-    padding: 12px 16px;
+    padding: 10px 16px;
     font-size: 1rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
   }
   
   .nav-dropdown {
@@ -315,13 +330,17 @@ onUnmounted(() => {
     position: static;
     transform: none;
     margin-top: 8px;
-    margin-left: 16px;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: none;
     animation: none;
     opacity: 1;
     visibility: visible;
     display: none;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
   }
   
   .dropdown-menu.show {
@@ -329,14 +348,21 @@ onUnmounted(() => {
   }
   
   .dropdown-item {
-    padding: 10px 14px;
-    font-size: 0.9rem;
+    padding: 12px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    width: 100%;
   }
   
   .dropdown-number {
-    width: 28px;
-    height: 28px;
-    font-size: 0.85rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    flex-shrink: 0;
   }
 }
 </style>

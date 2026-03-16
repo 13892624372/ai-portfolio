@@ -51,6 +51,7 @@
   position: relative;
   overflow: hidden;
   padding-top: 80px;
+  background: var(--bg-dark);
 }
 
 .hero-bg {
@@ -92,7 +93,8 @@
   height: 300px;
   background: var(--accent-color);
   top: 50%;
-  left: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
   animation: float 12s ease-in-out infinite;
 }
 
@@ -200,22 +202,52 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 100px 0 60px;
-    min-height: auto;
+    padding: 80px 0 40px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-start;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .hero .container {
+    width: 100%;
+    max-width: 100vw;
+    padding: 0 16px;
+    margin: 0;
   }
   
   .hero-content {
-    padding: 0 16px;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .hero-badge {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    margin-bottom: 16px;
   }
   
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 1.3;
+    margin-bottom: 16px;
+    word-wrap: break-word;
+  }
+  
+  .hero-title br {
+    display: block;
   }
   
   .hero-description {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.7;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 24px;
+    word-wrap: break-word;
   }
   
   .scroll-indicator {
@@ -223,7 +255,28 @@
   }
   
   .gradient-orb {
-    opacity: 0.5;
+    opacity: 0.3;
+    max-width: 100vw;
+  }
+  
+  .orb-1 {
+    width: 250px;
+    height: 250px;
+    top: -80px;
+    right: -80px;
+  }
+  
+  .orb-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -60px;
+    left: -60px;
+  }
+  
+  .orb-3 {
+    width: 150px;
+    height: 150px;
+    left: 20%;
   }
 }
 </style>

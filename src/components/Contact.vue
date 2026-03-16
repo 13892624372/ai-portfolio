@@ -137,6 +137,23 @@
 }
 
 @media (max-width: 768px) {
+  .contact {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .contact-methods {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .contact-item {
+    width: 100%;
+    max-width: 280px;
+    justify-content: flex-start;
+  }
+  
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 16px;
