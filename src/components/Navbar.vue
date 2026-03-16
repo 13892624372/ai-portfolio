@@ -353,21 +353,21 @@ onUnmounted(() => {
   }
 
   .nav-links {
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: 100%;
     left: 0;
     width: 100%;
-    height: 100vh;
-    max-height: 100vh;
+    min-height: calc(100vh - 70px);
     background: rgba(15, 23, 42, 0.98);
     flex-direction: column;
-    padding: 80px 20px 100px;
+    padding: 20px;
+    padding-bottom: 100px;
     gap: 8px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
     align-items: stretch;
-    z-index: 1001;
+    z-index: 999;
     backdrop-filter: blur(10px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
