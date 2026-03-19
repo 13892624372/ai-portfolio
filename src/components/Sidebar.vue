@@ -94,13 +94,13 @@ onUnmounted(() => {
 }
 
 .sidebar-content {
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
   border-radius: 0 16px 16px 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
   padding: 20px;
   min-width: 180px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
@@ -113,7 +113,7 @@ onUnmounted(() => {
 .sidebar-header {
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sidebar-title {
@@ -142,13 +142,14 @@ onUnmounted(() => {
 }
 
 .sidebar-link:hover {
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--bg-hover);
   color: var(--text-primary);
 }
 
 .sidebar-link.active {
-  background: var(--gradient-1);
-  color: white;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .link-icon {
@@ -165,8 +166,8 @@ onUnmounted(() => {
   transform: translateY(-50%);
   width: 40px;
   height: 60px;
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
@@ -184,12 +185,12 @@ onUnmounted(() => {
 .sidebar:not(.visible) .toggle-btn {
   left: 0;
   border-radius: 0 12px 12px 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid var(--border-color);
 }
 
 .toggle-btn:hover {
-  background: var(--gradient-1);
-  color: white;
+  background: var(--bg-hover);
+  color: var(--text-primary);
 }
 
 @media (max-width: 1024px) {
