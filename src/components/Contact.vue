@@ -62,7 +62,7 @@
 
 <style scoped>
 .contact {
-  background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(30, 41, 59, 0.8) 100%);
+  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
 }
 
 .contact-content {

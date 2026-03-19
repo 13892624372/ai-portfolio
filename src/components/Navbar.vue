@@ -180,10 +180,10 @@ onUnmounted(() => {
 }
 
 .navbar.scrolled {
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 15px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-wrapper {
@@ -265,12 +265,12 @@ onUnmounted(() => {
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  background: rgba(30, 41, 59, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 8px;
   min-width: 150px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   opacity: 0;
   visibility: hidden;
@@ -309,7 +309,7 @@ onUnmounted(() => {
 }
 
 .dropdown-item:hover {
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--bg-hover);
   color: var(--text-primary);
 }
 
@@ -371,7 +371,7 @@ onUnmounted(() => {
     width: 100%;
     height: calc(100vh - 70px);
     max-height: calc(100vh - 70px);
-    background: rgba(15, 23, 42, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     flex-direction: column;
     padding: 20px;
     padding-bottom: 100px;

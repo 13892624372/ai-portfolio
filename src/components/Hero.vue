@@ -115,11 +115,11 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: rgba(99, 102, 241, 0.2);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 30px;
   font-size: 0.9rem;
-  color: var(--primary-color);
+  color: var(--text-secondary);
   margin-bottom: 24px;
 }
 
