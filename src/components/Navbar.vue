@@ -22,35 +22,35 @@
             </a>
             <div class="dropdown-menu" :class="{ 'show': showSkillsDropdown }">
               <a href="#skill1" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #42b883 0%, #35495e 100%);">1</span>
+                <span class="dropdown-number">1</span>
                 <span>Vue3生态系统</span>
               </a>
               <a href="#skill2" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #3178c6 0%, #235a97 100%);">2</span>
+                <span class="dropdown-number">2</span>
                 <span>TypeScript开发</span>
               </a>
               <a href="#skill3" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #409eff 0%, #66b1ff 100%);">3</span>
+                <span class="dropdown-number">3</span>
                 <span>UI框架与样式</span>
               </a>
               <a href="#skill4" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #f7df1e 0%, #e6c200 100%);">4</span>
+                <span class="dropdown-number">4</span>
                 <span>原生JavaScript</span>
               </a>
               <a href="#skill5" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">5</span>
+                <span class="dropdown-number">5</span>
                 <span>多媒体与API</span>
               </a>
               <a href="#skill6" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #646cff 0%, #8f94fb 100%);">6</span>
+                <span class="dropdown-number">6</span>
                 <span>构建工具</span>
               </a>
               <a href="#skill7" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #2088ff 0%, #79b8ff 100%);">7</span>
+                <span class="dropdown-number">7</span>
                 <span>部署与CI/CD</span>
               </a>
               <a href="#skill8" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #f05032 0%, #ff6b4a 100%);">8</span>
+                <span class="dropdown-number">8</span>
                 <span>版本控制</span>
               </a>
             </div>
@@ -68,15 +68,15 @@
             </a>
             <div class="dropdown-menu" :class="{ 'show': showProjectsDropdown }">
               <a href="#project1" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);">1</span>
+                <span class="dropdown-number">1</span>
                 <span>AI智能简历助手</span>
               </a>
               <a href="#project2" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">2</span>
+                <span class="dropdown-number">2</span>
                 <span>影视大全网站</span>
               </a>
               <a href="#project3" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number" style="background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);">3</span>
+                <span class="dropdown-number">3</span>
                 <span>个人作品集网站</span>
               </a>
             </div>
@@ -205,19 +205,18 @@ onUnmounted(() => {
 .logo-icon {
   width: 40px;
   height: 40px;
-  background: var(--gradient-1);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .logo-text {
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .nav-links {
@@ -320,7 +319,9 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
