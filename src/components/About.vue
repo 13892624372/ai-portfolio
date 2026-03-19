@@ -8,7 +8,7 @@
       <div class="about-content">
         <div class="about-image">
           <div class="image-wrapper">
-            <img src="/photo.jpg.png" alt="田雨" class="profile-photo" />
+            <img src="/photo.jpg.jpg" alt="田雨" class="profile-photo" />
           </div>
         </div>
         
