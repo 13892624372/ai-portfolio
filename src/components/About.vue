@@ -280,6 +280,48 @@ const aiTimeline = ref([
     title: 'AI Agent元年',
     description: 'AI智能体技术快速发展，能够自主规划、使用工具、完成复杂任务，向通用人工智能迈进。',
     gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)'
+  },
+  {
+    year: '2024',
+    title: 'Sora视频生成',
+    description: 'OpenAI发布Sora，能够根据文本描述生成长达60秒的高质量视频，标志着AI视频生成技术的重大突破。',
+    gradient: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)'
+  },
+  {
+    year: '2024',
+    title: 'GPT-4o多模态',
+    description: 'OpenAI发布GPT-4o，原生支持文本、图像、音频多模态，响应速度提升，API价格大幅降低。',
+    gradient: 'linear-gradient(135deg, #10a37f 0%, #0d8c6d 100%)'
+  },
+  {
+    year: '2025',
+    title: 'DeepSeek崛起',
+    description: 'DeepSeek发布R1推理模型，以极低成本实现与OpenAI o1相当的性能，引发全球AI行业震动。',
+    gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+  },
+  {
+    year: '2025',
+    title: 'AI编程革命',
+    description: 'Cursor、Windsurf、GitHub Copilot等AI编程工具普及，AI辅助编程成为开发者标配。',
+    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+  },
+  {
+    year: '2025',
+    title: '人形机器人爆发',
+    description: '特斯拉Optimus、Figure AI等人形机器人进入工厂和家庭，AI与物理世界深度融合。',
+    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+  },
+  {
+    year: '2026',
+    title: 'AI超级应用时代',
+    description: 'AI应用全面普及，从办公、教育到医疗、科研，AI成为各行业基础设施，生产力大幅提升。',
+    gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+  },
+  {
+    year: '2026',
+    title: '端侧AI普及',
+    description: '手机、PC端AI芯片性能突破，大模型可在本地运行，AI助手成为每个人的私人助理。',
+    gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
   }
 ])
 
