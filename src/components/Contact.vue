@@ -2,14 +2,10 @@
   <section id="contact" class="section contact">
     <div class="container">
       <h2 class="section-title">联系我</h2>
-      <p class="section-subtitle">期待与您的合作与交流</p>
+      <p class="section-subtitle">期待与您的合作与交流，我会尽快回复您的消息</p>
       
       <div class="contact-content">
         <div class="contact-info">
-          <p class="info-description">
-            无论您是有项目合作意向、技术交流需求，还是其他事项，都欢迎与我联系。
-            我会尽快回复您的消息。
-          </p>
           
           <div class="contact-methods">
             <div class="contact-item">
