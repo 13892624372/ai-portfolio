@@ -8,7 +8,7 @@
         <!-- 技能 1 - Vue3生态系统 -->
         <div id="skill1" class="skill-item" @click="openModal('skill1')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #42b883 0%, #35495e 100%);">1</div>
+            <div class="skill-number">1</div>
             <div class="skill-info">
               <h3 class="skill-title">Vue3生态系统</h3>
               <p class="skill-subtitle">Composition API + Vue Router + Pinia状态管理</p>
@@ -24,7 +24,7 @@
         <!-- 技能 2 - TypeScript开发 -->
         <div id="skill2" class="skill-item" @click="openModal('skill2')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #3178c6 0%, #235a97 100%);">2</div>
+            <div class="skill-number">2</div>
             <div class="skill-info">
               <h3 class="skill-title">TypeScript开发</h3>
               <p class="skill-subtitle">类型系统 + 接口设计 + 代码规范</p>
@@ -40,7 +40,7 @@
         <!-- 技能 3 - UI框架与样式 -->
         <div id="skill3" class="skill-item" @click="openModal('skill3')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #409eff 0%, #66b1ff 100%);">3</div>
+            <div class="skill-number">3</div>
             <div class="skill-info">
               <h3 class="skill-title">UI框架与样式</h3>
               <p class="skill-subtitle">Element Plus + Tailwind CSS + 响应式设计</p>
@@ -56,7 +56,7 @@
         <!-- 技能 4 - 原生JavaScript开发 -->
         <div id="skill4" class="skill-item" @click="openModal('skill4')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #f7df1e 0%, #e6c200 100%);">4</div>
+            <div class="skill-number">4</div>
             <div class="skill-info">
               <h3 class="skill-title">原生JavaScript开发</h3>
               <p class="skill-subtitle">ES6+ + DOM操作 + 事件处理 + 模块化</p>
@@ -72,7 +72,7 @@
         <!-- 技能 5 - 多媒体与API集成 -->
         <div id="skill5" class="skill-item" @click="openModal('skill5')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">5</div>
+            <div class="skill-number">5</div>
             <div class="skill-info">
               <h3 class="skill-title">多媒体与API集成</h3>
               <p class="skill-subtitle">HLS.js播放 + 第三方API + CORS代理</p>
@@ -88,7 +88,7 @@
         <!-- 技能 6 - 构建工具与工程化 -->
         <div id="skill6" class="skill-item" @click="openModal('skill6')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #646cff 0%, #8f94fb 100%);">6</div>
+            <div class="skill-number">6</div>
             <div class="skill-info">
               <h3 class="skill-title">构建工具与工程化</h3>
               <p class="skill-subtitle">Vite + 模块化 + 代码优化 + 性能调优</p>
@@ -104,7 +104,7 @@
         <!-- 技能 7 - 部署与CI/CD -->
         <div id="skill7" class="skill-item" @click="openModal('skill7')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #2088ff 0%, #79b8ff 100%);">7</div>
+            <div class="skill-number">7</div>
             <div class="skill-info">
               <h3 class="skill-title">部署与CI/CD</h3>
               <p class="skill-subtitle">GitHub Pages + GitHub Actions + 自动化部署</p>
@@ -120,7 +120,7 @@
         <!-- 技能 8 - 版本控制与协作 -->
         <div id="skill8" class="skill-item" @click="openModal('skill8')">
           <div class="skill-header">
-            <div class="skill-number" style="background: linear-gradient(135deg, #f05032 0%, #ff6b4a 100%);">8</div>
+            <div class="skill-number">8</div>
             <div class="skill-info">
               <h3 class="skill-title">版本控制与协作</h3>
               <p class="skill-subtitle">Git + GitHub + 分支管理 + 代码审查</p>
@@ -381,7 +381,9 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
   font-size: 1.3rem;
   font-weight: 700;
   flex-shrink: 0;
