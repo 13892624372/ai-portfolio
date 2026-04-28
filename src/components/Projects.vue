@@ -43,7 +43,7 @@
             <div class="project-number">3</div>
             <div class="project-info">
               <h3 class="project-title">AI面试模拟器</h3>
-              <p class="project-subtitle">基于Coze智能体的AI面试模拟体验，上传简历和JD即可开始模拟面试</p>
+              <p class="project-subtitle">上传你的简历和JD，体验个性化AI面试。基于Coze + DeepSeek + RAG搭建，支持自定义简历和岗位JD，动态生成面试问题</p>
             </div>
             <div class="expand-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -121,12 +121,12 @@
               </button>
             </template>
             <template v-else-if="currentProject?.number === '3'">
-              <button @click="startInterview" class="btn btn-primary">
+              <a href="https://www.coze.cn/store/agent/7632215391754436660?bot_id=true" target="_blank" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 开始面试
-              </button>
+              </a>
               <button @click="openEmptyModal" class="btn btn-secondary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -726,21 +726,21 @@ const projectsData = {
   project3: {
     number: '3',
     title: 'AI面试模拟器',
-    subtitle: '基于Coze智能体的通用面试模拟体验',
+    subtitle: '基于Coze + DeepSeek + RAG的个性化AI面试模拟器',
     gradient: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)',
-    description: '一个基于Coze AI智能体的通用面试模拟器，适用于各类岗位面试练习。支持上传简历和职位描述(JD)，智能体会根据提供的材料进行针对性的模拟面试问答，帮助用户提升面试表现。',
+    description: '一个基于Coze平台搭建的AI面试模拟器，集成DeepSeek大模型和RAG技术。支持用户上传自定义简历和岗位JD，系统会动态生成个性化面试问题，固定5轮问答覆盖5个能力维度（项目经历、技能匹配、解决问题、学习成长、岗位动机），帮助求职者针对性准备面试。',
     features: [
-      '智能面试：基于Coze AI智能体，模拟真实面试场景，适用于各类岗位',
-      '简历分析：上传简历后，智能体会针对经历进行深度提问',
-      'JD匹配：根据职位描述，模拟该岗位的专业面试问题',
-      '实时对话：支持自然语言交互，像真实面试一样流畅对话',
-      '即时反馈：获得面试表现评估和改进建议',
-      '多轮问答：支持多轮深入交流，模拟完整面试流程'
+      '个性化面试：基于用户上传的简历和JD动态生成面试问题，非固定题库',
+      'RAG增强：使用Coze知识库实现检索增强生成，确保问题与材料高度相关',
+      '5轮问答：固定5个问题，覆盖项目经历、技能匹配、解决问题、学习成长、岗位动机5个维度',
+      '即时点评：每轮回答后提供针对性点评和建议',
+      '综合评估：面试结束后输出优势分析、待提升点和岗位匹配度评估',
+      '多格式支持：支持PDF、Word、图片格式的简历和JD上传'
     ],
-    techStack: 'Coze AI, iframe嵌入, Vue3, 智能体应用',
+    techStack: 'Coze, DeepSeek, RAG, 对话流, 知识库',
     duration: '2025.04 - 至今',
-    tags: ['Coze', 'AI智能体', '面试模拟', '通用工具'],
-    demoUrl: null,
+    tags: ['Coze', 'DeepSeek', 'RAG', '对话流'],
+    demoUrl: 'https://www.coze.cn/store/agent/7632215391754436660?bot_id=true',
     githubUrl: null
   }
 }
@@ -967,6 +967,32 @@ onMounted(() => {
 .project-subtitle {
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-left: 70px;
+}
+
+.project-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.project-tag:hover {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(99, 102, 241, 0.5);
 }
 
 .expand-icon {
@@ -1690,7 +1716,18 @@ onMounted(() => {
   .project-subtitle {
     font-size: 0.85rem;
   }
-  
+
+  .project-tags {
+    padding-left: 56px;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .project-tag {
+    padding: 3px 10px;
+    font-size: 0.7rem;
+  }
+
   .modal-overlay {
     padding: 0;
     align-items: flex-end;
