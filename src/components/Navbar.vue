@@ -3,7 +3,14 @@
     <div class="container">
       <div class="nav-wrapper">
         <a href="#" class="logo">
-          <span class="logo-icon">AI</span>
+          <span class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </span>
+          <span class="logo-text">个人作品网站</span>
         </a>
         
         <div class="nav-links" :class="{ 'active': isMenuOpen }">
@@ -20,39 +27,89 @@
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </a>
-            <div class="dropdown-menu" :class="{ 'show': showSkillsDropdown }">
-              <a href="#skill1" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">1</span>
-                <span>Vue3生态系统</span>
-              </a>
-              <a href="#skill2" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">2</span>
-                <span>TypeScript开发</span>
-              </a>
-              <a href="#skill3" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">3</span>
-                <span>UI框架与样式</span>
-              </a>
-              <a href="#skill4" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">4</span>
-                <span>原生JavaScript</span>
-              </a>
-              <a href="#skill5" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">5</span>
-                <span>多媒体与API</span>
-              </a>
-              <a href="#skill6" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">6</span>
-                <span>构建工具</span>
-              </a>
-              <a href="#skill7" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">7</span>
-                <span>部署与CI/CD</span>
-              </a>
-              <a href="#skill8" @click="closeMenu" class="dropdown-item">
-                <span class="dropdown-number">8</span>
-                <span>版本控制</span>
-              </a>
+            <div class="dropdown-menu skills-dropdown" :class="{ 'show': showSkillsDropdown }">
+              <div class="dropdown-section">
+                <div class="dropdown-section-title">业务能力 · AI产品与通用产品</div>
+                <a href="#skill-prd" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>PRD撰写</span>
+                </a>
+                <a href="#skill-prototype" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>原型 / 脑图 / 流程图</span>
+                </a>
+                <a href="#skill-metrics" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>数据指标体系建设</span>
+                </a>
+                <a href="#skill-ai-metrics" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>AI产品评估指标体系</span>
+                </a>
+                <a href="#skill-prompt" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>结构化Prompt工程</span>
+                </a>
+                <a href="#skill-rag" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>RAG / 微调 / Agent搭建</span>
+                </a>
+                <a href="#skill-llm-boundary" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>大模型能力边界判断</span>
+                </a>
+                <a href="#skill-coze" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>Coze工作流 & 知识库</span>
+                </a>
+                <a href="#skill-requirement" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>用户需求分析与真伪判断</span>
+                </a>
+                <a href="#skill-competitor" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>竞品分析与功能拆解</span>
+                </a>
+                <a href="#skill-cost" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>业务目标与成本收益分析</span>
+                </a>
+                <a href="#skill-info-arch" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>页面优先级与信息层级设计</span>
+                </a>
+                <a href="#skill-ai-optimize" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>AI产品指标优化闭环</span>
+                </a>
+                <a href="#skill-lifecycle" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>产品全生命周期落地能力</span>
+                </a>
+              </div>
+              <div class="dropdown-section">
+                <div class="dropdown-section-title">技术能力 · 独立交付与工程落地</div>
+                <a href="#skill-mvp" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>独立实现MVP（Trae / Cursor）</span>
+                </a>
+                <a href="#skill-frontend" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>Vue / React / TypeScript</span>
+                </a>
+                <a href="#skill-html-css" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>HTML / CSS</span>
+                </a>
+                <a href="#skill-deploy" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>GitHub Pages / Vercel部署</span>
+                </a>
+                <a href="#skill-api" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>前后端联调与异常沟通</span>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -77,7 +134,7 @@
               </a>
               <a href="#project3" @click="closeMenu" class="dropdown-item">
                 <span class="dropdown-number">3</span>
-                <span>个人作品集网站</span>
+                <span>AI面试模拟器</span>
               </a>
             </div>
           </div>
@@ -203,16 +260,28 @@ onUnmounted(() => {
 }
 
 .logo-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--bg-card);
+  width: 36px;
+  height: 36px;
+  background: var(--bg-dark);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.logo:hover .logo-icon {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.logo-text {
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .logo-text {
@@ -325,6 +394,40 @@ onUnmounted(() => {
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
+}
+
+/* 技能下拉菜单分组样式 */
+.skills-dropdown {
+  min-width: 320px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.dropdown-section {
+  margin-bottom: 12px;
+}
+
+.dropdown-section:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-bullet {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-right: 4px;
 }
 
 .menu-toggle {
@@ -458,6 +561,20 @@ onUnmounted(() => {
     height: 28px;
     font-size: 0.85rem;
     flex-shrink: 0;
+  }
+
+  .skills-dropdown {
+    min-width: 100%;
+    max-height: 60vh;
+  }
+
+  .dropdown-section-title {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+
+  .dropdown-bullet {
+    font-size: 1rem;
   }
 
   .nav-dropdown-toggle {

@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar" :class="{ visible: isVisible }">
+  <aside ref="sidebarRef" class="sidebar" :class="{ visible: isVisible }">
     <div class="sidebar-content">
       <div class="sidebar-header">
         <span class="sidebar-title">目录导航</span>
@@ -30,8 +30,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const isVisible = ref(true)
+const isVisible = ref(false)
 const activeSection = ref('hero')
+const sidebarRef = ref(null)
 
 const navItems = [
   { id: 'hero', name: '首页', href: '#hero', icon: '🏠' },
@@ -46,11 +47,17 @@ const toggleSidebar = () => {
   isVisible.value = !isVisible.value
 }
 
+const closeSidebar = () => {
+  isVisible.value = false
+}
+
 const scrollToSection = (href) => {
   const element = document.querySelector(href)
   if (element) {
     element.scrollIntoView({ behavior: 'smooth' })
   }
+  // 点击导航链接后自动收起
+  closeSidebar()
 }
 
 const handleScroll = () => {
@@ -69,13 +76,22 @@ const handleScroll = () => {
   })
 }
 
+// 点击外部区域收起导航
+const handleClickOutside = (event) => {
+  if (sidebarRef.value && !sidebarRef.value.contains(event.target) && isVisible.value) {
+    closeSidebar()
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  document.addEventListener('click', handleClickOutside)
   handleScroll()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 

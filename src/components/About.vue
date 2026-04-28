@@ -3,24 +3,29 @@
     <div class="container">
       <!-- 关于我部分 -->
       <h2 class="section-title">关于我</h2>
-      <p class="section-subtitle">致力于AI开发与智能应用解决方案</p>
+      <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
       
       <div class="about-content">
         <div class="about-image">
           <div class="image-wrapper">
-            <img src="/photo.jpg.jpg" alt="田雨" class="profile-photo" />
+            <img src="/photo/个人网站照片.jpg" alt="田雨" class="profile-photo" />
           </div>
         </div>
         
         <div class="about-text">
           <h3 class="about-title">我是田雨</h3>
           <p class="about-description">
-            2025届软件工程技术专业毕业生，毕业于西安信息职业大学。在校期间系统学习了软件开发的核心技术，
-            具备扎实的编程功底和良好的代码规范意识。对人工智能领域充满热情，主动学习了机器学习、深度学习等相关知识。
+            2025届软件工程技术专业毕业生，毕业于西安信息职业大学。四年的技术学习让我深入理解软件开发的完整流程，
+            从需求分析、架构设计到前后端实现，具备将抽象想法转化为具体产品的工程能力。
           </p>
           <p class="about-description">
-            善于学习新知识，能快速融入团队并推动项目落地，具有强烈的责任心和团队协作精神。
-            目前正积极向AI行业转型，期待在AI产品经理岗位上将技术能力与产品思维相结合，创造用户价值。
+            通过自主学习和项目实践，主导完成多个实战项目，涵盖Web应用、AI工具等领域，积累了丰富的项目经验。
+            对人工智能保持高度热情，系统学习机器学习、深度学习课程，持续关注GPT、Claude等大模型及AI Agent最新进展。
+          </p>
+          <p class="about-description">
+            我的核心优势在于：既能与开发团队进行深度技术对话，理解实现成本与技术边界；
+            又能从用户视角出发，挖掘真实需求并设计产品方案。期待加入贵司，
+            用技术背景赋能产品工作，在AI领域创造有价值的产品。
           </p>
         </div>
       </div>
@@ -482,6 +487,7 @@ const aiAgents = ref([
 
 .about-description {
   color: var(--text-secondary);
+  font-size: 1.1rem;
   margin-bottom: 16px;
   line-height: 1.8;
 }

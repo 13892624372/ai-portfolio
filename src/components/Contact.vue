@@ -33,7 +33,7 @@
               </div>
             </div>
             
-            <div class="contact-item">
+            <div class="contact-item contact-item-clickable" @click="openMap">
               <div class="contact-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
@@ -42,7 +42,8 @@
               </div>
               <div class="contact-detail">
                 <span class="contact-label">地址</span>
-                <span class="contact-value">陕西省西安市雁塔区</span>
+                <span class="contact-value contact-value-link">西安市雁塔区</span>
+                <span class="contact-hint">支持点击查看我的详细位置</span>
               </div>
             </div>
           </div>
@@ -50,10 +51,150 @@
         </div>
       </div>
     </div>
+    
+    <!-- 地图弹窗 -->
+    <div class="map-modal-overlay" v-if="showMap" @click="closeMap">
+      <div class="map-modal-content" @click.stop>
+        <div class="map-modal-header">
+          <h3>我的位置</h3>
+          <button class="map-modal-close" @click="closeMap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="map-container" ref="mapContainer"></div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const showMap = ref(false)
+const mapContainer = ref(null)
+let map = null
+let marker = null
+
+// 高德地图Key
+const MAP_KEY = '1e0d8f4704cf242be33f1a916da8d461'
+
+const openMap = () => {
+  showMap.value = true
+  // 等待DOM更新后初始化地图
+  setTimeout(() => {
+    initMap()
+  }, 100)
+}
+
+const closeMap = () => {
+  showMap.value = false
+  // 清理地图实例，以便下次重新创建
+  if (map) {
+    map.destroy()
+    map = null
+    marker = null
+  }
+}
+
+const initMap = () => {
+  if (!mapContainer.value) return
+  
+  // 如果地图已存在，先销毁
+  if (map) {
+    map.destroy()
+    map = null
+    marker = null
+  }
+  
+  // 检查高德地图API是否已加载
+  if (!window.AMap) {
+    loadAMapScript().then(() => {
+      createMap()
+    })
+  } else {
+    createMap()
+  }
+}
+
+// 目标地址和坐标（南窑头社区西区的精确坐标）
+const TARGET_ADDRESS = '西安市雁塔区南窑头社区西区'
+const TARGET_COORDINATES = [108.8795, 34.218] // 南窑头社区西区的精确坐标（向东回调400米）
+
+const loadAMapScript = () => {
+  return new Promise((resolve, reject) => {
+    if (window.AMap) {
+      resolve()
+      return
+    }
+    
+    // 使用JSAPI Loader方式加载
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = `https://webapi.amap.com/loader.js`
+    script.onerror = reject
+    script.onload = () => {
+      window.AMapLoader.load({
+        key: MAP_KEY,
+        version: '2.0',
+        plugins: ['AMap.Geocoder', 'AMap.Marker', 'AMap.InfoWindow']
+      }).then(() => {
+        resolve()
+      }).catch(reject)
+    }
+    document.head.appendChild(script)
+  })
+}
+
+const createMap = () => {
+  if (!mapContainer.value || !window.AMap) {
+    console.error('地图容器或AMap未准备好')
+    return
+  }
+  
+  try {
+    // 创建地图实例，直接使用精确坐标
+    map = new window.AMap.Map(mapContainer.value, {
+      zoom: 16,
+      center: TARGET_COORDINATES,
+      viewMode: '2D'
+    })
+    
+    // 添加标记点
+    marker = new window.AMap.Marker({
+      position: TARGET_COORDINATES,
+      title: TARGET_ADDRESS
+    })
+    
+    marker.setMap(map)
+    
+    // 添加信息窗体
+    const infoWindow = new window.AMap.InfoWindow({
+      content: `<div style="padding: 8px 12px; font-size: 14px; color: #333;">${TARGET_ADDRESS}</div>`,
+      offset: new window.AMap.Pixel(0, -30)
+    })
+    
+    marker.on('click', () => {
+      infoWindow.open(map, marker.getPosition())
+    })
+    
+    // 自动打开信息窗体
+    infoWindow.open(map, marker.getPosition())
+    
+  } catch (error) {
+    console.error('创建地图时出错:', error)
+  }
+}
+
+// 清理地图实例
+onUnmounted(() => {
+  if (map) {
+    map.destroy()
+    map = null
+  }
+})
 </script>
 
 <style scoped>
@@ -124,6 +265,99 @@
 
 .contact-value:hover {
   color: var(--primary-color);
+}
+
+.contact-hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* 地图弹窗样式 */
+.map-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.map-modal-content {
+  background: var(--bg-card);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 800px;
+  height: 80vh;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.map-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.map-modal-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.map-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.map-modal-close:hover {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+.map-container {
+  flex: 1;
+  width: 100%;
+  min-height: 400px;
+}
+
+/* 可点击的地址样式 */
+.contact-item-clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-item-clickable:hover .contact-icon {
+  background: rgba(99, 102, 241, 0.25);
+}
+
+.contact-value-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.contact-value-link:hover {
+  text-decoration-color: var(--primary-color);
 }
 
 @media (max-width: 968px) {
