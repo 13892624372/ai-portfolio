@@ -110,9 +110,9 @@ const musicPlayerRef = ref(null)
 // 歌曲列表 - 支持多首歌曲循环播放
 const songs = [
   { name: 'Sorry', url: '/music/Sorry.mp3', type: 'audio/mpeg' },
-  { name: 'Peaches', url: '/music/peaches.mp3', type: 'audio/mpeg' },
-  { name: 'The Cure', url: '/music/the cure.mp3', type: 'audio/mpeg' },
-  { name: 'Dead Man', url: '/music/Dead man.mp3', type: 'audio/mpeg' },
+  { name: 'Peaches', url: '/music/Peaches.mp3', type: 'audio/mpeg' },
+  { name: 'The Cure', url: '/music/The Cure.mp3', type: 'audio/mpeg' },
+  { name: 'Dead Man', url: '/music/Dead Man.mp3', type: 'audio/mpeg' },
   { name: 'Colder', url: '/music/Colder.mp3', type: 'audio/mpeg' }
 ]
 
