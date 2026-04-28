@@ -62,7 +62,7 @@
       </div>
 
       <audio ref="audioPlayer" @ended="playNext" @timeupdate="updateProgress">
-        <source :src="currentSong.url" type="audio/mpeg">
+        <source :src="currentSong.url" :type="currentSong.type">
       </audio>
     </div>
 
@@ -109,11 +109,11 @@ const musicPlayerRef = ref(null)
 
 // 歌曲列表 - 支持多首歌曲循环播放
 const songs = [
-  { name: 'Sorry', url: '/music/sorry.m4a' },
-  { name: 'Peaches', url: '/music/peaches.mp3' },
-  { name: 'The Cure', url: '/music/the cure.mp3' },
-  { name: 'Dead Man', url: '/music/Dead man.mp3' },
-  { name: 'Colder', url: '/music/Colder.mp3' }
+  { name: 'Sorry', url: '/music/Sorry.mp3', type: 'audio/mpeg' },
+  { name: 'Peaches', url: '/music/Peaches.mp3', type: 'audio/mpeg' },
+  { name: 'The Cure', url: '/music/The Cure.mp3', type: 'audio/mpeg' },
+  { name: 'Dead Man', url: '/music/Dead Man.mp3', type: 'audio/mpeg' },
+  { name: 'Colder', url: '/music/Colder.mp3', type: 'audio/mpeg' }
 ]
 
 const currentSong = computed(() => songs[currentIndex.value])
