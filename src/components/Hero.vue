@@ -108,12 +108,13 @@ const currentIndex = ref(0)
 const musicPlayerRef = ref(null)
 
 // 歌曲列表 - 支持多首歌曲循环播放
+// 使用相对路径，兼容GitHub Pages子目录部署
 const songs = [
-  { name: 'Sorry', url: '/music/sorry.m4a' },
-  { name: 'Peaches', url: '/music/peaches.mp3' },
-  { name: 'The Cure', url: '/music/the cure.mp3' },
-  { name: 'Dead Man', url: '/music/Dead man.mp3' },
-  { name: 'Colder', url: '/music/Colder.mp3' }
+  { name: 'Sorry', url: './music/sorry.m4a' },
+  { name: 'Peaches', url: './music/peaches.mp3' },
+  { name: 'The Cure', url: './music/the cure.mp3' },
+  { name: 'Dead Man', url: './music/Dead man.mp3' },
+  { name: 'Colder', url: './music/Colder.mp3' }
 ]
 
 const currentSong = computed(() => songs[currentIndex.value])
