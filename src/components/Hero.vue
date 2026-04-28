@@ -111,8 +111,8 @@ const musicPlayerRef = ref(null)
 const songs = [
   { name: 'Sorry', url: '/ai-portfolio/music/Sorry.mp3', type: 'audio/mpeg' },
   { name: 'Peaches', url: '/ai-portfolio/music/Peaches.mp3', type: 'audio/mpeg' },
-  { name: 'The Cure', url: '/ai-portfolio/music/The Cure.mp3', type: 'audio/mpeg' },
-  { name: 'Dead Man', url: '/ai-portfolio/music/Dead Man.mp3', type: 'audio/mpeg' },
+  { name: 'The Cure', url: '/ai-portfolio/music/The%20Cure.mp3', type: 'audio/mpeg' },
+  { name: 'Dead Man', url: '/ai-portfolio/music/Dead%20Man.mp3', type: 'audio/mpeg' },
   { name: 'Colder', url: '/ai-portfolio/music/Colder.mp3', type: 'audio/mpeg' }
 ]
 
