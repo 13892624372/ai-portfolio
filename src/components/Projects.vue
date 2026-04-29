@@ -121,12 +121,12 @@
               </button>
             </template>
             <template v-else-if="currentProject?.number === '3'">
-              <a href="https://www.coze.cn/store/agent/7632215391754436660?bot_id=true" target="_blank" class="btn btn-primary">
+              <button @click="openChatSDK" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 开始面试
-              </a>
+              </button>
               <button @click="openEmptyModal" class="btn btn-secondary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -263,7 +263,36 @@
         </div>
       </div>
     </div>
-    
+
+    <!-- Chat SDK 弹窗 -->
+    <div class="interview-modal-overlay" v-if="showChatSDK" @click="closeChatSDK">
+      <div class="interview-modal-content chat-sdk-modal" @click.stop @wheel.stop @touchmove.stop>
+        <div class="interview-modal-actions" :class="{ 'floating': isChatFullscreen }">
+          <button class="interview-modal-btn" @click="toggleChatFullscreen" :title="isChatFullscreen ? '退出全屏' : '全屏'">
+            <svg v-if="!isChatFullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+            </svg>
+          </button>
+          <button class="interview-modal-btn" @click="closeChatSDK" title="关闭">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div v-if="!isChatFullscreen" class="interview-modal-header">
+          <h3>AI面试模拟器</h3>
+          <p>上传你的简历和JD，体验个性化AI面试</p>
+        </div>
+
+        <div class="chat-sdk-container" :class="{ 'fullscreen': isChatFullscreen }" ref="chatContainerRef"></div>
+      </div>
+    </div>
+
     <!-- PRD文档弹窗 -->
     <div class="interview-modal-overlay" v-if="showEmptyModal" @click="closeEmptyModal">
       <div class="interview-modal-content prd-modal-content" :class="{ 'fullscreen': isEmptyFullscreen }" @click.stop @wheel.stop @touchmove.stop>
@@ -619,7 +648,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 
 const activeModal = ref(null)
 const isProject3Expanded = ref(false)
@@ -817,6 +846,103 @@ const closeProject2 = () => {
 
 const toggleProject2Fullscreen = () => {
   isProject2Fullscreen.value = !isProject2Fullscreen.value
+}
+
+// Chat SDK 弹窗控制
+const showChatSDK = ref(false)
+const isChatFullscreen = ref(false)
+const chatContainerRef = ref(null)
+let chatClient = null
+
+const initChatSDK = () => {
+  if (!chatContainerRef.value || !window.CozeWebSDK) {
+    console.error('Chat SDK 未加载或容器不存在')
+    return
+  }
+
+  // 如果已经初始化，先销毁
+  if (chatClient) {
+    chatClient.destroy()
+    chatClient = null
+  }
+
+  try {
+    console.log('开始初始化 Chat SDK...')
+    chatClient = new window.CozeWebSDK.WebChatClient({
+      config: {
+        bot_id: '7632215391754436660',
+      },
+      auth: {
+        type: 'token',
+        token: 'pat_sDGZGAuu8wJqQUChnsL0z0OyxRkhxIWoeF2ubQmTsz0LBwq9q0dmH58I48ypFr1k',
+        onRefreshToken: async () => 'pat_sDGZGAuu8wJqQUChnsL0z0OyxRkhxIWoeF2ubQmTsz0LBwq9q0dmH58I48ypFr1k',
+      },
+      userInfo: {
+        id: 'user',
+        url: 'https://lf-coze-web-cdn.coze.cn/obj/eden-cn/lm-lgvj/ljhwZthlaukjlkulzlp/coze/coze-logo.png',
+        nickname: '用户',
+      },
+      ui: {
+        base: {
+          layout: 'pc',
+          lang: 'zh-CN',
+          zIndex: 1000,
+        },
+        asstBtn: {
+          isNeed: false,
+        },
+        header: {
+          isShow: false,
+        },
+        chatBot: {
+          title: 'AI面试模拟器',
+          uploadable: true,
+          width: '100%',
+          el: chatContainerRef.value,
+        },
+      },
+    })
+    console.log('Chat SDK 初始化成功')
+    
+    // 隐藏悬浮球后，需要主动调用 showChatBot() 显示聊天窗口
+    setTimeout(() => {
+      if (chatClient && chatClient.showChatBot) {
+        chatClient.showChatBot()
+        console.log('Chat 窗口已显示')
+      }
+    }, 200)
+  } catch (error) {
+    console.error('Chat SDK 初始化失败:', error)
+  }
+}
+
+const openChatSDK = () => {
+  showChatSDK.value = true
+  isChatFullscreen.value = false
+  document.body.style.overflow = 'hidden'
+
+  // 等待 DOM 更新后初始化
+  nextTick(() => {
+    setTimeout(() => {
+      initChatSDK()
+    }, 200)
+  })
+}
+
+const closeChatSDK = () => {
+  showChatSDK.value = false
+  isChatFullscreen.value = false
+  document.body.style.overflow = ''
+
+  // 销毁 Chat SDK 实例
+  if (chatClient) {
+    chatClient.destroy()
+    chatClient = null
+  }
+}
+
+const toggleChatFullscreen = () => {
+  isChatFullscreen.value = !isChatFullscreen.value
 }
 
 // PRD导航相关方法
@@ -1410,6 +1536,107 @@ onMounted(() => {
   height: 100%;
   border: none;
   display: block;
+}
+
+/* Chat SDK 弹窗样式 */
+.chat-sdk-modal {
+  max-width: 1200px;
+  width: 95vw;
+  height: 85vh;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-sdk-modal .interview-modal-header {
+  flex-shrink: 0;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-sdk-container {
+  flex: 1;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.chat-sdk-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  border-radius: 0;
+  border: none;
+}
+
+.interview-modal-actions.floating {
+  position: fixed;
+  top: 12px;
+  right: 50%;
+  transform: translateX(280px);
+  z-index: 3001;
+  background: transparent;
+  border-radius: 8px;
+  padding: 0;
+  border: none;
+}
+
+.interview-modal-actions.floating .interview-modal-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #666;
+  border: 1px solid #e5e5e5;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.interview-modal-actions.floating .interview-modal-btn:hover {
+  background: #f5f5f5;
+  color: #333;
+  border-color: #d9d9d9;
+}
+
+.interview-modal-actions.floating .interview-modal-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Chat SDK 容器样式 */
+.chat-sdk-container {
+  flex: 1;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+}
+
+.chat-sdk-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  border-radius: 0;
+  border: none;
 }
 
 /* 空白弹窗内容样式 */
