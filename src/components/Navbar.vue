@@ -124,17 +124,21 @@
               </svg>
             </a>
             <div class="dropdown-menu" :class="{ 'show': showProjectsDropdown }">
-              <a href="#project1" @click="closeMenu" class="dropdown-item">
+              <a href="#project1" @click.prevent="openProjectModal('project1')" class="dropdown-item">
                 <span class="dropdown-number">1</span>
                 <span>AI智能简历助手</span>
               </a>
-              <a href="#project2" @click="closeMenu" class="dropdown-item">
+              <a href="#project2" @click.prevent="openProjectModal('project2')" class="dropdown-item">
                 <span class="dropdown-number">2</span>
                 <span>影视大全网站</span>
               </a>
-              <a href="#project3" @click="closeMenu" class="dropdown-item">
+              <a href="#project3" @click.prevent="openProjectModal('project3')" class="dropdown-item">
                 <span class="dropdown-number">3</span>
                 <span>AI面试模拟器</span>
+              </a>
+              <a href="#project4" @click.prevent="openProjectModal('project4')" class="dropdown-item">
+                <span class="dropdown-number">4</span>
+                <span>用户反馈数据看板</span>
               </a>
             </div>
           </div>
@@ -155,6 +159,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+
+const emit = defineEmits(['openProject'])
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
@@ -198,6 +204,15 @@ const closeMenu = () => {
   isMenuOpen.value = false
   showSkillsDropdown.value = false
   showProjectsDropdown.value = false
+}
+
+const openProjectModal = (projectId) => {
+  // 先定位到项目区域
+  window.location.href = `#${projectId}`
+  // 关闭菜单
+  closeMenu()
+  // 触发事件通知父组件打开弹窗
+  emit('openProject', projectId)
 }
 
 // 点击外部关闭菜单

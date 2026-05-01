@@ -715,7 +715,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, defineExpose } from 'vue'
 
 const activeModal = ref(null)
 const isProject3Expanded = ref(false)
@@ -1126,10 +1126,15 @@ onMounted(() => {
   // 监听hash变化
   window.addEventListener('hashchange', () => {
     const newHash = window.location.hash
-    if (newHash === '#project1' || newHash === '#project2' || newHash === '#project3') {
+    if (newHash === '#project1' || newHash === '#project2' || newHash === '#project3' || newHash === '#project4') {
       openModal(newHash.replace('#', ''))
     }
   })
+})
+
+// 暴露方法给父组件
+defineExpose({
+  openModal
 })
 </script>
 
