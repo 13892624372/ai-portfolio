@@ -52,6 +52,22 @@
             </div>
           </div>
         </div>
+        
+        <!-- 项目 4 - 模拟器配套数据看板 -->
+        <div id="project4" class="project-item" @click="openModal('project4')">
+          <div class="project-header">
+            <div class="project-number">4</div>
+            <div class="project-info">
+              <h3 class="project-title">模拟器配套数据看板</h3>
+              <p class="project-subtitle">AI面试模拟器用户反馈数据分析可视化平台，实时展示用户满意度、NPS值、用户画像等多维度数据</p>
+            </div>
+            <div class="expand-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -137,6 +153,22 @@
                 </svg>
                 查看PRD
               </button>
+            </template>
+            <template v-else-if="currentProject?.number === '4'">
+              <button @click="openDashboard" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                查看数据看板
+              </button>
+              <a href="https://github.com/13892624372/dashboard" target="_blank" class="btn btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
             </template>
             <a v-if="currentProject?.githubUrl" :href="currentProject.githubUrl" target="_blank" class="btn btn-secondary">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -293,6 +325,41 @@
       </div>
     </div>
 
+    <!-- 数据看板弹窗 -->
+    <div class="interview-modal-overlay" v-if="showDashboard" @click="closeDashboard">
+      <div class="interview-modal-content dashboard-modal" :class="{ 'fullscreen': isDashboardFullscreen }" @click.stop @wheel.stop @touchmove.stop>
+        <div class="interview-modal-actions" :class="{ 'floating': isDashboardFullscreen }">
+          <button class="interview-modal-btn" @click="toggleDashboardFullscreen" :title="isDashboardFullscreen ? '退出全屏' : '全屏'">
+            <svg v-if="!isDashboardFullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+            <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+            </svg>
+          </button>
+          <button class="interview-modal-btn" @click="closeDashboard" title="关闭">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div v-if="!isDashboardFullscreen" class="interview-modal-header">
+          <h3>用户反馈数据看板</h3>
+          <p>AI面试模拟器用户反馈数据分析可视化平台</p>
+        </div>
+
+        <div class="dashboard-container" :class="{ 'fullscreen': isDashboardFullscreen }">
+          <iframe
+            src="https://13892624372.github.io/dashboard/"
+            class="dashboard-iframe"
+            frameborder="0"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
     <!-- PRD文档弹窗 -->
     <div class="interview-modal-overlay" v-if="showEmptyModal" @click="closeEmptyModal">
       <div class="interview-modal-content prd-modal-content" :class="{ 'fullscreen': isEmptyFullscreen }" @click.stop @wheel.stop @touchmove.stop>
@@ -371,7 +438,7 @@
             </table>
 
             <h2 id="prd-summary">执行摘要</h2>
-            <p>本产品是一个AI面试模拟器，核心价值是"基于用户自己的简历和JD生成个性化面试"。v1.0已验证固定岗位流程可行，v2.0支持用户上传自定义文件，v3.0规划一键生成。当前卡点在知识库异步处理导致的检索延迟，预计2周内解决。成功标准：完成率≥60%，复购率≥30%。</p>
+            <p>本产品是一个AI面试模拟器，核心价值是"基于用户自己的简历和JD生成个性化面试"。v1.0已验证固定岗位流程可行，v2.0支持用户上传自定义文件，v3.0规划一键生成。当前卡点在知识库异步处理导致的检索延迟，预计2周内解决。成功标准：完成率≥60%，满意度≥80%。</p>
 
             <h2 id="prd-terms">术语表</h2>
             <table>
@@ -771,6 +838,28 @@ const projectsData = {
     tags: ['Coze', 'DeepSeek', 'RAG', '对话流'],
     demoUrl: 'https://www.coze.cn/store/agent/7632215391754436660?bot_id=true',
     githubUrl: null
+  },
+  project4: {
+    number: '4',
+    title: '用户反馈数据看板',
+    subtitle: 'AI面试模拟器用户反馈数据分析可视化平台',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
+    description: '一个专为AI面试模拟器打造的用户反馈数据可视化看板，实时收集和分析用户使用数据，包括满意度评分、NPS值、用户画像、行业分布、五维度能力评估等多维度数据展示，帮助产品持续优化。',
+    features: [
+      '实时数据展示：总问卷数、平均满意度、NPS值等核心指标一目了然',
+      '用户画像分析：展示用户行业分布、职位分布等画像数据',
+      '满意度趋势：追踪用户满意度变化趋势，及时发现产品问题',
+      '五维度评分：展示项目经历、技能匹配、解决问题、学习成长、岗位动机五个维度的评分',
+      'NPS分布：分析用户推荐意愿分布，识别忠实用户和改进空间',
+      '用户反馈收集：展示用户认为做得好的方面和改进建议',
+      '响应式设计：适配桌面端和移动端，支持深色主题'
+    ],
+    techStack: 'HTML5, CSS3, JavaScript, ECharts, GitHub Pages',
+    duration: '2025.05 - 至今',
+    tags: ['数据可视化', '用户反馈', 'ECharts', 'GitHub部署'],
+    demoUrl: 'https://13892624372.github.io/dashboard/',
+    githubUrl: null,
+    isIframe: true
   }
 }
 
@@ -853,6 +942,26 @@ const showChatSDK = ref(false)
 const isChatFullscreen = ref(false)
 const chatContainerRef = ref(null)
 let chatClient = null
+
+// 数据看板弹窗控制
+const showDashboard = ref(false)
+const isDashboardFullscreen = ref(false)
+
+const openDashboard = () => {
+  showDashboard.value = true
+  isDashboardFullscreen.value = false
+  document.body.style.overflow = 'hidden'
+}
+
+const closeDashboard = () => {
+  showDashboard.value = false
+  isDashboardFullscreen.value = false
+  document.body.style.overflow = ''
+}
+
+const toggleDashboardFullscreen = () => {
+  isDashboardFullscreen.value = !isDashboardFullscreen.value
+}
 
 const initChatSDK = () => {
   if (!chatContainerRef.value || !window.CozeWebSDK) {
@@ -1614,6 +1723,53 @@ onMounted(() => {
 .interview-modal-actions.floating .interview-modal-btn svg {
   width: 16px;
   height: 16px;
+}
+
+/* 数据看板弹窗样式 */
+.dashboard-modal {
+  max-width: 1400px;
+  width: 95vw;
+  height: 90vh;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-modal .interview-modal-header {
+  flex-shrink: 0;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-container {
+  flex: 1;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.dashboard-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  border-radius: 0;
+  border: none;
+}
+
+.dashboard-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 /* Chat SDK 容器样式 */
