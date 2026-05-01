@@ -42,7 +42,7 @@
           <div class="project-header">
             <div class="project-number">3</div>
             <div class="project-info">
-              <h3 class="project-title">AI面试模拟器</h3>
+              <h3 class="project-title">AI面试模拟器+PRD</h3>
               <p class="project-subtitle">上传你的简历和JD，体验个性化AI面试。基于Coze + DeepSeek + RAG搭建，支持自定义简历和岗位JD，动态生成面试问题</p>
             </div>
             <div class="expand-icon">
@@ -821,7 +821,7 @@ const projectsData = {
   },
   project3: {
     number: '3',
-    title: 'AI面试模拟器',
+    title: 'AI面试模拟器+PRD',
     subtitle: '基于Coze + DeepSeek + RAG的个性化AI面试模拟器',
     gradient: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)',
     description: '一个基于Coze平台搭建的AI面试模拟器，集成DeepSeek大模型和RAG技术。支持用户上传自定义简历和岗位JD，系统会动态生成个性化面试问题，固定5轮问答覆盖5个能力维度（项目经历、技能匹配、解决问题、学习成长、岗位动机），帮助求职者针对性准备面试。',

@@ -134,7 +134,7 @@
               </a>
               <a href="#project3" @click.prevent="openProjectModal('project3')" class="dropdown-item">
                 <span class="dropdown-number">3</span>
-                <span>AI面试模拟器</span>
+                <span>AI面试模拟器+PRD</span>
               </a>
               <a href="#project4" @click.prevent="openProjectModal('project4')" class="dropdown-item">
                 <span class="dropdown-number">4</span>
