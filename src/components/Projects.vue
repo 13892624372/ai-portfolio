@@ -1695,8 +1695,7 @@ defineExpose({
 .interview-modal-actions.floating {
   position: fixed;
   top: 12px;
-  right: 50%;
-  transform: translateX(280px);
+  right: 20px;
   z-index: 3001;
   background: transparent;
   border-radius: 8px;

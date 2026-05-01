@@ -8,18 +8,20 @@
         <!-- 左列：业务技能 -->
         <div class="skills-column">
           <h3 class="column-title">业务能力 · AI产品与通用产品</h3>
-          <div class="skills-list">
-            <div 
-              v-for="(skill, index) in businessSkills" 
-              :key="index"
-              :id="skill.id"
-              class="skill-card"
-            >
-              <div class="skill-main">
-                <span class="skill-bullet"></span>
-                <span class="skill-text">{{ skill.name }}</span>
+          <div class="skills-list-container">
+            <div class="skills-list">
+              <div 
+                v-for="(skill, index) in businessSkills" 
+                :key="index"
+                :id="skill.id"
+                class="skill-card"
+              >
+                <div class="skill-main">
+                  <span class="skill-bullet"></span>
+                  <span class="skill-text">{{ skill.name }}</span>
+                </div>
+                <p class="skill-desc">{{ skill.description }}</p>
               </div>
-              <p class="skill-desc">{{ skill.description }}</p>
             </div>
           </div>
         </div>
@@ -27,18 +29,20 @@
         <!-- 右列：技术技能 -->
         <div class="skills-column">
           <h3 class="column-title">技术能力 · 独立交付与工程落地</h3>
-          <div class="skills-list">
-            <div 
-              v-for="(skill, index) in techSkills" 
-              :key="index"
-              :id="skill.id"
-              class="skill-card"
-            >
-              <div class="skill-main">
-                <span class="skill-bullet"></span>
-                <span class="skill-text">{{ skill.name }}</span>
+          <div class="skills-list-container">
+            <div class="skills-list">
+              <div 
+                v-for="(skill, index) in techSkills" 
+                :key="index"
+                :id="skill.id"
+                class="skill-card"
+              >
+                <div class="skill-main">
+                  <span class="skill-bullet"></span>
+                  <span class="skill-text">{{ skill.name }}</span>
+                </div>
+                <p class="skill-desc">{{ skill.description }}</p>
               </div>
-              <p class="skill-desc">{{ skill.description }}</p>
             </div>
           </div>
         </div>
@@ -148,6 +152,11 @@ const techSkills = [
     id: 'skill-api',
     name: '前后端联调与异常沟通',
     description: '能与开发高效对齐需求边界与异常逻辑'
+  },
+  { 
+    id: 'skill-apifox',
+    name: 'Apifox / 接口测试',
+    description: '能够独立完成接口调用、参数校验、返回数据分析及问题定位'
   }
 ]
 
@@ -189,6 +198,29 @@ const techSkills = [
 
 .column-icon {
   font-size: 1.4rem;
+}
+
+.skills-list-container {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.skills-list-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.skills-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.skills-list-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+
+.skills-list-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .skills-list {
@@ -252,15 +284,19 @@ const techSkills = [
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .skills-column {
     padding: 20px;
   }
-  
+
   .column-title {
     font-size: 1.1rem;
     margin-bottom: 16px;
     padding-bottom: 12px;
+  }
+
+  .skills-list-container {
+    max-height: 280px;
   }
 }
 
@@ -269,24 +305,28 @@ const techSkills = [
     max-width: 100vw;
     overflow-x: hidden;
   }
-  
+
   .skills-grid {
     margin-top: 24px;
   }
-  
+
   .column-title {
     font-size: 1rem;
   }
-  
+
+  .skills-list-container {
+    max-height: 260px;
+  }
+
   .skill-text {
     font-size: 0.85rem;
   }
-  
+
   .skill-card {
     padding: 8px 12px;
     gap: 2px;
   }
-  
+
   .skill-desc {
     font-size: 0.7rem;
   }

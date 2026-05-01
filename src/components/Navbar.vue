@@ -109,6 +109,10 @@
                   <span class="dropdown-bullet">•</span>
                   <span>前后端联调与异常沟通</span>
                 </a>
+                <a href="#skill-apifox" @click="closeMenu" class="dropdown-item">
+                  <span class="dropdown-bullet">•</span>
+                  <span>Apifox / 接口测试</span>
+                </a>
               </div>
             </div>
           </div>

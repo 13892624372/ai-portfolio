@@ -1,6 +1,6 @@
 <template>
   <section id="about" class="section about">
-    <div class="container">
+    <div class="container about-container">
       <!-- 关于我部分 -->
       <h2 class="section-title">关于我</h2>
       <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
@@ -30,396 +30,355 @@
         </div>
       </div>
       
-      <!-- 关于AI部分 -->
-      <div class="ai-section">
+      <!-- AI发展史时间轴 -->
+      <div class="ai-timeline-section">
         <h2 class="section-title ai-section-title">关于AI</h2>
-        <p class="section-subtitle ai-section-subtitle">探索人工智能的发展历程与未来趋势</p>
+        <p class="section-subtitle ai-section-subtitle">从图灵测试到智能体时代的技术演进</p>
         
-        <div class="about-grid">
-          <!-- AI发展史卡片 -->
-          <div class="about-card" @click="openModal('history')">
-            <div class="card-header">
-              <div class="card-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                <span>📜</span>
+        <div class="timeline-container">
+          <div class="timeline-track">
+            <div 
+              v-for="(event, index) in aiHistoryTimeline" 
+              :key="index"
+              class="timeline-node"
+              :class="{ 'active': activeTimelineIndex === index }"
+              @mouseenter="activeTimelineIndex = index"
+              @mouseleave="activeTimelineIndex = null"
+            >
+              <div class="timeline-year">{{ event.year }}</div>
+              <div class="timeline-dot" :style="{ '--dot-color': event.color }"></div>
+              <div class="timeline-line" v-if="index < aiHistoryTimeline.length - 1"></div>
+              <div class="timeline-card">
+                <div class="timeline-card-header">
+                  <span class="timeline-event">{{ event.event }}</span>
+                  <span class="timeline-tag" :style="{ background: event.tagColor }">{{ event.tag }}</span>
+                </div>
+                <p class="timeline-detail">{{ event.detail }}</p>
+                <p class="timeline-quote">"{{ event.quote }}"</p>
               </div>
-              <div class="card-info">
-                <h3 class="card-title">AI发展史</h3>
-                <p class="card-subtitle">从诞生到爆发的技术演进</p>
-              </div>
-            </div>
-            <p class="card-desc">
-              从1956年达特茅斯会议到2024年AI Agent元年，
-              回顾人工智能70年的发展历程与里程碑事件。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">10个里程碑</span>
-              <span class="card-tag">时间轴</span>
-              <span class="card-tag">技术演进</span>
             </div>
           </div>
-          
-          <!-- 主流大模型卡片 -->
-          <div class="about-card" @click="openModal('models')">
-            <div class="card-header">
-              <div class="card-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                <span>🤖</span>
-              </div>
-              <div class="card-info">
-                <h3 class="card-title">主流大模型</h3>
-                <p class="card-subtitle">当前最热门的LLM对比</p>
-              </div>
-            </div>
-            <p class="card-desc">
-              GPT-4o、Claude 3.5、Gemini 1.5、Llama 3等
-              国内外主流大语言模型的特点与应用场景分析。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">6大模型</span>
-              <span class="card-tag">对比分析</span>
-              <span class="card-tag">选型参考</span>
-            </div>
+        </div>
+      </div>
+      
+      <!-- 大模型对比雷达图 -->
+      <div class="model-radar-section">
+        <h2 class="section-title radar-section-title">主流大模型能力对比</h2>
+        <p class="section-subtitle radar-section-subtitle">多维度评估主流AI模型的综合能力</p>
+        
+        <!-- Tab 按钮组 -->
+        <div class="radar-tabs">
+          <button 
+            v-for="tab in radarTabs" 
+            :key="tab.key"
+            class="radar-tab"
+            @click="openRadarModal(tab.key)"
+          >
+            {{ tab.label }}
+          </button>
+        </div>
+      </div>
+      
+      <!-- 雷达图弹窗 -->
+      <div v-if="showRadarModal" class="radar-modal-overlay" @click="closeRadarModal">
+        <div class="radar-modal" @click.stop>
+          <button class="radar-modal-close" @click="closeRadarModal">&times;</button>
+          <h3 class="radar-modal-title">{{ currentRadarTabLabel }}</h3>
+          <div class="radar-modal-chart-container">
+            <div ref="radarChart" class="radar-chart"></div>
           </div>
-          
-          <!-- AI智能体卡片 -->
-          <div class="about-card" @click="openModal('agents')">
-            <div class="card-header">
-              <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                <span>🧠</span>
-              </div>
-              <div class="card-info">
-                <h3 class="card-title">AI智能体</h3>
-                <p class="card-subtitle">从工具到助手的进化</p>
-              </div>
-            </div>
-            <p class="card-desc">
-              AutoGPT、Devin、Copilot等AI Agent生态介绍，
-              探索能够自主决策、执行任务的智能系统。
-            </p>
-            <div class="card-tags">
-              <span class="card-tag">6类智能体</span>
-              <span class="card-tag">应用场景</span>
-              <span class="card-tag">未来趋势</span>
-            </div>
-          </div>
+          <p class="radar-modal-note">
+            * 评分基于 MMLU、C-Eval、SWE-Bench 等公开基准及 API 价格综合评估，仅供能力对比参考
+          </p>
         </div>
       </div>
     </div>
     
-    <!-- 弹窗 -->
-    <div class="modal-overlay" v-if="activeModal" @click="closeModal">
-      
-      <!-- AI发展史弹窗 -->
-      <div v-if="activeModal === 'history'" class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        
-        <div class="modal-header">
-          <div class="modal-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📜</div>
-          <div>
-            <h3 class="modal-title">AI发展史</h3>
-            <p class="modal-subtitle">从诞生到爆发的技术演进</p>
-          </div>
-        </div>
-        
-        <div class="modal-body">
-          <div class="timeline">
-            <div class="timeline-item" v-for="(event, index) in aiTimeline" :key="index">
-              <div class="timeline-marker" :style="{ background: event.gradient }">
-                <span class="timeline-year">{{ event.year }}</span>
-              </div>
-              <div class="timeline-content">
-                <h5 class="timeline-title">{{ event.title }}</h5>
-                <p class="timeline-desc">{{ event.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 主流大模型弹窗 -->
-      <div v-if="activeModal === 'models'" class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        
-        <div class="modal-header">
-          <div class="modal-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🤖</div>
-          <div>
-            <h3 class="modal-title">主流大语言模型</h3>
-            <p class="modal-subtitle">当前最热门的LLM对比分析</p>
-          </div>
-        </div>
-        
-        <div class="modal-body">
-          <div class="models-list">
-            <div class="model-detail-card" v-for="(model, index) in llmModels" :key="index">
-              <div class="model-detail-header">
-                <div class="model-detail-icon" :style="{ background: model.gradient }">{{ model.icon }}</div>
-                <div class="model-detail-info">
-                  <h5 class="model-detail-name">{{ model.name }}</h5>
-                  <span class="model-detail-company">{{ model.company }}</span>
-                </div>
-              </div>
-              <p class="model-detail-desc">{{ model.description }}</p>
-              <div class="model-detail-tags">
-                <span class="model-detail-tag" v-for="(tag, tagIndex) in model.tags" :key="tagIndex">{{ tag }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- AI智能体弹窗 -->
-      <div v-if="activeModal === 'agents'" class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        
-        <div class="modal-header">
-          <div class="modal-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🧠</div>
-          <div>
-            <h3 class="modal-title">AI智能体生态</h3>
-            <p class="modal-subtitle">从工具到助手的智能进化</p>
-          </div>
-        </div>
-        
-        <div class="modal-body">
-          <div class="agents-list">
-            <div class="agent-detail-card" v-for="(agent, index) in aiAgents" :key="index">
-              <div class="agent-detail-icon">{{ agent.icon }}</div>
-              <div class="agent-detail-content">
-                <h5 class="agent-detail-name">{{ agent.name }}</h5>
-                <p class="agent-detail-desc">{{ agent.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import * as echarts from 'echarts'
 
-const activeModal = ref(null)
+// 当前激活的时间轴索引
+const activeTimelineIndex = ref(null)
 
-const openModal = (type) => {
-  activeModal.value = type
-  document.body.style.overflow = 'hidden'
-}
-
-const closeModal = () => {
-  activeModal.value = null
-  document.body.style.overflow = ''
-}
-
-// AI发展史时间轴数据
-const aiTimeline = ref([
+// AI发展历史时间轴数据
+const aiHistoryTimeline = ref([
   {
-    year: '1956',
-    title: '人工智能诞生',
-    description: '达特茅斯会议召开，约翰·麦卡锡首次提出"人工智能"概念，标志着AI学科的正式诞生。',
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    year: '1950',
+    event: '图灵测试',
+    quote: '机器能思考吗？——问题被提出',
+    significance: '起点',
+    detail: '艾伦·图灵发表论文《计算机器与智能》，提出著名的"图灵测试"，为判断机器是否具有智能提供了标准。这是人工智能概念的哲学起点，标志着人类开始严肃思考机器智能的可能性。',
+    color: '#667eea',
+    tagColor: 'rgba(102, 126, 234, 0.2)',
+    tag: '起点'
   },
   {
-    year: '1966',
-    title: 'ELIZA聊天机器人',
-    description: '世界上第一个聊天机器人ELIZA诞生，能够模拟心理治疗师进行对话。',
-    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+    year: '1956',
+    event: '达特茅斯会议',
+    quote: '人工智能概念正式诞生',
+    significance: '学科成立',
+    detail: '约翰·麦卡锡等科学家在达特茅斯学院召开研讨会，首次提出"人工智能"(Artificial Intelligence)这一术语。会议确立了AI作为独立学科的地位，开启了符号主义AI的黄金时代。',
+    color: '#764ba2',
+    tagColor: 'rgba(118, 75, 162, 0.2)',
+    tag: '学科成立'
   },
   {
     year: '1997',
-    title: '深蓝战胜卡斯帕罗夫',
-    description: 'IBM深蓝计算机击败国际象棋世界冠军卡斯帕罗夫，成为首个在标准比赛中击败世界冠军的计算机系统。',
-    gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-  },
-  {
-    year: '2011',
-    title: 'IBM Watson',
-    description: 'Watson在智力竞赛节目《危险边缘》中击败人类冠军，展示了自然语言理解和知识推理能力。',
-    gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+    event: '深蓝战胜卡斯帕罗夫',
+    quote: '算力首次在智力博弈中击败人类',
+    significance: '算力突破',
+    detail: 'IBM深蓝超级计算机以3.5:2.5击败世界国际象棋冠军卡斯帕罗夫。这是机器首次在复杂智力游戏中战胜人类顶尖选手，证明了暴力计算结合启发式搜索的强大威力。',
+    color: '#f093fb',
+    tagColor: 'rgba(240, 147, 251, 0.2)',
+    tag: '算力突破'
   },
   {
     year: '2012',
-    title: '深度学习革命',
-    description: 'AlexNet在ImageNet竞赛中以压倒性优势获胜，深度学习开始引领AI发展新方向。',
-    gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+    event: 'AlexNet与深度学习爆发',
+    quote: 'GPU+大数据让图像识别错误率从26%降至15%',
+    significance: '深度学习时代',
+    detail: 'Alex Krizhevsky等人设计的AlexNet在ImageNet竞赛中以巨大优势获胜，将图像识别错误率大幅降低。这一突破证明了深度神经网络+GPU训练的可行性，开启了深度学习革命。',
+    color: '#f5576c',
+    tagColor: 'rgba(245, 87, 108, 0.2)',
+    tag: '深度学习'
   },
   {
     year: '2016',
-    title: 'AlphaGo击败李世石',
-    description: 'DeepMind的AlphaGo以4:1战胜围棋世界冠军李世石，标志着AI在复杂策略游戏中的突破。',
-    gradient: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
+    event: 'AlphaGo战胜李世石',
+    quote: '攻克人类智慧最后堡垒——围棋',
+    significance: '全球认知破圈',
+    detail: 'DeepMind的AlphaGo以4:1击败围棋世界冠军李世石。围棋被视为人类智慧的最后堡垒，其搜索空间远超国际象棋。AlphaGo结合了深度神经网络和蒙特卡洛树搜索，震惊全球。',
+    color: '#4facfe',
+    tagColor: 'rgba(79, 172, 254, 0.2)',
+    tag: '认知破圈'
   },
   {
-    year: '2020',
-    title: 'GPT-3发布',
-    description: 'OpenAI发布GPT-3，拥有1750亿参数，展现出强大的文本生成和理解能力，开启大模型时代。',
-    gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+    year: '2017',
+    event: 'Transformer架构诞生',
+    quote: 'Google团队的论文奠定大模型基础',
+    significance: '技术基石',
+    detail: 'Google发布论文《Attention Is All You Need》，提出Transformer架构。这一创新彻底改变了自然语言处理领域，其自注意力机制成为GPT、BERT等大模型的核心技术基础。',
+    color: '#00f2fe',
+    tagColor: 'rgba(0, 242, 254, 0.2)',
+    tag: '技术基石'
   },
   {
     year: '2022',
-    title: 'ChatGPT现象',
-    description: 'ChatGPT发布，两个月内用户突破1亿，成为历史上增长最快的消费级应用，引发全球AI热潮。',
-    gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
+    event: 'ChatGPT引爆大众认知',
+    quote: 'AI从实验室走向每个人',
+    significance: '大众化元年',
+    detail: 'OpenAI发布ChatGPT，两个月内用户突破1亿，成为史上增长最快的消费级应用。它展示了大型语言模型的惊人能力，让普通大众第一次直观感受到AI的强大，开启了生成式AI时代。',
+    color: '#43e97b',
+    tagColor: 'rgba(67, 233, 123, 0.2)',
+    tag: '大众化'
   },
   {
-    year: '2023',
-    title: '多模态AI爆发',
-    description: 'GPT-4、DALL-E 3、Midjourney等多模态AI工具涌现，AI能力从文本扩展到图像、音频、视频。',
-    gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+    year: '2023-2024',
+    event: 'AI Agent爆发',
+    quote: 'AI不再只会聊天，它会用工具、做计划、自主执行',
+    significance: '从对话到行动',
+    detail: 'AutoGPT、LangChain等框架兴起，AI Agent成为热点。AI开始具备规划、记忆、工具使用等能力，能够自主完成复杂任务。这标志着AI从"对话"向"行动"的转变，是迈向AGI的重要一步。',
+    color: '#38f9d7',
+    tagColor: 'rgba(56, 249, 215, 0.2)',
+    tag: 'Agent时代'
   },
   {
-    year: '2024',
-    title: 'AI Agent元年',
-    description: 'AI智能体技术快速发展，能够自主规划、使用工具、完成复杂任务，向通用人工智能迈进。',
-    gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)'
-  },
-  {
-    year: '2024',
-    title: 'Sora视频生成',
-    description: 'OpenAI发布Sora，能够根据文本描述生成长达60秒的高质量视频，标志着AI视频生成技术的重大突破。',
-    gradient: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)'
-  },
-  {
-    year: '2024',
-    title: 'GPT-4o多模态',
-    description: 'OpenAI发布GPT-4o，原生支持文本、图像、音频多模态，响应速度提升，API价格大幅降低。',
-    gradient: 'linear-gradient(135deg, #10a37f 0%, #0d8c6d 100%)'
-  },
-  {
-    year: '2025',
-    title: 'DeepSeek崛起',
-    description: 'DeepSeek发布R1推理模型，以极低成本实现与OpenAI o1相当的性能，引发全球AI行业震动。',
-    gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-  },
-  {
-    year: '2025',
-    title: 'AI编程革命',
-    description: 'Cursor、Windsurf、GitHub Copilot等AI编程工具普及，AI辅助编程成为开发者标配。',
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-  },
-  {
-    year: '2025',
-    title: '人形机器人爆发',
-    description: '特斯拉Optimus、Figure AI等人形机器人进入工厂和家庭，AI与物理世界深度融合。',
-    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-  },
-  {
-    year: '2026',
-    title: 'AI超级应用时代',
-    description: 'AI应用全面普及，从办公、教育到医疗、科研，AI成为各行业基础设施，生产力大幅提升。',
-    gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
-  },
-  {
-    year: '2026',
-    title: '端侧AI普及',
-    description: '手机、PC端AI芯片性能突破，大模型可在本地运行，AI助手成为每个人的私人助理。',
-    gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+    year: '2025+',
+    event: '多模态 + Agent + 成本下降',
+    quote: 'AI从玩具变成工具，从单点变成系统',
+    significance: '当前趋势',
+    detail: 'GPT-4V、Sora等多模态模型展现强大能力，AI Agent框架日趋成熟，推理成本持续下降。AI正从实验室走向产业应用，从单点工具演变为智能系统，真正开始改变各行各业的工作方式。',
+    color: '#fa709a',
+    tagColor: 'rgba(250, 112, 154, 0.2)',
+    tag: '当前趋势'
   }
 ])
 
-// 主流大语言模型数据
-const llmModels = ref([
-  {
-    name: 'GPT-4o',
-    company: 'OpenAI',
-    icon: 'GPT',
-    description: 'OpenAI最新旗舰模型，支持文本、图像、音频多模态输入，在推理、编程、创意写作方面表现卓越。',
-    gradient: 'linear-gradient(135deg, #10a37f 0%, #0d8c6d 100%)',
-    tags: ['多模态', '推理强', '代码生成']
-  },
-  {
-    name: 'Claude 3.5',
-    company: 'Anthropic',
-    icon: 'C3.5',
-    description: 'Anthropic推出的Claude 3.5 Sonnet在多项基准测试中超越GPT-4，特别擅长长文本理解和安全对话。',
-    gradient: 'linear-gradient(135deg, #d4a574 0%, #c9956c 100%)',
-    tags: ['长文本', '安全性高', '推理强']
-  },
-  {
-    name: 'Gemini 1.5',
-    company: 'Google',
-    icon: 'G1.5',
-    description: 'Google DeepMind推出的多模态大模型，支持100万token上下文窗口，在数学和科学推理方面表现突出。',
-    gradient: 'linear-gradient(135deg, #4285f4 0%, #34a853 100%)',
-    tags: ['超长上下文', '多模态', '科学推理']
-  },
-  {
-    name: 'Llama 3',
-    company: 'Meta',
-    icon: 'L3',
-    description: 'Meta开源的大语言模型，性能接近闭源模型，支持商业使用，推动开源AI生态发展。',
-    gradient: 'linear-gradient(135deg, #0668e1 0%, #0081fb 100%)',
-    tags: ['开源', '可商用', '性能强']
-  },
-  {
-    name: 'Kimi K1.5',
-    company: '月之暗面',
-    icon: 'Kimi',
-    description: '国产大模型代表，支持超长上下文（200万字），在中文理解和长文档处理方面表现优异。',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-    tags: ['超长上下文', '中文强', '国产']
-  },
-  {
-    name: '文心一言',
-    company: '百度',
-    icon: '文心',
-    description: '百度推出的知识增强大语言模型，深度融合中文知识图谱，在中文场景下表现优秀。',
-    gradient: 'linear-gradient(135deg, #2932e1 0%, #4b5bff 100%)',
-    tags: ['中文强', '知识增强', '国产']
-  }
-])
+// 雷达图相关
+const currentRadarTab = ref('international')
+const showRadarModal = ref(false)
+const radarChart = ref(null)
+let chartInstance = null
 
-// AI智能体数据
-const aiAgents = ref([
-  {
-    name: 'AutoGPT',
-    icon: '🤖',
-    description: '能够自主分解任务、调用工具、执行复杂工作流的AI智能体，实现真正的自动化。'
-  },
-  {
-    name: 'Devin',
-    icon: '👨‍💻',
-    description: '首个AI软件工程师，能够端到端完成软件开发任务，包括编码、调试、部署。'
-  },
-  {
-    name: 'Manus',
-    icon: '🧠',
-    description: '通用型AI智能体，能够处理各种复杂任务，从数据分析到内容创作无所不能。'
-  },
-  {
-    name: 'Copilot',
-    icon: '✈️',
-    description: 'GitHub Copilot等编程助手，深度集成开发环境，提供智能代码补全和建议。'
-  },
-  {
-    name: 'Siri/小爱',
-    icon: '📱',
-    description: '智能语音助手，集成在手机和智能家居中，提供便捷的语音交互体验。'
-  },
-  {
-    name: '智能客服',
-    icon: '💬',
-    description: '企业级AI客服系统，能够理解用户意图，提供7x24小时的智能服务支持。'
+const radarTabs = [
+  { key: 'international', label: '国际闭源' },
+  { key: 'domestic', label: '国产旗舰' },
+  { key: 'opensource', label: '开源/特色' }
+]
+
+// 计算当前Tab标签
+const currentRadarTabLabel = computed(() => {
+  const tab = radarTabs.find(t => t.key === currentRadarTab.value)
+  return tab ? tab.label : ''
+})
+
+// 打开雷达图弹窗
+const openRadarModal = (tabKey) => {
+  currentRadarTab.value = tabKey
+  showRadarModal.value = true
+  nextTick(() => {
+    initRadarChart()
+  })
+}
+
+// 关闭雷达图弹窗
+const closeRadarModal = () => {
+  showRadarModal.value = false
+  if (chartInstance) {
+    chartInstance.dispose()
+    chartInstance = null
   }
-])
+}
+
+// 雷达图维度
+const radarIndicators = [
+  { name: '通用能力', max: 100 },
+  { name: '推理深度', max: 100 },
+  { name: '多模态理解', max: 100 },
+  { name: 'Agent能力', max: 100 },
+  { name: '中文能力', max: 100 },
+  { name: '成本效率', max: 100 }
+]
+
+// 雷达图数据
+const radarData = {
+  international: [
+    { name: 'GPT-5.5 Pro', value: [96, 95, 88, 94, 82, 65], color: '#10a37f' },
+    { name: 'Gemini 3.1 Pro', value: [94, 91, 97, 88, 85, 70], color: '#4285f4' },
+    { name: 'Claude Opus 4.7', value: [93, 94, 85, 96, 78, 60], color: '#d97757' },
+    { name: 'Grok 4.20 v2', value: [89, 88, 82, 90, 75, 75], color: '#1d9bf0' }
+  ],
+  domestic: [
+    { name: '豆包 2.0 Pro', value: [86, 78, 95, 82, 92, 82], color: '#ff6b6b' },
+    { name: 'DeepSeek V4 Pro', value: [92, 93, 80, 89, 94, 95], color: '#4ecdc4' },
+    { name: 'Qwen3.5-397B', value: [91, 90, 91, 87, 95, 88], color: '#7b68ee' }
+  ],
+  opensource: [
+    { name: 'GLM-5.1', value: [88, 86, 84, 91, 93, 85], color: '#3498db' },
+    { name: 'Kimi K2.6', value: [87, 85, 78, 93, 91, 82], color: '#e74c3c' }
+  ]
+}
+
+// 初始化雷达图
+const initRadarChart = () => {
+  if (!radarChart.value) return
+  
+  chartInstance = echarts.init(radarChart.value)
+  updateRadarChart()
+  
+  window.addEventListener('resize', () => {
+    chartInstance?.resize()
+  })
+}
+
+// 更新雷达图
+const updateRadarChart = () => {
+  if (!chartInstance) return
+  
+  const currentData = radarData[currentRadarTab.value]
+  const seriesData = currentData.map(item => ({
+    value: item.value,
+    name: item.name,
+    lineStyle: { color: item.color },
+    areaStyle: { 
+      color: item.color,
+      opacity: 0.15
+    },
+    itemStyle: { color: item.color },
+    symbol: 'circle',
+    symbolSize: 8
+  }))
+  
+  const option = {
+    backgroundColor: 'transparent',
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: 'rgba(20, 20, 35, 0.95)',
+      borderColor: 'rgba(99, 102, 241, 0.3)',
+      borderWidth: 1,
+      textStyle: {
+        color: '#fff',
+        fontSize: 14
+      },
+      formatter: function(params) {
+        let html = `<div style="font-weight:700;margin-bottom:8px;font-size:16px;color:${params.color}">${params.name}</div>`
+        radarIndicators.forEach((indicator, index) => {
+          html += `<div style="display:flex;justify-content:space-between;margin:4px 0;min-width:150px">
+            <span style="color:#aaa">${indicator.name}:</span>
+            <span style="font-weight:600;color:#fff">${params.value[index]}</span>
+          </div>`
+        })
+        return html
+      }
+    },
+    legend: {
+      data: currentData.map(item => item.name),
+      bottom: 0,
+      textStyle: {
+        color: '#e0e0e0',
+        fontSize: 13
+      },
+      itemGap: 20,
+      itemWidth: 16,
+      itemHeight: 16
+    },
+    radar: {
+      indicator: radarIndicators,
+      center: ['50%', '45%'],
+      radius: '60%',
+      axisName: {
+        color: '#b0b0c0',
+        fontSize: 13,
+        fontWeight: 500
+      },
+      splitArea: {
+        areaStyle: {
+          color: ['rgba(99, 102, 241, 0.02)', 'rgba(99, 102, 241, 0.05)', 
+                  'rgba(99, 102, 241, 0.08)', 'rgba(99, 102, 241, 0.11)']
+        }
+      },
+      axisLine: {
+        lineStyle: {
+          color: 'rgba(99, 102, 241, 0.2)'
+        }
+      },
+      splitLine: {
+        lineStyle: {
+          color: 'rgba(99, 102, 241, 0.15)'
+        }
+      }
+    },
+    series: [{
+      type: 'radar',
+      data: seriesData,
+      emphasis: {
+        lineStyle: {
+          width: 3
+        },
+        areaStyle: {
+          opacity: 0.3
+        }
+      }
+    }]
+  }
+  
+  chartInstance.setOption(option, true)
+}
 </script>
 
 <style scoped>
 .about {
-  background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+  background: var(--bg-dark);
+}
+
+/* About页面使用更宽的容器 */
+.about-container {
+  max-width: 1400px;
+  width: 100%;
 }
 
 /* 关于我部分样式 */
@@ -492,10 +451,142 @@ const aiAgents = ref([
   line-height: 1.8;
 }
 
-/* 关于AI部分样式 */
-.ai-section {
-  padding-top: 60px;
+/* AI发展史时间轴样式 */
+.ai-timeline-section {
+  padding-top: 80px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 大模型雷达图样式 */
+.model-radar-section {
+  padding-top: 40px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radar-section-title {
+  margin-top: 0;
+  color: #2d2d3a;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+}
+
+.radar-section-subtitle {
+  margin-bottom: 40px;
+  color: #4a4a5a;
+}
+
+/* Tab 切换样式 */
+.radar-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.radar-tab {
+  padding: 14px 32px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 30px;
+  background: #f5f5f5;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.radar-tab:hover {
+  background: #e8e8e8;
+  border-color: rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* 雷达图弹窗样式 */
+.radar-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.radar-modal {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+}
+
+.radar-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.radar-modal-close:hover {
+  background: rgba(0, 0, 0, 0.15);
+  color: #333;
+  transform: rotate(90deg);
+}
+
+.radar-modal-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d2d3a;
+  margin-bottom: 30px;
+  margin-top: 0;
+}
+
+.radar-modal-chart-container {
+  width: 100%;
+  padding: 20px;
+  background: rgba(20, 20, 35, 0.05);
+  border-radius: 16px;
+}
+
+.radar-modal .radar-chart {
+  width: 100%;
+  height: 450px;
+}
+
+.radar-modal-note {
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-style: italic;
 }
 
 .ai-section-title {
@@ -503,83 +594,193 @@ const aiAgents = ref([
 }
 
 .ai-section-subtitle {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+/* 横向时间轴容器 */
+.timeline-container {
+  width: 100%;
+  overflow: visible;
+  padding: 80px 20px 120px;
 }
 
-.about-card {
-  background: var(--bg-card);
-  border-radius: 20px;
-  padding: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* 时间轴轨道 */
+.timeline-track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  position: relative;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* 彩虹连接线 - 贯穿整个时间轴 */
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 63px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    #667eea 0%, 
+    #764ba2 12%, 
+    #f093fb 24%, 
+    #f5576c 36%, 
+    #4facfe 48%, 
+    #00f2fe 60%, 
+    #43e97b 72%, 
+    #38f9d7 84%, 
+    #fa709a 100%
+  );
+  border-radius: 2px;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  z-index: 1;
+}
+
+/* 时间轴节点 */
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0 25px;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.about-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: var(--primary-color);
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.card-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  flex-shrink: 0;
-}
-
-.card-info {
+  z-index: 2;
   flex: 1;
+  max-width: 140px;
 }
 
-.card-title {
+.timeline-node:first-child {
+  padding-left: 25px;
+}
+
+.timeline-node:last-child {
+  padding-right: 25px;
+}
+
+.timeline-node:hover {
+  transform: translateY(-8px);
+}
+
+.timeline-node:hover .timeline-dot {
+  transform: scale(1.4);
+  box-shadow: 0 0 0 4px var(--dot-color), 0 0 30px var(--dot-color), 0 0 60px var(--dot-color);
+}
+
+.timeline-node:hover .timeline-year {
+  transform: translateY(-5px);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 年份标签 */
+.timeline-year {
   font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-weight: 900;
+  color: #2d2d3a;
+  margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #2d2d3a 0%, #4a4a5a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.card-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+/* 时间节点圆点 */
+.timeline-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--dot-color);
+  border: 5px solid #ffffff;
+  box-shadow: 0 0 0 3px var(--dot-color), 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  z-index: 3;
 }
 
-.card-desc {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 16px;
+/* 移除原来的连接线样式 */
+.timeline-line {
+  display: none;
 }
 
-.card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.card-tag {
-  padding: 4px 12px;
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--primary-color);
+/* 时间轴卡片 */
+.timeline-card {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 380px;
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
   border-radius: 20px;
-  font-size: 0.8rem;
+  padding: 28px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.timeline-node:hover .timeline-card {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+}
+
+.timeline-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.timeline-event {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.timeline-tag {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.timeline-detail {
+  font-size: 0.95rem;
+  color: #4a4a5a;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.timeline-quote {
+  font-size: 0.95rem;
+  color: #4a4a5a;
   font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  padding-left: 12px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.timeline-significance {
+  font-size: 0.9rem;
+  color: #6a6a7a;
+  font-weight: 600;
 }
 
 /* 弹窗样式 */
@@ -920,57 +1121,131 @@ const aiAgents = ref([
     line-height: 1.7;
   }
   
-  .ai-section {
-    padding-top: 40px;
+  .ai-timeline-section {
+    padding-top: 50px;
   }
-  
-  .about-grid {
-    grid-template-columns: 1fr;
+
+  .timeline-container {
+    padding: 60px 10px 100px;
   }
-  
-  .about-card {
-    padding: 20px;
+
+  .timeline-track {
+    padding: 0;
+    max-width: 100%;
   }
-  
-  .card-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
+
+  .timeline-track::before {
+    left: 5%;
+    right: 5%;
+    top: 58px;
+    height: 3px;
   }
-  
-  .card-title {
-    font-size: 1.1rem;
+
+  .timeline-node {
+    padding: 0 8px;
+    max-width: none;
+    flex: 1;
   }
-  
-  .modal-content {
-    padding: 24px;
-    padding-top: 60px;
+
+  .timeline-node:first-child {
+    padding-left: 8px;
   }
-  
-  .modal-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
+
+  .timeline-node:last-child {
+    padding-right: 8px;
   }
-  
-  .modal-title {
-    font-size: 1.4rem;
+
+  .timeline-year {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
   }
-  
+
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
+    border: 3px solid #ffffff;
+  }
+
+  .timeline-card {
+    width: 280px;
+    padding: 18px;
+    top: 85px;
+  }
+
+  .timeline-event {
+    font-size: 0.95rem;
+  }
+
+  .timeline-detail {
+    font-size: 0.85rem;
+  }
+
+  .timeline-quote {
+    font-size: 0.8rem;
+  }
+
+  /* 雷达图移动端样式 */
+  .model-radar-section {
+    padding-top: 30px;
+    margin-top: 15px;
+  }
+
+  .radar-tabs {
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .radar-tab {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .radar-modal {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+
+  .radar-modal-close {
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .radar-modal-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .radar-modal-chart-container {
+    padding: 15px;
+  }
+
+  .radar-modal .radar-chart {
+    height: 350px;
+  }
+
+  .radar-modal-note {
+    font-size: 0.75rem;
+    padding: 0 10px;
+  }
+
   .info-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .timeline {
     padding-left: 20px;
   }
-  
+
   .timeline-marker {
     left: -26px;
     width: 36px;
     height: 36px;
   }
-  
+
   .timeline-year {
     font-size: 0.6rem;
   }
