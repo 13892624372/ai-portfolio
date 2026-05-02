@@ -14,7 +14,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
 import Hero from './components/Hero.vue'
@@ -35,6 +37,11 @@ const handleOpenProject = (projectId) => {
     }
   }, 300)
 }
+
+// 初始化 GSAP ScrollTrigger
+onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger)
+})
 </script>
 
 <style scoped>

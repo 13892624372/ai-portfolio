@@ -1,0 +1,331 @@
+<template>
+  <div class="app">
+    <!-- 平滑滚动容器 -->
+    <main ref="mainRef" class="main">
+      <!-- 背景层（视差效果：缓慢移动） -->
+      <div ref="bgRef" class="parallax-bg" :style="bgStyle"></div>
+
+      <!-- 内容区块 -->
+      <section 
+        v-for="(section, index) in sections" 
+        :key="index"
+        ref="sectionRefs"
+        class="section"
+      >
+        <div class="section-content">
+          <h2 class="section-title">{{ section.title }}</h2>
+          <p class="section-desc">{{ section.description }}</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- 加载进度（模仿 Inversa 的 Phase / Freq 样式） -->
+    <div v-if="loading" class="loader">
+      <div class="progress-bar" :style="{ width: progress + '%' }"></div>
+      <div class="stats">
+        <div class="stat">
+          <span class="label">Phase</span>
+          <span class="value">{{ Math.floor(progress) }}%</span>
+        </div>
+        <div class="stat">
+          <span class="label">Freq</span>
+          <span class="value">16HZ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from '@studio-freight/lenis'
+
+// 注册 GSAP 插件
+gsap.registerPlugin(ScrollTrigger)
+
+// --- 响应式数据 ---
+const mainRef = ref(null)
+const bgRef = ref(null)
+const sectionRefs = ref([])
+const loading = ref(true)
+const progress = ref(0)
+
+// 页面内容（可以改成你自己的）
+const sections = [
+  { title: '逆转入侵', description: '入侵进展迅速。快点。' },
+  { title: 'Explore Origin', description: '探索起源，了解生态修复的未来' },
+  { title: 'AI Confirmation', description: '0% certainty · Scan Invasive Hotspots' },
+  { title: 'Data Sources', description: 'Satellites · Drones · Traps' }
+]
+
+// 背景图（替换成你自己的）
+const bgStyle = ref({
+  backgroundImage: 'url(/path/to/your/background.jpg)', // 替换实际路径
+  backgroundSize: 'cover',
+  backgroundPosition: 'center'
+})
+
+// --- 动画实例 ---
+let lenis = null
+let mainTimeline = null
+let bgTween = null
+
+// 初始化平滑滚动 + 视差
+const initSmoothScroll = () => {
+  // 1. Lenis 平滑滚动
+  lenis = new Lenis({
+    lerp: 0.08,
+    smoothWheel: true,
+    smoothTouch: true
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+  requestAnimationFrame(raf)
+
+  // 同步 ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update)
+
+  // 2. 背景视差：向下滚动时，背景图向下缓慢移动（用 y 偏移模拟）
+  bgTween = gsap.to(bgRef.value, {
+    y: '15vh',           // 向下移动视口高度的 15%
+    ease: 'none',
+    scrollTrigger: {
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.2,
+      invalidateOnRefresh: true
+    }
+  })
+
+  // 3. 每个 section 的文字从下方渐显 + 向上移动（入场动画）
+  sectionRefs.value.forEach((section, idx) => {
+    const title = section.querySelector('.section-title')
+    const desc = section.querySelector('.section-desc')
+
+    // 标题动画
+    gsap.fromTo(title, 
+      { opacity: 0, y: 60, filter: 'blur(8px)' },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+          end: 'top 30%',
+          toggleActions: 'play none none reverse',
+          scrub: false,
+          markers: false   // 开发时可以改为 true 查看触发点
+        }
+      }
+    )
+
+    // 描述动画（稍延迟）
+    if (desc) {
+      gsap.fromTo(desc,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      )
+    }
+  })
+}
+
+// 模仿 Inversa 的入场加载动画（Loader）
+const initLoaderAnimation = () => {
+  mainTimeline = gsap.timeline({
+    onComplete: () => {
+      loading.value = false
+    }
+  })
+
+  // 进度条计数动画
+  mainTimeline.to(progress, {
+    value: 99,
+    duration: 2,
+    ease: 'expo.inOut',
+    onUpdate: () => {
+      // 可在此更新界面上的数字
+    }
+  }, 0)
+
+  // 背景层缓慢放大（制造视差预备感）
+  mainTimeline.to(bgRef.value, {
+    scale: 1.1,
+    duration: 2,
+    ease: 'expo.inOut'
+  }, 0)
+
+  // 文字整体向上移动一小段（模仿 loader 退出）
+  mainTimeline.to('.section-content', {
+    y: '-5vh',
+    autoAlpha: 1,
+    duration: 1.5,
+    ease: 'power2.out'
+  }, 1)
+}
+
+// 监听窗口 resize 刷新 ScrollTrigger
+const handleResize = () => {
+  ScrollTrigger.refresh()
+}
+
+onMounted(() => {
+  initLoaderAnimation()
+  initSmoothScroll()
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  if (lenis) lenis.destroy()
+  if (mainTimeline) mainTimeline.kill()
+  if (bgTween) bgTween.kill()
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  window.removeEventListener('resize', handleResize)
+})
+</script>
+
+<style scoped>
+/* 全局样式：去除滚动条，全屏区块 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* 背景层：独立层，用于视差移动 */
+.parallax-bg {
+  position: fixed;
+  top: -10vh;          /* 预向上偏移，给向下移动留空间 */
+  left: 0;
+  width: 100%;
+  height: 120vh;       /* 比视口高，防止移动时露底 */
+  z-index: 0;
+  will-change: transform;
+  background-size: cover;
+  background-position: center;
+  transform-origin: center center;
+}
+
+/* 每个区块占满视口，内容居中，白色文字 */
+.section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.section-content {
+  max-width: 800px;
+  padding: 2rem;
+  backdrop-filter: blur(2px);
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.section-desc {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Loader 样式（模仿 Inversa 的 Phase/Freq） */
+.loader {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 100;
+  font-family: monospace;
+  color: white;
+  background: rgba(0,0,0,0.6);
+  padding: 0.75rem 1.5rem;
+  border-radius: 32px;
+  backdrop-filter: blur(4px);
+  display: flex;
+  gap: 2rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.stat .label {
+  opacity: 0.6;
+}
+
+.stat .value {
+  font-weight: 600;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #fff;
+  z-index: 101;
+  transition: width 0.1s linear;
+}
+
+/* 响应式：移动端稍微降低背景移动距离 */
+@media (max-width: 768px) {
+  .parallax-bg {
+    top: -5vh;
+    height: 110vh;
+  }
+  .loader {
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+</style>

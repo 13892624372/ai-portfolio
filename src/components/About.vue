@@ -373,6 +373,8 @@ const updateRadarChart = () => {
 <style scoped>
 .about {
   background: var(--bg-dark);
+  position: relative;
+  z-index: 20;
 }
 
 /* About页面使用更宽的容器 */
@@ -489,22 +491,65 @@ const updateRadarChart = () => {
 
 .radar-tab {
   padding: 14px 32px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(200, 200, 220, 0.5);
   border-radius: 30px;
-  background: #f5f5f5;
-  color: #333;
+  background: linear-gradient(
+    135deg,
+    rgba(240, 240, 245, 0.7) 0%,
+    rgba(220, 220, 230, 0.4) 100%
+  );
+  color: #2d2d3a;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.radar-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.radar-tab:hover::before {
+  left: 100%;
 }
 
 .radar-tab:hover {
-  background: #e8e8e8;
-  border-color: rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(
+    135deg,
+    rgba(250, 250, 255, 0.85) 0%,
+    rgba(230, 230, 240, 0.5) 100%
+  );
+  border-color: rgba(180, 180, 200, 0.7);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 30px rgba(99, 102, 241, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.radar-tab:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow:
+    0 4px 15px rgba(99, 102, 241, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 /* 雷达图弹窗样式 */
@@ -1199,6 +1244,8 @@ const updateRadarChart = () => {
   .radar-tab {
     padding: 10px 20px;
     font-size: 0.9rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .radar-modal {

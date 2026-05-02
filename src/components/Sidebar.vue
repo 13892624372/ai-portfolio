@@ -101,7 +101,7 @@ onUnmounted(() => {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 999;
+  z-index: 10;
   transition: all 0.3s ease;
 }
 
@@ -110,13 +110,19 @@ onUnmounted(() => {
 }
 
 .sidebar-content {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(10px);
+  /* 液态玻璃效果 */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-radius: 0 16px 16px 0;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: none;
   padding: 20px;
   min-width: 180px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
 }
 
@@ -182,14 +188,20 @@ onUnmounted(() => {
   transform: translateY(-50%);
   width: 40px;
   height: 60px;
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
+  /* 液态玻璃效果 */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .sidebar.visible .toggle-btn {
@@ -205,8 +217,9 @@ onUnmounted(() => {
 }
 
 .toggle-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 1024px) {

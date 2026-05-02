@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'scrolled': isScrolled }">
+  <nav class="navbar" :class="{ 'scrolled': isScrolled, 'hidden': isHidden }">
     <div class="container">
       <div class="nav-wrapper">
         <a href="#" class="logo">
@@ -171,9 +171,28 @@ const isMenuOpen = ref(false)
 const showSkillsDropdown = ref(false)
 const showProjectsDropdown = ref(false)
 const isMobile = ref(false)
+const isHidden = ref(true) // 默认隐藏，在首页时隐藏
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
+  const scrollY = window.scrollY
+  isScrolled.value = scrollY > 50
+  
+  // 获取 Hero 和 About 元素
+  const heroElement = document.querySelector('.hero')
+  const aboutElement = document.querySelector('#about')
+  
+  if (heroElement && aboutElement) {
+    const heroHeight = heroElement.offsetHeight
+    const aboutTop = aboutElement.getBoundingClientRect().top
+    
+    // 当 About 区域触碰到视口顶部时显示导航栏
+    // 或者滚动超过 Hero 高度时也显示
+    if (aboutTop <= 0 || scrollY >= heroHeight - 100) {
+      isHidden.value = false
+    } else {
+      isHidden.value = true
+    }
+  }
 }
 
 const checkMobile = () => {
@@ -260,6 +279,12 @@ onUnmounted(() => {
   backdrop-filter: blur(10px);
   padding: 15px 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nav-wrapper {
