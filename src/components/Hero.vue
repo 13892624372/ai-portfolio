@@ -166,7 +166,8 @@ const songs = [
   { name: 'peaches', url: '/ai-portfolio/music/peaches.mp3', type: 'audio/mpeg' },
   { name: 'the cure', url: '/ai-portfolio/music/the%20cure.mp3', type: 'audio/mpeg' },
   { name: 'Dead man', url: '/ai-portfolio/music/Dead%20man.mp3', type: 'audio/mpeg' },
-  { name: 'Colder', url: '/ai-portfolio/music/Colder.mp3', type: 'audio/mpeg' }
+  { name: 'Colder', url: '/ai-portfolio/music/Colder.mp3', type: 'audio/mpeg' },
+  { name: 'Monsters', url: '/ai-portfolio/music/Monsters.mp3', type: 'audio/mpeg' }
 ]
 
 const currentSong = computed(() => songs[currentIndex.value])
