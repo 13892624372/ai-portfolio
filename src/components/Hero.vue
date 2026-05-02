@@ -555,7 +555,7 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 30px;
-  color: rgba(255, 255, 255, 0.95);
+  color: #000000;
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -581,8 +581,8 @@ onUnmounted(() => {
 .music-btn.active {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.5);
-  color: #ffffff;
-  box-shadow: 
+  color: #000000;
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 -1px 0 rgba(255, 255, 255, 0.2);
@@ -624,7 +624,7 @@ onUnmounted(() => {
   align-items: center;
   margin-bottom: 8px;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: #000000;
   font-weight: 500;
 }
 
@@ -633,22 +633,22 @@ onUnmounted(() => {
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin-bottom: 12px;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #000000;
 }
 
 .volume-tip svg {
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
 }
 
 .close-panel {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #000000;
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
@@ -659,8 +659,8 @@ onUnmounted(() => {
 }
 
 .close-panel:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.1);
+  color: #000000;
 }
 
 .song-list {
@@ -754,7 +754,7 @@ onUnmounted(() => {
 .music-btn.playing {
   background: rgba(99, 102, 241, 0.1);
   border-color: var(--primary-color);
-  color: var(--primary-color);
+  color: #000000;
 }
 
 .music-text {
@@ -830,7 +830,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 99999; /* 确保是整个网站最高层级 */
   flex-direction: column;
   pointer-events: none; /* 允许点击穿透到下方 */
 }
@@ -981,12 +981,12 @@ onUnmounted(() => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 20;
+  z-index: 99999; /* 确保是整个网站最高层级 */
 }
 
 .curtain-top,
 .curtain-bottom {
-  z-index: 20;
+  z-index: 99999; /* 确保是整个网站最高层级 */
 }
 
 @media (max-width: 768px) {

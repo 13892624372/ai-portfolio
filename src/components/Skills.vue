@@ -1,59 +1,78 @@
 <template>
   <section id="skills" class="section skills">
-    <div class="container">
+    <!-- 业务能力标题 - 定位在5vw -->
+    <div class="business-title-wrapper">
+      <h2 class="section-title">业务能力</h2>
+      <p class="section-subtitle">AI产品与通用产品</p>
+    </div>
+    
+    <!-- 技术能力标题 - 定位在55vw -->
+    <div class="tech-title-wrapper">
       <h2 class="section-title">技术能力</h2>
-      <p class="section-subtitle">产品思维与技术落地的双重能力</p>
-
-      <div class="skills-grid">
-        <!-- 左列：业务技能 -->
-        <div class="skills-column">
-          <h3 class="column-title">业务能力 · AI产品与通用产品</h3>
-          <div class="skills-list-container">
-            <div class="skills-list">
-              <div 
-                v-for="(skill, index) in businessSkills" 
-                :key="index"
-                :id="skill.id"
-                class="skill-card"
-              >
-                <div class="skill-main">
-                  <span class="skill-bullet"></span>
-                  <span class="skill-text">{{ skill.name }}</span>
-                </div>
-                <p class="skill-desc">{{ skill.description }}</p>
+      <p class="section-subtitle">独立交付与工程落地</p>
+    </div>
+    
+    <div class="skills-content">
+      <!-- 业务能力区域 (0-55vw) -->
+      <div class="business-section">
+        <div class="business-columns">
+          <!-- 业务能力左列 (0-28vw) -->
+          <div class="business-column-left">
+            <div 
+              v-for="(skill, index) in businessSkillsLeft" 
+              :key="index"
+              :id="skill.id"
+              class="skill-item"
+            >
+              <div class="skill-main">
+                <span class="skill-bullet"></span>
+                <span class="skill-text">{{ skill.name }}</span>
               </div>
+              <p class="skill-desc">{{ skill.description }}</p>
             </div>
           </div>
-        </div>
-
-        <!-- 右列：技术技能 -->
-        <div class="skills-column">
-          <h3 class="column-title">技术能力 · 独立交付与工程落地</h3>
-          <div class="skills-list-container">
-            <div class="skills-list">
-              <div 
-                v-for="(skill, index) in techSkills" 
-                :key="index"
-                :id="skill.id"
-                class="skill-card"
-              >
-                <div class="skill-main">
-                  <span class="skill-bullet"></span>
-                  <span class="skill-text">{{ skill.name }}</span>
-                </div>
-                <p class="skill-desc">{{ skill.description }}</p>
+          <!-- 业务能力右列 (28-55vw) -->
+          <div class="business-column-right">
+            <div 
+              v-for="(skill, index) in businessSkillsRight" 
+              :key="index"
+              :id="skill.id"
+              class="skill-item"
+            >
+              <div class="skill-main">
+                <span class="skill-bullet"></span>
+                <span class="skill-text">{{ skill.name }}</span>
               </div>
+              <p class="skill-desc">{{ skill.description }}</p>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 技术技能区域 (55-80vw) -->
+      <div class="tech-section">
+        <div class="tech-column">
+          <div 
+            v-for="(skill, index) in techSkills" 
+            :key="index"
+            :id="skill.id"
+            class="skill-item"
+          >
+            <div class="skill-main">
+              <span class="skill-bullet"></span>
+              <span class="skill-text">{{ skill.name }}</span>
+            </div>
+            <p class="skill-desc">{{ skill.description }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-
-
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const businessSkills = [
   { 
     id: 'skill-prd',
@@ -144,6 +163,11 @@ const techSkills = [
     description: '扎实的页面结构与样式实现能力'
   },
   { 
+    id: 'skill-gsap',
+    name: 'GSAP 动画引擎',
+    description: '熟练运用GSAP实现高性能UI动效与复杂交互设计，提升产品视觉体验'
+  },
+  { 
     id: 'skill-deploy',
     name: 'GitHub Pages / Vercel部署',
     description: '熟悉从代码提交到自动化部署的完整流程'
@@ -160,104 +184,214 @@ const techSkills = [
   }
 ]
 
-
+// 将业务能力分成两列
+const businessSkillsLeft = computed(() => businessSkills.slice(0, 7))
+const businessSkillsRight = computed(() => businessSkills.slice(7))
 </script>
 
 <style scoped>
 .skills {
   background: var(--bg-dark);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
-/* 两列布局 */
-.skills-grid {
+/* 业务能力标题 - 定位在5vw */
+.business-title-wrapper {
+  position: absolute;
+  left: 4vw;
+  top: 100px;
+  z-index: 10;
+}
+
+/* 技术能力标题 - 定位在55vw */
+.tech-title-wrapper {
+  position: absolute;
+  left: 59vw;
+  top: 100px;
+  z-index: 10;
+}
+
+.skills-content {
   display: flex;
-  gap: 24px;
-  margin-top: 32px;
-  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  padding-top: 140px;
 }
 
-.skills-column {
-  flex: 1;
-  background: var(--bg-card);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  padding: 24px;
-}
-
-.column-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--border-color);
-}
-
-.column-icon {
-  font-size: 1.4rem;
-}
-
-.skills-list-container {
-  max-height: 320px;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-.skills-list-container::-webkit-scrollbar {
-  width: 4px;
-}
-
-.skills-list-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.skills-list-container::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 2px;
-}
-
-.skills-list-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.skills-list {
+/* 业务能力区域 (0-55vw) */
+.business-section {
+  width: 55vw;
+  height: 100%;
+  padding: 0 10px 0 40px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
-.skill-card {
+.business-columns {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.business-column-left {
+  width: 28vw;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.business-column-right {
+  width: 27vw;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 技术技能区域 (55-80vw) */
+.tech-section {
+  width: 25vw;
+  height: 100%;
+  padding: 0 20px 0 40px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+}
+
+.tech-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+/* 标题样式 */
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.section-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* 技能条样式 - 宽度减少1/4 (即75%宽度) */
+.skill-item {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 8px 12px;
-  background: var(--bg-dark);
+  padding: 5px 8px;
+  background: var(--bg-card);
   border-radius: 6px;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
 }
 
-.skill-card:hover {
+/* 液态水晶光泽效果 */
+.skill-item::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(99, 102, 241, 0.08) 40%,
+    rgba(139, 92, 246, 0.15) 50%,
+    rgba(99, 102, 241, 0.08) 60%,
+    transparent 70%
+  );
+  animation: liquidCrystal 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* 液态水晶流动动画 */
+@keyframes liquidCrystal {
+  0%, 100% {
+    transform: translateX(-30%) translateY(-30%) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translateX(10%) translateY(10%) rotate(90deg);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateX(-10%) translateY(20%) rotate(180deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateX(20%) translateY(-10%) rotate(270deg);
+    opacity: 0.72;
+  }
+}
+
+/* 额外的闪烁效果 */
+.skill-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+  animation: crystalShine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes crystalShine {
+  0%, 100% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    left: 150%;
+    opacity: 0.9;
+  }
+}
+
+.skill-item:hover {
   border-color: var(--primary-color);
-  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12);
+}
+
+/* 悬停时增强液态效果 */
+.skill-item:hover::before {
+  animation-duration: 4s;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(99, 102, 241, 0.12) 40%,
+    rgba(139, 92, 246, 0.22) 50%,
+    rgba(99, 102, 241, 0.12) 60%,
+    transparent 70%
+  );
+}
+
+.skill-item:hover::after {
+  animation-duration: 3s;
 }
 
 .skill-main {
   display: flex;
   align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.skill-desc {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  margin: 0;
-  padding-left: 14px;
-  line-height: 1.3;
+  gap: 6px;
 }
 
 .skill-bullet {
@@ -270,65 +404,28 @@ const techSkills = [
 
 .skill-text {
   flex: 1;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
-.skill-card:hover .skill-text {
+  font-size: 0.85rem;
+  font-weight: 400;
   color: var(--text-primary);
 }
 
-/* 响应式 */
-@media (max-width: 968px) {
-  .skills-grid {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .skills-column {
-    padding: 20px;
-  }
-
-  .column-title {
-    font-size: 1.1rem;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-  }
-
-  .skills-list-container {
-    max-height: 280px;
-  }
+.skill-desc {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin: 0;
+  padding-left: 11px;
+  line-height: 1.3;
 }
 
-@media (max-width: 768px) {
-  .skills {
-    max-width: 100vw;
-    overflow-x: hidden;
+/* 响应式 */
+@media (max-width: 1200px) {
+  .business-columns {
+    gap: 6px;
   }
-
-  .skills-grid {
-    margin-top: 24px;
-  }
-
-  .column-title {
-    font-size: 1rem;
-  }
-
-  .skills-list-container {
-    max-height: 260px;
-  }
-
-  .skill-text {
-    font-size: 0.85rem;
-  }
-
-  .skill-card {
-    padding: 8px 12px;
-    gap: 2px;
-  }
-
-  .skill-desc {
-    font-size: 0.7rem;
+  
+  .business-section,
+  .tech-section {
+    padding: 0 10px;
   }
 }
 </style>

@@ -4,65 +4,22 @@
       <h2 class="section-title">工作经历</h2>
       <p class="section-subtitle">构建产品思维，探索AI之路</p>
       
-      <div class="timeline-wrapper">
-        <div class="timeline-line"></div>
-        <div class="timeline-container">
-          <div
-            v-for="(job, index) in experiences"
-            :key="job.id"
-            class="timeline-item"
-            :class="{ 'active': activeIndex === index }"
-            @mouseenter="!isMobile && (activeIndex = index)"
-            @mouseleave="!isMobile && (activeIndex = null)"
-            @click="toggleExpand(index)"
-          >
-            <div class="timeline-dot" :style="{ background: job.gradient }"></div>
-            
-            <div class="timeline-card">
-              <div class="card-compact">
-                <div class="company-logo" :style="{ background: job.gradient }">
-                  <span>{{ job.companyInitial }}</span>
-                </div>
-                <div class="compact-info">
-                  <h3 class="job-title">{{ job.title }}</h3>
-                  <p class="company-name">{{ job.company }}</p>
-                  <span class="job-period">{{ job.period }}</span>
-                </div>
-              </div>
-              
-              <div class="card-expand" :class="{ 'show': activeIndex === index }">
-                <div class="expand-content">
-                  <div class="job-meta">
-                    <span class="job-location">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                      </svg>
-                      {{ job.location }}
-                    </span>
-                  </div>
-                  
-                  <p class="job-description">{{ job.description }}</p>
-                  
-                  <div class="job-achievements">
-                    <h4>主要成就</h4>
-                    <ul>
-                      <li v-for="achievement in job.achievements" :key="achievement">
-                        {{ achievement }}
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div class="job-techs">
-                    <span v-for="tech in job.technologies" :key="tech" class="tech-badge">
-                      {{ tech }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- 工作经历卡片网格 -->
+      <div class="experience-grid">
+        <AnimatedProfileCard
+          v-for="job in experiences"
+          :key="job.id"
+          :title="job.title"
+          :company="job.company"
+          :company-initial="job.companyInitial"
+          :period="job.period"
+          :description="job.description"
+          :achievements="job.achievements"
+          :technologies="job.technologies"
+          :gradient="job.gradient"
+          :accent="job.accent"
+          width="100%"
+        />
       </div>
       
       <div class="education-section">
@@ -76,10 +33,12 @@
             @click="toggleEduExpand(index)"
           >
             <div class="edu-header">
-              <div class="edu-icon" :style="{ background: edu.gradient }">
+              <div class="edu-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3z"/>
+                  <path d="M12 12l-7-3.82"/>
+                  <path d="M12 12l7-3.82"/>
+                  <path d="M12 12v9"/>
                 </svg>
               </div>
               <div class="edu-content">
@@ -131,34 +90,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
+import AnimatedProfileCard from './AnimatedProfileCard.vue'
 
-const activeIndex = ref(null)
 const expandedEduIndex = ref(null)
-const isMobile = ref(false)
-
-const checkMobile = () => {
-  isMobile.value = window.innerWidth <= 768
-}
-
-const toggleExpand = (index) => {
-  if (isMobile.value) {
-    activeIndex.value = activeIndex.value === index ? null : index
-  }
-}
 
 const toggleEduExpand = (index) => {
   expandedEduIndex.value = expandedEduIndex.value === index ? null : index
 }
-
-onMounted(() => {
-  window.addEventListener('resize', checkMobile)
-  checkMobile()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile)
-})
 
 const experiences = [
   {
@@ -168,7 +107,8 @@ const experiences = [
     companyInitial: '森',
     period: '2024.11 - 2025.05',
     location: '汉中',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+    gradient: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)',
+    accent: '#d1d5db',
     description: '负责产品需求分析、跨部门协作、成本收益测算、选品上市跟进、数据报表输出、竞品分析、用户反馈管理及产品文档维护等全流程产品工作。',
     achievements: [
       '需求分析：收集并梳理用户与业务需求，输出可执行的产品方案',
@@ -189,7 +129,8 @@ const experiences = [
     companyInitial: '南',
     period: '2025.07 - 2025.12',
     location: '海南',
-    gradient: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
+    gradient: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)',
+    accent: '#d1d5db',
     description: '负责通信测试数据的清洗、整理与结构化处理，分析测试结果识别异常指标，输出评估报告，与前后台团队协作推动项目交付。',
     achievements: [
       '负责通信测试数据的清洗、整理与结构化处理',
@@ -209,7 +150,8 @@ const experiences = [
     companyInitial: '高',
     period: '2025.12 - 2026.01',
     location: '西安',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+    gradient: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)',
+    accent: '#d1d5db',
     description: '负责客户的需求分析，精准识别核心痛点，挖掘用户潜在需求，制定个性化方案，通过专业沟通建立客户关系，协调多方信息推动转化，持续优化流程，以结果为导向达成目标。',
     achievements: [
       '负责客户的需求分析，精准识别核心痛点',
@@ -264,240 +206,82 @@ const education = [
 <style scoped>
 .experience {
   background: var(--bg-dark);
+  padding: 80px 0;
 }
 
-.timeline-wrapper {
-  position: relative;
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   margin-bottom: 80px;
-  padding: 40px 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.timeline-line {
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  border-radius: 3px;
+@media (max-width: 1024px) {
+  .experience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.timeline-container {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  position: relative;
-  z-index: 1;
+@media (max-width: 768px) {
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.timeline-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  width: 280px;
-}
-
-.timeline-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 4px solid var(--bg-dark);
-  box-shadow: 0 0 0 3px var(--primary-color);
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
-}
-
-.timeline-item:hover .timeline-dot {
-  transform: scale(1.3);
-  box-shadow: 0 0 0 4px var(--primary-color), 0 0 20px rgba(99, 102, 241, 0.5);
-}
-
-.timeline-card {
-  background: var(--bg-card);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-.timeline-item:hover .timeline-card {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.card-compact {
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.company-logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-
-.compact-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.job-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.company-name {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.job-period {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.card-expand {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  opacity: 0;
-}
-
-.card-expand.show {
-  max-height: 500px;
-  opacity: 1;
-}
-
-.expand-content {
-  padding: 0 20px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 16px;
-}
-
-.job-meta {
-  margin-bottom: 12px;
-}
-
-.job-location {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.job-description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 16px;
-  font-size: 0.85rem;
-}
-
-.job-achievements {
-  margin-bottom: 16px;
-}
-
-.job-achievements h4 {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text-primary);
-}
-
-.job-achievements ul {
-  list-style: none;
-  padding: 0;
-}
-
-.job-achievements li {
-  position: relative;
-  padding-left: 14px;
-  margin-bottom: 4px;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  line-height: 1.4;
-}
-
-.job-achievements li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 5px;
-  width: 4px;
-  height: 4px;
-  background: var(--primary-color);
-  border-radius: 50%;
-}
-
-.job-techs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tech-badge {
-  padding: 4px 10px;
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--primary-color);
-  border-radius: 16px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
+/* 教育背景样式保持不变 */
 .education-section {
-  margin-bottom: 60px;
+  margin-top: 60px;
 }
 
 .education-title {
-  text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  margin-bottom: 32px;
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--text-primary);
 }
 
 .education-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .education-card {
-  background: var(--bg-card);
-  padding: 24px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .education-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .edu-header {
   display: flex;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
+  gap: 16px;
 }
 
 .edu-icon {
@@ -507,7 +291,9 @@ const education = [
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #374151;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
 
@@ -518,81 +304,81 @@ const education = [
 .edu-degree {
   font-size: 1.1rem;
   font-weight: 600;
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 
 .edu-school {
-  color: var(--text-secondary);
   font-size: 0.95rem;
+  color: var(--text-secondary);
   margin-bottom: 2px;
 }
 
 .edu-major {
+  font-size: 0.9rem;
   color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .edu-year {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--primary-color);
   font-weight: 500;
 }
 
 .edu-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: var(--text-muted);
   transition: transform 0.3s ease;
 }
 
-.edu-arrow svg {
-  transition: transform 0.3s ease;
-}
-
-.edu-arrow svg.rotated {
+.edu-arrow.rotated {
   transform: rotate(180deg);
 }
 
 .edu-expand {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  opacity: 0;
+  transition: max-height 0.3s ease;
 }
 
 .edu-expand.show {
-  max-height: 800px;
-  opacity: 1;
+  max-height: 1000px;
 }
 
 .edu-expand-content {
   padding-top: 20px;
-  margin-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-color);
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .edu-expand-content {
+    grid-template-columns: 1fr;
+  }
 }
 
 .details-title {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .details-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px 0;
 }
 
 .details-list li {
-  position: relative;
-  padding-left: 16px;
-  margin-bottom: 8px;
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  font-size: 0.9rem;
   line-height: 1.6;
+  margin-bottom: 6px;
+  padding-left: 16px;
+  position: relative;
 }
 
 .details-list li::before {
@@ -606,129 +392,13 @@ const education = [
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 20px;
 }
 
 .course-tag {
-  padding: 4px 12px;
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--primary-color);
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .experience {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-  
-  .timeline-wrapper {
-    max-width: 100%;
-  }
-  
-  .timeline-line {
-    display: none;
-  }
-  
-  .timeline-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .timeline-item {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  .timeline-card {
-    width: 100%;
-  }
-  
-  .card-compact {
-    padding: 16px;
-  }
-  
-  .company-logo {
-    width: 40px;
-    height: 40px;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
-  
-  .job-title {
-    font-size: 0.95rem;
-  }
-
-  .company-name {
-    font-size: 0.8rem;
-  }
-
-  .job-period {
-    font-size: 0.7rem;
-  }
-
-  .timeline-item {
-    cursor: pointer;
-  }
-
-  .timeline-card {
-    position: relative;
-  }
-
-  .timeline-card::after {
-    content: '';
-    position: absolute;
-    right: 16px;
-    top: 28px;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid var(--text-muted);
-    border-bottom: 2px solid var(--text-muted);
-    transform: rotate(45deg);
-    transition: transform 0.3s ease;
-  }
-
-  .timeline-item.active .timeline-card::after {
-    transform: rotate(-135deg);
-    border-color: var(--primary-color);
-  }
-  
-  .expand-content {
-    padding: 0 16px 16px;
-  }
-  
-  .job-description {
-    font-size: 0.9rem;
-  }
-  
-  .job-achievements h4 {
-    font-size: 0.9rem;
-  }
-  
-  .job-achievements li {
-    font-size: 0.85rem;
-  }
-  
-  .tech-badge {
-    font-size: 0.75rem;
-    padding: 4px 10px;
-  }
-  
-  .education-section {
-    max-width: 100%;
-  }
-  
-  .education-grid {
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-  
-  .education-card {
-    padding: 20px;
-  }
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: var(--bg-hover);
+  border-radius: 12px;
+  color: var(--text-secondary);
 }
 </style>

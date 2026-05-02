@@ -4,18 +4,18 @@
       <!-- 关于我部分 -->
       <h2 class="section-title">关于我</h2>
       <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
-      
+
       <div class="about-content">
         <div class="about-image">
           <div class="image-wrapper">
             <img src="/photo/个人网站照片.jpg" alt="田雨" class="profile-photo" />
           </div>
         </div>
-        
+
         <div class="about-text">
           <h3 class="about-title">我是田雨</h3>
           <p class="about-description">
-            2025届软件工程技术专业毕业生，毕业于西安信息职业大学。四年的技术学习让我深入理解软件开发的完整流程，
+            软件工程技术专业毕业生，毕业于西安信息职业大学。四年的技术学习让我深入理解软件开发的完整流程，
             从需求分析、架构设计到前后端实现，具备将抽象想法转化为具体产品的工程能力。
           </p>
           <p class="about-description">
@@ -79,8 +79,11 @@
         </div>
       </div>
       
-      <!-- 雷达图弹窗 -->
-      <div v-if="showRadarModal" class="radar-modal-overlay" @click="closeRadarModal">
+    </div>
+
+    <!-- 雷达图弹窗 - 使用 teleport 移到 body 下避免 z-index 嵌套问题 -->
+    <teleport to="body">
+      <div v-if="showRadarModal" :class="['radar-modal-overlay', { 'closing': isClosingRadarModal }]" @click="closeRadarModal">
         <div class="radar-modal" @click.stop>
           <button class="radar-modal-close" @click="closeRadarModal">&times;</button>
           <h3 class="radar-modal-title">{{ currentRadarTabLabel }}</h3>
@@ -92,8 +95,7 @@
           </p>
         </div>
       </div>
-    </div>
-    
+    </teleport>
   </section>
 </template>
 
@@ -201,6 +203,7 @@ const aiHistoryTimeline = ref([
 // 雷达图相关
 const currentRadarTab = ref('international')
 const showRadarModal = ref(false)
+const isClosingRadarModal = ref(false)
 const radarChart = ref(null)
 let chartInstance = null
 
@@ -218,6 +221,7 @@ const currentRadarTabLabel = computed(() => {
 
 // 打开雷达图弹窗
 const openRadarModal = (tabKey) => {
+  isClosingRadarModal.value = false
   currentRadarTab.value = tabKey
   showRadarModal.value = true
   nextTick(() => {
@@ -227,11 +231,16 @@ const openRadarModal = (tabKey) => {
 
 // 关闭雷达图弹窗
 const closeRadarModal = () => {
-  showRadarModal.value = false
-  if (chartInstance) {
-    chartInstance.dispose()
-    chartInstance = null
-  }
+  isClosingRadarModal.value = true
+  // 等待动画完成后再关闭
+  setTimeout(() => {
+    showRadarModal.value = false
+    isClosingRadarModal.value = false
+    if (chartInstance) {
+      chartInstance.dispose()
+      chartInstance = null
+    }
+  }, 300)
 }
 
 // 雷达图维度
@@ -375,6 +384,10 @@ const updateRadarChart = () => {
   background: var(--bg-dark);
   position: relative;
   z-index: 20;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* About页面使用更宽的容器 */
@@ -559,13 +572,40 @@ const updateRadarChart = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2000;
   padding: 20px;
+  animation: radarOverlayFadeIn 0.4s ease forwards;
+}
+
+@keyframes radarOverlayFadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+  }
+}
+
+.radar-modal-overlay.closing {
+  animation: radarOverlayFadeOut 0.3s ease forwards;
+}
+
+@keyframes radarOverlayFadeOut {
+  from {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+  }
+  to {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
 }
 
 .radar-modal {
@@ -578,6 +618,35 @@ const updateRadarChart = () => {
   overflow-y: auto;
   position: relative;
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateX(100px);
+  animation: radarModalSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes radarModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.radar-modal-overlay.closing .radar-modal {
+  animation: radarModalSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes radarModalSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
 }
 
 .radar-modal-close {

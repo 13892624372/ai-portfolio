@@ -6,7 +6,7 @@
       
       <div class="projects-list">
         <!-- 项目 1 - AI智能简历助手 -->
-        <div id="project1" class="project-item" @click="openModal('project1')">
+        <div id="project1" class="project-item" @click="openModal('project1', $event)">
           <div class="project-header">
             <div class="project-number">1</div>
             <div class="project-info">
@@ -22,7 +22,7 @@
         </div>
         
         <!-- 项目 2 - 影视大全网站 -->
-        <div id="project2" class="project-item" @click="openModal('project2')">
+        <div id="project2" class="project-item" @click="openModal('project2', $event)">
           <div class="project-header">
             <div class="project-number">2</div>
             <div class="project-info">
@@ -38,7 +38,7 @@
         </div>
         
         <!-- 项目 3 - AI面试模拟器 -->
-        <div id="project3" class="project-item" @click="openModal('project3')">
+        <div id="project3" class="project-item" @click="openModal('project3', $event)">
           <div class="project-header">
             <div class="project-number">3</div>
             <div class="project-info">
@@ -54,7 +54,7 @@
         </div>
         
         <!-- 项目 4 - 模拟器配套数据看板 -->
-        <div id="project4" class="project-item" @click="openModal('project4')">
+        <div id="project4" class="project-item" @click="openModal('project4', $event)">
           <div class="project-header">
             <div class="project-number">4</div>
             <div class="project-info">
@@ -71,9 +71,10 @@
       </div>
     </div>
     
-    <!-- 弹窗 -->
-    <div class="modal-overlay" v-if="activeModal" @click="closeModal">
-      <div class="modal-content" @click.stop @wheel.stop @touchmove.stop>
+    <!-- 弹窗 - 使用 Teleport 传送到 body 层级以突破父容器限制 -->
+    <Teleport to="body">
+    <div class="modal-overlay" v-if="activeModal" :class="{ 'closing': isClosingModal }" @click="closeModal">
+      <div class="modal-content" :class="{ 'closing': isClosingModal }" :style="modalContentStyle" @click.stop @wheel.stop @touchmove.stop>
         <button class="modal-close" @click="closeModal">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -117,7 +118,7 @@
           <div class="modal-actions">
             <!-- 项目1、2、3的按钮 -->
             <template v-if="currentProject?.number === '1'">
-              <button @click="openProject1" class="btn btn-primary">
+              <button @click="openProject1($event)" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>
@@ -127,7 +128,7 @@
               </button>
             </template>
             <template v-else-if="currentProject?.number === '2'">
-              <button @click="openProject2" class="btn btn-primary">
+              <button @click="openProject2($event)" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>
@@ -137,13 +138,13 @@
               </button>
             </template>
             <template v-else-if="currentProject?.number === '3'">
-              <button @click="openChatSDK" class="btn btn-primary">
+              <button @click="openChatSDK($event)" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 开始面试
               </button>
-              <button @click="openEmptyModal" class="btn btn-secondary">
+              <button @click="openEmptyModal($event)" class="btn btn-secondary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                   <polyline points="14 2 14 8 20 8"></polyline>
@@ -155,7 +156,7 @@
               </button>
             </template>
             <template v-else-if="currentProject?.number === '4'">
-              <button @click="openDashboard" class="btn btn-primary">
+              <button @click="openDashboard($event)" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                   <line x1="3" y1="9" x2="21" y2="9"></line>
@@ -182,8 +183,10 @@
         </div>
       </div>
     </div>
+    </Teleport>
     
-    <!-- 面试助手弹窗 -->
+    <!-- 面试助手弹窗 - 使用 Teleport 传送到 body 层级 -->
+    <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showInterviewIframe" @click="closeInterview">
       <div class="interview-modal-content" :class="{ 'fullscreen': isFullscreen }" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions">
@@ -221,10 +224,12 @@
         </div>
       </div>
     </div>
+    </Teleport>
     
-    <!-- 项目1弹窗 -->
+    <!-- 项目1弹窗 - 使用 Teleport 传送到 body 层级 -->
+    <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showProject1" @click="closeProject1">
-      <div class="interview-modal-content" :class="{ 'fullscreen': isProject1Fullscreen }" @click.stop @wheel.stop @touchmove.stop>
+      <div class="interview-modal-content" :class="{ 'fullscreen': isProject1Fullscreen }" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions">
           <button class="interview-modal-btn" @click="toggleProject1Fullscreen" :title="isProject1Fullscreen ? '退出全屏' : '全屏'">
             <svg v-if="!isProject1Fullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -258,10 +263,12 @@
         </div>
       </div>
     </div>
+    </Teleport>
     
-    <!-- 项目2弹窗 -->
+    <!-- 项目2弹窗 - 使用 Teleport 传送到 body 层级 -->
+    <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showProject2" @click="closeProject2">
-      <div class="interview-modal-content" :class="{ 'fullscreen': isProject2Fullscreen }" @click.stop @wheel.stop @touchmove.stop>
+      <div class="interview-modal-content" :class="{ 'fullscreen': isProject2Fullscreen }" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions">
           <button class="interview-modal-btn" @click="toggleProject2Fullscreen" :title="isProject2Fullscreen ? '退出全屏' : '全屏'">
             <svg v-if="!isProject2Fullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -295,10 +302,12 @@
         </div>
       </div>
     </div>
+    </Teleport>
 
-    <!-- Chat SDK 弹窗 -->
+    <!-- Chat SDK 弹窗 - 使用 Teleport 传送到 body 层级 -->
+    <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showChatSDK" @click="closeChatSDK">
-      <div class="interview-modal-content chat-sdk-modal" @click.stop @wheel.stop @touchmove.stop>
+      <div class="interview-modal-content chat-sdk-modal" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions" :class="{ 'floating': isChatFullscreen }">
           <button class="interview-modal-btn" @click="toggleChatFullscreen" :title="isChatFullscreen ? '退出全屏' : '全屏'">
             <svg v-if="!isChatFullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -324,10 +333,12 @@
         <div class="chat-sdk-container" :class="{ 'fullscreen': isChatFullscreen }" ref="chatContainerRef"></div>
       </div>
     </div>
+    </Teleport>
 
-    <!-- 数据看板弹窗 -->
+    <!-- 数据看板弹窗 - 使用 Teleport 传送到 body 层级 -->
+    <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showDashboard" @click="closeDashboard">
-      <div class="interview-modal-content dashboard-modal" :class="{ 'fullscreen': isDashboardFullscreen }" @click.stop @wheel.stop @touchmove.stop>
+      <div class="interview-modal-content dashboard-modal" :class="{ 'fullscreen': isDashboardFullscreen }" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions" :class="{ 'floating': isDashboardFullscreen }">
           <button class="interview-modal-btn" @click="toggleDashboardFullscreen" :title="isDashboardFullscreen ? '退出全屏' : '全屏'">
             <svg v-if="!isDashboardFullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -359,10 +370,12 @@
         </div>
       </div>
     </div>
+    </Teleport>
 
-    <!-- PRD文档弹窗 -->
+    <!-- PRD文档弹窗 - 使用 Teleport 传送到 body 层级 -->
+    <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showEmptyModal" @click="closeEmptyModal">
-      <div class="interview-modal-content prd-modal-content" :class="{ 'fullscreen': isEmptyFullscreen }" @click.stop @wheel.stop @touchmove.stop>
+      <div class="interview-modal-content prd-modal-content" :class="{ 'fullscreen': isEmptyFullscreen }" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions">
           <button class="interview-modal-btn" @click="toggleEmptyFullscreen" :title="isEmptyFullscreen ? '退出全屏' : '全屏'">
             <svg v-if="!isEmptyFullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -711,6 +724,7 @@
       </div>
       </div>
     </div>
+    </Teleport>
   </section>
 </template>
 
@@ -718,7 +732,18 @@
 import { ref, computed, onMounted, nextTick, defineExpose } from 'vue'
 
 const activeModal = ref(null)
+const isClosingModal = ref(false)
+const modalOrigin = ref({ x: 0, y: 0 })
 const isProject3Expanded = ref(false)
+
+// 弹窗内容样式，用于从按钮位置生长动画
+const modalContentStyle = computed(() => {
+  if (!modalOrigin.value.x && !modalOrigin.value.y) return {}
+  return {
+    '--modal-origin-x': `${modalOrigin.value.x}px`,
+    '--modal-origin-y': `${modalOrigin.value.y}px`
+  }
+})
 const showInterviewIframe = ref(false)
 const isFullscreen = ref(false)
 const showEmptyModal = ref(false)
@@ -727,6 +752,18 @@ const showProject1 = ref(false)
 const isProject1Fullscreen = ref(false)
 const showProject2 = ref(false)
 const isProject2Fullscreen = ref(false)
+
+// 项目内容弹窗动画原点
+const projectModalOrigin = ref({ x: 0, y: 0 })
+
+// 项目内容弹窗样式
+const projectModalStyle = computed(() => {
+  if (!projectModalOrigin.value.x && !projectModalOrigin.value.y) return {}
+  return {
+    '--modal-origin-x': `${projectModalOrigin.value.x}px`,
+    '--modal-origin-y': `${projectModalOrigin.value.y}px`
+  }
+})
 
 // PRD导航数据
 const prdNavSections = ref([
@@ -867,14 +904,27 @@ const currentProject = computed(() => {
   return activeModal.value ? projectsData[activeModal.value] : null
 })
 
-const openModal = (projectId) => {
+const openModal = (projectId, event) => {
+  // 获取点击位置作为动画起点
+  if (event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    modalOrigin.value = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    }
+  }
+  isClosingModal.value = false
   activeModal.value = projectId
   document.body.style.overflow = 'hidden'
 }
 
 const closeModal = () => {
-  activeModal.value = null
-  document.body.style.overflow = ''
+  isClosingModal.value = true
+  setTimeout(() => {
+    activeModal.value = null
+    isClosingModal.value = false
+    document.body.style.overflow = ''
+  }, 400)
 }
 
 const toggleProject3 = () => {
@@ -895,7 +945,15 @@ const toggleFullscreen = () => {
   isFullscreen.value = !isFullscreen.value
 }
 
-const openEmptyModal = () => {
+const openEmptyModal = (event) => {
+  // 获取点击位置作为动画起点
+  if (event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    projectModalOrigin.value = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    }
+  }
   showEmptyModal.value = true
   isEmptyFullscreen.value = false
 }
@@ -909,7 +967,15 @@ const toggleEmptyFullscreen = () => {
   isEmptyFullscreen.value = !isEmptyFullscreen.value
 }
 
-const openProject1 = () => {
+const openProject1 = (event) => {
+  // 获取点击位置作为动画起点
+  if (event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    projectModalOrigin.value = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    }
+  }
   showProject1.value = true
   isProject1Fullscreen.value = false
 }
@@ -923,7 +989,15 @@ const toggleProject1Fullscreen = () => {
   isProject1Fullscreen.value = !isProject1Fullscreen.value
 }
 
-const openProject2 = () => {
+const openProject2 = (event) => {
+  // 获取点击位置作为动画起点
+  if (event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    projectModalOrigin.value = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    }
+  }
   showProject2.value = true
   isProject2Fullscreen.value = false
 }
@@ -947,7 +1021,15 @@ let chatClient = null
 const showDashboard = ref(false)
 const isDashboardFullscreen = ref(false)
 
-const openDashboard = () => {
+const openDashboard = (event) => {
+  // 获取点击位置作为动画起点
+  if (event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    projectModalOrigin.value = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    }
+  }
   showDashboard.value = true
   isDashboardFullscreen.value = false
   document.body.style.overflow = 'hidden'
@@ -1025,7 +1107,15 @@ const initChatSDK = () => {
   }
 }
 
-const openChatSDK = () => {
+const openChatSDK = (event) => {
+  // 获取点击位置作为动画起点
+  if (event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    projectModalOrigin.value = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
+    }
+  }
   showChatSDK.value = true
   isChatFullscreen.value = false
   document.body.style.overflow = 'hidden'
@@ -1260,19 +1350,41 @@ defineExpose({
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
   padding: 20px;
-  animation: fadeIn 0.3s ease;
+  animation: modalOverlayFadeIn 0.5s ease forwards;
+  isolation: isolate;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.modal-overlay.closing {
+  animation: modalOverlayFadeOut 0.4s ease forwards;
+}
+
+@keyframes modalOverlayFadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+  }
+}
+
+@keyframes modalOverlayFadeOut {
+  from {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+  }
+  to {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
 }
 
 .modal-content {
@@ -1286,18 +1398,43 @@ defineExpose({
   position: relative;
   padding: 40px;
   padding-top: 80px;
-  animation: slideUp 0.3s ease;
   overscroll-behavior: contain;
+  opacity: 0;
+  transform: scale(0) translate(var(--modal-origin-x, 50vw), var(--modal-origin-y, 50vh));
+  transform-origin: var(--modal-origin-x, 50%) var(--modal-origin-y, 50%);
+  animation: modalGrowIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes slideUp {
-  from {
+.modal-content.closing {
+  animation: modalGrowOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes modalGrowIn {
+  0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.1) translate(calc(var(--modal-origin-x) * -1), calc(var(--modal-origin-y) * -1));
+    border-radius: 50%;
   }
-  to {
+  50% {
+    border-radius: 24px;
+  }
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) translate(0, 0);
+    border-radius: 24px;
+  }
+}
+
+@keyframes modalGrowOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+    border-radius: 24px;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.1) translate(calc(var(--modal-origin-x) * -1), calc(var(--modal-origin-y) * -1));
+    border-radius: 50%;
   }
 }
 
@@ -1564,7 +1701,10 @@ defineExpose({
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  animation: slideUp 0.3s ease;
+  opacity: 0;
+  transform: scale(0) translate(var(--modal-origin-x, 50vw), var(--modal-origin-y, 50vh));
+  transform-origin: var(--modal-origin-x, 50%) var(--modal-origin-y, 50%);
+  animation: modalGrowIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .interview-modal-actions {

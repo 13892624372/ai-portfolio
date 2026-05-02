@@ -72,6 +72,8 @@ body {
 
 .section {
   padding: 100px 0;
+  position: relative;
+  z-index: 20;
 }
 
 .section-title {

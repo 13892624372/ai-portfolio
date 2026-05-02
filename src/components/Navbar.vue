@@ -17,105 +17,7 @@
           <a href="#hero" @click="closeMenu" class="nav-link">首页</a>
           <a href="#about" @click="closeMenu" class="nav-link">关于</a>
           
-          <!-- 技能下拉菜单 -->
-          <div class="nav-dropdown"
-               @mouseenter="!isMobile && (showSkillsDropdown = true)"
-               @mouseleave="!isMobile && (showSkillsDropdown = false)">
-            <a href="#skills" @click.prevent="toggleSkillsDropdown" class="nav-link nav-dropdown-toggle">
-              <span>技能</span>
-              <svg class="dropdown-arrow" :class="{ 'rotated': showSkillsDropdown }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </a>
-            <div class="dropdown-menu skills-dropdown" :class="{ 'show': showSkillsDropdown }">
-              <div class="dropdown-section">
-                <div class="dropdown-section-title">业务能力 · AI产品与通用产品</div>
-                <a href="#skill-prd" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>PRD撰写</span>
-                </a>
-                <a href="#skill-prototype" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>原型 / 脑图 / 流程图</span>
-                </a>
-                <a href="#skill-metrics" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>数据指标体系建设</span>
-                </a>
-                <a href="#skill-ai-metrics" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>AI产品评估指标体系</span>
-                </a>
-                <a href="#skill-prompt" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>结构化Prompt工程</span>
-                </a>
-                <a href="#skill-rag" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>RAG / 微调 / Agent搭建</span>
-                </a>
-                <a href="#skill-llm-boundary" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>大模型能力边界判断</span>
-                </a>
-                <a href="#skill-coze" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>Coze工作流 & 知识库</span>
-                </a>
-                <a href="#skill-requirement" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>用户需求分析与真伪判断</span>
-                </a>
-                <a href="#skill-competitor" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>竞品分析与功能拆解</span>
-                </a>
-                <a href="#skill-cost" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>业务目标与成本收益分析</span>
-                </a>
-                <a href="#skill-info-arch" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>页面优先级与信息层级设计</span>
-                </a>
-                <a href="#skill-ai-optimize" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>AI产品指标优化闭环</span>
-                </a>
-                <a href="#skill-lifecycle" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>产品全生命周期落地能力</span>
-                </a>
-              </div>
-              <div class="dropdown-section">
-                <div class="dropdown-section-title">技术能力 · 独立交付与工程落地</div>
-                <a href="#skill-mvp" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>独立实现MVP（Trae / Cursor）</span>
-                </a>
-                <a href="#skill-frontend" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>Vue / React / TypeScript</span>
-                </a>
-                <a href="#skill-html-css" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>HTML / CSS</span>
-                </a>
-                <a href="#skill-deploy" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>GitHub Pages / Vercel部署</span>
-                </a>
-                <a href="#skill-api" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>前后端联调与异常沟通</span>
-                </a>
-                <a href="#skill-apifox" @click="closeMenu" class="dropdown-item">
-                  <span class="dropdown-bullet">•</span>
-                  <span>Apifox / 接口测试</span>
-                </a>
-              </div>
-            </div>
-          </div>
+          <a href="#skills" @click="closeMenu" class="nav-link">技能</a>
 
           <!-- 项目下拉菜单 -->
           <div class="nav-dropdown"
@@ -168,7 +70,6 @@ const emit = defineEmits(['openProject'])
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
-const showSkillsDropdown = ref(false)
 const showProjectsDropdown = ref(false)
 const isMobile = ref(false)
 const isHidden = ref(true) // 默认隐藏，在首页时隐藏
@@ -203,20 +104,9 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
-const toggleSkillsDropdown = () => {
-  if (isMobile.value) {
-    showSkillsDropdown.value = !showSkillsDropdown.value
-    showProjectsDropdown.value = false
-  } else {
-    window.location.href = '#skills'
-    closeMenu()
-  }
-}
-
 const toggleProjectsDropdown = () => {
   if (isMobile.value) {
     showProjectsDropdown.value = !showProjectsDropdown.value
-    showSkillsDropdown.value = false
   } else {
     window.location.href = '#projects'
     closeMenu()
@@ -225,7 +115,6 @@ const toggleProjectsDropdown = () => {
 
 const closeMenu = () => {
   isMenuOpen.value = false
-  showSkillsDropdown.value = false
   showProjectsDropdown.value = false
 }
 
@@ -269,7 +158,7 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 20px 0;
+  padding: 13px 0;
   transition: all 0.3s ease;
   transform: none;
 }
@@ -277,7 +166,7 @@ onUnmounted(() => {
 .navbar.scrolled {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 15px 0;
+  padding: 10px 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
