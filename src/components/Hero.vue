@@ -58,7 +58,7 @@
 
     <!-- 2026年在做的事 -->
     <div class="hero-current" ref="heroCurrent">
-      <div class="current-title">📍 2026年在做的事</div>
+      <div class="current-title">” 2026年在做的事</div>
       <div class="current-item">• 正在逐步提升自己并完善个人作品</div>
       <div class="current-item">• 努力寻找属于自己的方向</div>
       <div class="current-item">• 每天都在极力地摆脱床和沙发的绑架....</div>
@@ -462,6 +462,25 @@ onUnmounted(() => {
   z-index: 0;
   pointer-events: none;
   will-change: transform;
+}
+
+/* Hero 底部渐变遮罩 - 平滑过渡到下方内容 */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6.25vh;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(10, 10, 10, 0.3) 30%,
+    rgba(10, 10, 10, 0.7) 70%,
+    var(--bg-dark) 100%
+  );
+  z-index: 5;
+  pointer-events: none;
 }
 
 .hero-content {
@@ -1063,7 +1082,7 @@ onUnmounted(() => {
 /* 2026年在做的事 */
 .hero-current {
   position: absolute;
-  top: 235vh;
+  top: 230vh;
   left: 75%;
   z-index: 5;
   text-align: left;
