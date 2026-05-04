@@ -177,21 +177,22 @@ onUnmounted(() => {
 
 .image-wrapper {
   position: relative;
+  width: 240px;
+  height: 300px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-  max-height: calc(100vh - 250px);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .profile-photo {
   width: 100%;
-  max-width: 280px;
-  height: auto;
-  max-height: calc(100vh - 250px);
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
   display: block;
   transition: transform 0.5s ease;
 }
@@ -264,12 +265,8 @@ onUnmounted(() => {
   }
   
   .image-wrapper {
-    max-height: calc(100vh - 280px);
-  }
-  
-  .profile-photo {
-    max-width: 240px;
-    max-height: calc(100vh - 280px);
+    width: 220px;
+    height: 275px;
   }
   
   .about-title {
@@ -308,12 +305,8 @@ onUnmounted(() => {
   }
   
   .image-wrapper {
-    max-height: calc(100vh - 300px);
-  }
-  
-  .profile-photo {
-    max-width: 220px;
-    max-height: calc(100vh - 300px);
+    width: 200px;
+    height: 250px;
   }
   
   .about-description {
@@ -410,9 +403,9 @@ onUnmounted(() => {
     gap: 80px;
   }
   
-  .profile-photo {
-    width: 360px;
-    height: 460px;
+  .image-wrapper {
+    width: 300px;
+    height: 375px;
   }
   
   .about-title {
