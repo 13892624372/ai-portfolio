@@ -61,8 +61,8 @@ const videoLoading = ref(false) // 视频加载状态
 // Refs
 const videoRef = ref(null)
 
-// 七牛云 CDN 视频地址配置
-const QINIU_VIDEO_URL = 'http://teidw2nb5.hb-bkt.clouddn.com/1.0%E7%89%88%E6%9C%AC.mp4'
+// 七牛云 CDN 视频地址配置（必须使用 HTTPS）
+const QINIU_VIDEO_URL = 'https://teidw2nb5.hb-bkt.clouddn.com/1.0%E7%89%88%E6%9C%AC.mp4'
 
 // 计算视频URL（优先使用 CDN，失败时回退到本地）
 const videoUrl = computed(() => {
