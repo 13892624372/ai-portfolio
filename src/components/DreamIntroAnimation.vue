@@ -862,4 +862,143 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.3);
   transform: translateX(-50%) scale(1.05);
 }
+
+/* 响应式适配 - 1366x768 到 2560x1440 */
+
+/* 1366px - 1440px 笔记本屏幕 */
+@media (max-width: 1440px) {
+  .hint-text {
+    font-size: 1.1rem;
+    top: 18%;
+  }
+  
+  .video-loading {
+    gap: 12px;
+    font-size: 13px;
+  }
+  
+  .loading-spinner {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .mute-toggle-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+    bottom: 25px;
+  }
+}
+
+/* 1024px - 1365px 小型笔记本 */
+@media (max-width: 1365px) {
+  .hint-text {
+    font-size: 1rem;
+    top: 15%;
+  }
+  
+  .video-loading {
+    gap: 10px;
+    font-size: 12px;
+  }
+  
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
+  }
+}
+
+/* 平板设备 768px - 1024px */
+@media (max-width: 1024px) {
+  .hint-text {
+    font-size: 0.95rem;
+    top: 12%;
+    width: 90%;
+    text-align: center;
+  }
+  
+  .video-loading {
+    gap: 8px;
+    font-size: 12px;
+  }
+  
+  .loading-spinner {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .mute-toggle-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+    bottom: 20px;
+  }
+}
+
+/* 手机设备 < 768px */
+@media (max-width: 768px) {
+  .hint-text {
+    font-size: 0.85rem;
+    top: 10%;
+    width: 85%;
+  }
+  
+  .video-loading {
+    gap: 6px;
+    font-size: 11px;
+  }
+  
+  .loading-spinner {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .mute-toggle-btn {
+    padding: 8px 14px;
+    font-size: 11px;
+    bottom: 15px;
+    border-radius: 20px;
+  }
+  
+  .dream-video {
+    object-fit: contain;
+    background: #000;
+  }
+}
+
+/* 小屏手机 < 375px */
+@media (max-width: 375px) {
+  .hint-text {
+    font-size: 0.8rem;
+  }
+  
+  .mute-toggle-btn {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+}
+
+/* 大屏设备 > 1920px */
+@media (min-width: 1920px) {
+  .hint-text {
+    font-size: 1.4rem;
+    top: 22%;
+  }
+  
+  .video-loading {
+    gap: 20px;
+    font-size: 16px;
+  }
+  
+  .loading-spinner {
+    width: 48px;
+    height: 48px;
+    border-width: 4px;
+  }
+  
+  .mute-toggle-btn {
+    padding: 14px 28px;
+    font-size: 16px;
+    bottom: 40px;
+  }
+}
 </style>

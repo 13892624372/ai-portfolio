@@ -1028,6 +1028,102 @@ onUnmounted(() => {
   z-index: 99999; /* 确保是整个网站最高层级 */
 }
 
+/* 1366px - 1440px 笔记本屏幕 */
+@media (max-width: 1440px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .hero-description {
+    font-size: 1.1rem;
+    max-width: 550px;
+  }
+  
+  .belief-item {
+    font-size: 1.3rem;
+  }
+  
+  .hero-welcome {
+    font-size: 2.5rem;
+  }
+  
+  .curtain-text-top,
+  .curtain-text-bottom {
+    font-size: 5rem;
+  }
+}
+
+/* 1024px - 1365px 小型笔记本 */
+@media (max-width: 1365px) {
+  .hero-title {
+    font-size: 2.4rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    max-width: 500px;
+  }
+  
+  .belief-item {
+    font-size: 1.2rem;
+    max-width: 700px;
+  }
+  
+  .hero-welcome {
+    font-size: 2rem;
+    right: 30px;
+  }
+  
+  .curtain-text-top,
+  .curtain-text-bottom {
+    font-size: 4rem;
+  }
+  
+  .current-title {
+    font-size: 1.5rem;
+  }
+  
+  .current-item {
+    font-size: 1rem;
+  }
+}
+
+/* 平板设备 768px - 1024px */
+@media (max-width: 1024px) {
+  .hero-main-content {
+    top: 20vh;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-description {
+    font-size: 0.95rem;
+    max-width: 450px;
+  }
+  
+  .belief-item {
+    font-size: 1.1rem;
+    max-width: 600px;
+  }
+  
+  .hero-welcome {
+    font-size: 1.5rem;
+    right: 20px;
+    top: 65vh;
+  }
+  
+  .scroll-indicator {
+    right: 30px;
+  }
+  
+  .curtain-text-top,
+  .curtain-text-bottom {
+    font-size: 3.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 80px 0 40px;
@@ -1080,6 +1176,16 @@ onUnmounted(() => {
   
   .scroll-indicator {
     display: none;
+  }
+  
+  .belief-item {
+    font-size: 1rem;
+    padding-right: 16px;
+  }
+  
+  .curtain-text-top,
+  .curtain-text-bottom {
+    font-size: 2.5rem;
   }
 }
 

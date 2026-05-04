@@ -417,15 +417,235 @@ const businessSkillsRight = computed(() => businessSkills.slice(7))
   line-height: 1.3;
 }
 
-/* 响应式 */
-@media (max-width: 1200px) {
+/* 响应式 - 1366x768 到 2560x1440 适配 */
+
+/* 1366px - 1440px 笔记本屏幕 */
+@media (max-width: 1440px) {
+  .business-title-wrapper {
+    left: 3vw;
+    top: 80px;
+  }
+  
+  .tech-title-wrapper {
+    left: 58vw;
+    top: 80px;
+  }
+  
+  .skills-content {
+    padding-top: 120px;
+  }
+  
+  .business-section {
+    width: 56vw;
+    padding: 0 8px 0 30px;
+  }
+  
+  .tech-section {
+    width: 26vw;
+    padding: 0 15px 0 30px;
+  }
+  
+  .skill-item {
+    width: 95%;
+    padding: 4px 6px;
+  }
+  
+  .skill-text {
+    font-size: 0.8rem;
+  }
+  
+  .skill-desc {
+    font-size: 0.65rem;
+  }
+}
+
+/* 1024px - 1365px 小型笔记本 */
+@media (max-width: 1365px) {
+  .skills {
+    height: auto;
+    min-height: 100vh;
+    padding: 40px 0;
+  }
+  
+  .business-title-wrapper,
+  .tech-title-wrapper {
+    position: relative;
+    left: auto;
+    top: auto;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .skills-content {
+    flex-direction: column;
+    padding-top: 0;
+    gap: 30px;
+  }
+  
+  .business-section {
+    width: 100%;
+    padding: 0 20px;
+    height: auto;
+  }
+  
+  .tech-section {
+    width: 100%;
+    padding: 20px;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+  
   .business-columns {
-    gap: 6px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .business-column-left,
+  .business-column-right {
+    width: 100%;
+  }
+  
+  .tech-column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  
+  .skill-item {
+    width: 100%;
+  }
+}
+
+/* 平板设备 768px - 1024px */
+@media (max-width: 1024px) {
+  .skills {
+    padding: 30px 0;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.8rem;
   }
   
   .business-section,
   .tech-section {
-    padding: 0 10px;
+    padding: 0 16px;
+  }
+  
+  .tech-column {
+    grid-template-columns: 1fr;
+  }
+  
+  .skill-text {
+    font-size: 0.85rem;
+  }
+  
+  .skill-desc {
+    font-size: 0.75rem;
+  }
+}
+
+/* 手机设备 < 768px */
+@media (max-width: 768px) {
+  .skills {
+    padding: 20px 0;
+    height: auto;
+  }
+  
+  .business-title-wrapper,
+  .tech-title-wrapper {
+    margin-bottom: 16px;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .skills-content {
+    gap: 20px;
+  }
+  
+  .business-section,
+  .tech-section {
+    padding: 0 12px;
+  }
+  
+  .tech-section {
+    padding-top: 16px;
+  }
+  
+  .skill-item {
+    padding: 8px 10px;
+    width: 100%;
+  }
+  
+  .skill-text {
+    font-size: 0.9rem;
+  }
+  
+  .skill-desc {
+    font-size: 0.8rem;
+    padding-left: 13px;
+  }
+}
+
+/* 小屏手机 < 375px */
+@media (max-width: 375px) {
+  .section-title {
+    font-size: 1.2rem;
+  }
+  
+  .skill-text {
+    font-size: 0.85rem;
+  }
+  
+  .skill-desc {
+    font-size: 0.75rem;
+  }
+}
+
+/* 大屏设备 > 1920px */
+@media (min-width: 1920px) {
+  .business-title-wrapper {
+    left: 5vw;
+    top: 120px;
+  }
+  
+  .tech-title-wrapper {
+    left: 60vw;
+    top: 120px;
+  }
+  
+  .skills-content {
+    padding-top: 180px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  .skill-item {
+    padding: 8px 12px;
+  }
+  
+  .skill-text {
+    font-size: 0.95rem;
+  }
+  
+  .skill-desc {
+    font-size: 0.8rem;
   }
 }
 </style>

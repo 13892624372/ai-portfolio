@@ -241,6 +241,74 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
+/* 1366px - 1440px 笔记本屏幕 */
+@media (max-width: 1440px) {
+  .about-me {
+    width: 100%;
+    padding-top: 120px;
+  }
+  
+  .about-container {
+    max-width: 1200px;
+    width: 90%;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+  }
+  
+  .profile-photo {
+    width: 240px;
+    height: 320px;
+  }
+  
+  .about-title {
+    font-size: 1.5rem;
+  }
+  
+  .about-description {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+/* 1024px - 1365px 小型笔记本 */
+@media (max-width: 1365px) {
+  .about-me {
+    padding-top: 100px;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .about-container {
+    width: 92%;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr 1.8fr;
+    gap: 30px;
+  }
+  
+  .profile-photo {
+    width: 220px;
+    height: 280px;
+  }
+  
+  .about-description {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+}
+
 @media (max-width: 1024px) {
   .about-content {
     grid-template-columns: 1fr;
@@ -250,11 +318,21 @@ onUnmounted(() => {
   .about-image {
     display: none;
   }
+  
+  .about-text {
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
   .about-me {
     padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  
+  .about-container {
+    width: 100%;
+    padding: 0 16px;
   }
   
   .about-title {
@@ -264,6 +342,7 @@ onUnmounted(() => {
   .about-description {
     font-size: 0.9rem;
     line-height: 1.6;
+    text-align: left;
   }
   
   .section-title {
@@ -276,6 +355,68 @@ onUnmounted(() => {
   
   .section-subtitle {
     font-size: 0.9rem;
+  }
+}
+
+/* 小屏手机 < 375px */
+@media (max-width: 375px) {
+  .about-me {
+    padding-top: 40px;
+  }
+  
+  .about-title {
+    font-size: 1.2rem;
+  }
+  
+  .about-description {
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+/* 大屏设备 > 1920px */
+@media (min-width: 1920px) {
+  .about-me {
+    padding-top: 200px;
+  }
+  
+  .about-container {
+    max-width: 1600px;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr 2.5fr;
+    gap: 80px;
+  }
+  
+  .profile-photo {
+    width: 360px;
+    height: 460px;
+  }
+  
+  .about-title {
+    font-size: 2rem;
+  }
+  
+  .about-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.2rem;
   }
 }
 </style>
