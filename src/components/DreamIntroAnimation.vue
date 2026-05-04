@@ -23,8 +23,18 @@
         :src="videoUrl"
         autoplay
         playsinline
+        muted
+        preload="auto"
         @ended="onVideoEnded"
+        @waiting="onVideoWaiting"
+        @playing="onVideoPlaying"
+        @canplay="onVideoCanPlay"
       ></video>
+      <!-- 加载指示器 -->
+      <div v-if="videoLoading" class="video-loading">
+        <div class="loading-spinner"></div>
+        <span>加载中...</span>
+      </div>
     </div>
   </div>
 </template>
@@ -46,12 +56,21 @@ const isDragging = ref(false)
 const isZooming = ref(false)
 const showWhiteCurtain = ref(false)
 const isPlayingVideo = ref(false) // 是否正在播放视频
+const videoLoading = ref(false) // 视频加载状态
 
 // Refs
 const videoRef = ref(null)
 
-// 计算视频URL（适配GitHub Pages路径）
+// 七牛云 CDN 视频地址配置
+const QINIU_VIDEO_URL = 'http://teidw2nb5.hb-bkt.clouddn.com/1.0%E7%89%88%E6%9C%AC.mp4'
+
+// 计算视频URL（优先使用 CDN，失败时回退到本地）
 const videoUrl = computed(() => {
+  // 如果配置了七牛云地址，优先使用 CDN
+  if (QINIU_VIDEO_URL && !QINIU_VIDEO_URL.includes('your-qiniu-domain')) {
+    return QINIU_VIDEO_URL
+  }
+  // 否则使用本地视频（GitHub Pages 路径）
   const baseUrl = import.meta.env.BASE_URL || '/'
   return `${baseUrl}photo/1.0版本.mp4`.replace(/\/+/g, '/')
 })
@@ -545,6 +564,25 @@ const onVideoEnded = () => {
   // 用户需要点击界面来倒放返回
 }
 
+// 视频缓冲中
+const onVideoWaiting = () => {
+  videoLoading.value = true
+}
+
+// 视频开始播放
+const onVideoPlaying = () => {
+  videoLoading.value = false
+}
+
+// 视频可以播放
+const onVideoCanPlay = () => {
+  videoLoading.value = false
+  // 确保视频流畅播放
+  if (videoRef.value) {
+    videoRef.value.playbackRate = 1.0
+  }
+}
+
 // 倒放动画（恢复到初始状态）
 const reverseAnimation = () => {
   if (!initialState.cameraPosition || !initialState.earthRotation) return
@@ -703,5 +741,35 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* 视频加载指示器 */
+.video-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: white;
+  font-size: 14px;
+  z-index: 45;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
