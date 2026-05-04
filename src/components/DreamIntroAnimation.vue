@@ -63,19 +63,10 @@ const isVideoMuted = ref(false) // 视频默认不静音（用户已交互）
 // Refs
 const videoRef = ref(null)
 
-// 阿里云 OSS 视频地址配置
-// 暂时禁用，使用本地视频（阿里云视频格式有问题）
-const ALIYUN_OSS_URL = '' // 'https://ai-portfolio-video4372.oss-cn-chengdu.aliyuncs.com/1.0%E7%89%88%E6%9C%AC.mp4'
-
-// 计算视频URL（优先使用阿里云 OSS，失败时回退到本地）
+// 计算视频URL（使用本地视频）
 const videoUrl = computed(() => {
-  // 如果配置了有效的阿里云 OSS 地址，优先使用
-  if (ALIYUN_OSS_URL && ALIYUN_OSS_URL.startsWith('https://') && ALIYUN_OSS_URL.includes('aliyuncs.com')) {
-    return ALIYUN_OSS_URL
-  }
-  // 否则使用本地视频（GitHub Pages 路径）
   const baseUrl = import.meta.env.BASE_URL || '/'
-  return `${baseUrl}photo/1.0版本.mp4`.replace(/\/+/g, '/')
+  return `${baseUrl}photo/2.0.mp4`.replace(/\/+/g, '/')
 })
 
 // 保存动画初始状态用于倒放
@@ -611,14 +602,6 @@ const onVideoError = (e) => {
   if (videoRef.value && videoRef.value.error) {
     console.error('错误代码:', videoRef.value.error.code)
     console.error('错误信息:', videoRef.value.error.message)
-  }
-  // 回退到本地视频
-  console.log('尝试回退到本地视频...')
-  const baseUrl = import.meta.env.BASE_URL || '/'
-  const localUrl = `${baseUrl}photo/1.0版本.mp4`.replace(/\/+/g, '/')
-  if (videoRef.value && videoRef.value.src !== localUrl) {
-    videoRef.value.src = localUrl
-    videoRef.value.load()
   }
 }
 
