@@ -2,12 +2,117 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 视口设置 - 确保移动端正确缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes" />
+    
+    <!-- 兼容性设置 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    
+    <!-- 禁止自动识别电话号码和邮箱 -->
+    <meta name="format-detection" content="telephone=no,email=no,address=no" />
+    
+    <!-- 主题色 -->
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
+    
+    <!-- 全屏模式（iOS） -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- 禁止缓存（开发阶段） -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
     <title>个人作品集</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- 基础样式重置 - 确保跨浏览器一致性 -->
+    <style>
+      /* CSS Reset - 统一浏览器默认样式 */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      html {
+        /* 防止字体大小在移动端被调整 */
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        
+        /* 平滑滚动 */
+        scroll-behavior: smooth;
+        
+        /* 防止iOS点击高亮 */
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      body {
+        /* 字体回退栈 */
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        
+        /* 字体渲染优化 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        
+        /* 防止水平滚动 */
+        overflow-x: hidden;
+        
+        /* 基础背景色 */
+        background-color: #0a0a0a;
+      }
+      
+      /* 图片默认样式 */
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      /* 链接默认样式 */
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      
+      /* 按钮默认样式 */
+      button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      
+      /* 列表默认样式 */
+      ul, ol {
+        list-style: none;
+      }
+      
+      /* 表单元素默认样式 */
+      input, textarea, select {
+        font-family: inherit;
+        font-size: inherit;
+      }
+      
+      /* 禁用元素默认样式 */
+      [disabled] {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      
+      /* 选中文字样式 */
+      ::selection {
+        background-color: rgba(100, 150, 255, 0.3);
+        color: inherit;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
