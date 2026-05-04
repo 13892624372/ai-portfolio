@@ -577,6 +577,9 @@ const onVideoCanPlay = () => {
   // 确保视频流畅播放
   if (videoRef.value) {
     videoRef.value.playbackRate = 1.0
+    // 确保不静音（用户已交互）
+    videoRef.value.muted = false
+    isVideoMuted.value = false
     // 尝试播放
     const playPromise = videoRef.value.play()
     if (playPromise !== undefined) {
@@ -584,13 +587,6 @@ const onVideoCanPlay = () => {
         console.log('视频播放成功')
       }).catch(err => {
         console.error('视频播放失败:', err)
-        // 如果自动播放失败，尝试静音播放
-        videoRef.value.muted = true
-        videoRef.value.play().then(() => {
-          console.log('静音播放成功')
-        }).catch(err2 => {
-          console.error('静音播放也失败:', err2)
-        })
       })
     }
   }
