@@ -61,15 +61,14 @@ const videoLoading = ref(false) // 视频加载状态
 // Refs
 const videoRef = ref(null)
 
-// 七牛云 CDN 视频地址配置（需要绑定自定义域名并配置 HTTPS）
-// 示例：const QINIU_VIDEO_URL = 'https://video.yourdomain.com/1.0%E7%89%88%E6%9C%AC.mp4'
-const QINIU_VIDEO_URL = '' // 暂时为空，使用本地视频
+// 阿里云 OSS 视频地址配置
+const ALIYUN_OSS_URL = 'https://ai-portfolio-video4372.oss-cn-chengdu.aliyuncs.com/1.0%E7%89%88%E6%9C%AC.mp4'
 
-// 计算视频URL（优先使用 CDN，失败时回退到本地）
+// 计算视频URL（优先使用阿里云 OSS，失败时回退到本地）
 const videoUrl = computed(() => {
-  // 如果配置了有效的七牛云 HTTPS 地址，优先使用 CDN
-  if (QINIU_VIDEO_URL && QINIU_VIDEO_URL.startsWith('https://') && !QINIU_VIDEO_URL.includes('clouddn.com')) {
-    return QINIU_VIDEO_URL
+  // 如果配置了有效的阿里云 OSS 地址，优先使用
+  if (ALIYUN_OSS_URL && ALIYUN_OSS_URL.startsWith('https://') && ALIYUN_OSS_URL.includes('aliyuncs.com')) {
+    return ALIYUN_OSS_URL
   }
   // 否则使用本地视频（GitHub Pages 路径）
   const baseUrl = import.meta.env.BASE_URL || '/'
