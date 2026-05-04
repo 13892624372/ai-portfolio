@@ -475,7 +475,7 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 210%;
-  background-image: url('/photo/OIP.webp');
+  background-image: url('../../public/photo/OIP.webp');
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -967,7 +967,7 @@ onUnmounted(() => {
   width: 100%;
   height: 210%;
   z-index: 1;
-  background-image: url('/photo/OIP.webp');
+  background-image: url('../../public/photo/OIP.webp');
   background-size: cover;
   background-position: center;
   pointer-events: none;

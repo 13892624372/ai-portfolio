@@ -118,7 +118,8 @@ onUnmounted(() => {
   left: -10%;
   width: 120%;
   height: 120%;
-  background: url('/photo/Aboutme.jpg') center center / cover no-repeat;
+  background: center center / cover no-repeat;
+  background-image: url('../../public/photo/Aboutme.jpg');
   animation: windEffect 8s ease-in-out infinite;
   z-index: -2;
 }

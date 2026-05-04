@@ -20,7 +20,7 @@
       <video 
         ref="videoRef"
         class="dream-video"
-        src="/photo/1.0版本.mp4"
+        :src="videoUrl"
         autoplay
         playsinline
         @ended="onVideoEnded"
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
 import gsap from 'gsap'
 import * as THREE from 'three'
 
@@ -49,6 +49,12 @@ const isPlayingVideo = ref(false) // 是否正在播放视频
 
 // Refs
 const videoRef = ref(null)
+
+// 计算视频URL（适配GitHub Pages路径）
+const videoUrl = computed(() => {
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  return `${baseUrl}photo/1.0版本.mp4`.replace(/\/+/g, '/')
+})
 
 // 保存动画初始状态用于倒放
 const initialState = {
@@ -126,7 +132,9 @@ const initThreeJS = async () => {
 const loadEarthTexture = () => {
   const textureLoader = new THREE.TextureLoader()
   return new Promise((resolve, reject) => {
-    const url = '/photo/earth.jpg'
+    // 使用 import.meta.env.BASE_URL 适配 GitHub Pages 路径
+    const baseUrl = import.meta.env.BASE_URL || '/'
+    const url = `${baseUrl}photo/earth.jpg`.replace(/\/+/g, '/')
     console.log('加载地球纹理:', url)
     textureLoader.load(
       url,
