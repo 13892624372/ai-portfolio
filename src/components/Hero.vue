@@ -364,6 +364,25 @@ const initScrollAnimations = () => {
 
   // 背景视差效果已由原生滚动监听实现（initParallaxScroll）
   // 不再使用 ScrollTrigger 控制背景图
+  
+  // 在 Dream 区域隐藏音乐播放器，其他区域显示
+  ScrollTrigger.create({
+    trigger: '#dream',
+    start: 'top 80%',
+    end: 'bottom 20%',
+    onEnter: () => {
+      gsap.to('.music-player', { opacity: 0, pointerEvents: 'none', duration: 0.3 })
+    },
+    onLeave: () => {
+      gsap.to('.music-player', { opacity: 1, pointerEvents: 'auto', duration: 0.3 })
+    },
+    onEnterBack: () => {
+      gsap.to('.music-player', { opacity: 0, pointerEvents: 'none', duration: 0.3 })
+    },
+    onLeaveBack: () => {
+      gsap.to('.music-player', { opacity: 1, pointerEvents: 'auto', duration: 0.3 })
+    }
+  })
 }
 
 const handleClickOutside = (event) => {

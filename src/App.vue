@@ -23,8 +23,11 @@
       </div>
       <Projects ref="projectsRef" />
       <Experience />
+      <Dream />
       <Contact />
     </main>
+    <!-- 水波纹效果 -->
+    <WaterRippleEffect />
   </div>
 </template>
 
@@ -41,7 +44,9 @@ import ModelRadar from './components/ModelRadar.vue'
 import Skills from './components/Skills.vue'
 import Projects from './components/Projects.vue'
 import Experience from './components/Experience.vue'
+import Dream from './components/Dream.vue'
 import Contact from './components/Contact.vue'
+import WaterRippleEffect from './components/WaterRippleEffect.vue'
 
 const projectsRef = ref(null)
 const horizontalContainer = ref(null)

@@ -1,6 +1,13 @@
 <template>
   <section id="contact" class="section contact">
     <div class="container">
+      <!-- 视频说明文本 -->
+      <div class="video-description">
+        <p>本片由 Pika 2.2、Seedance 2.0、Kling 3.0 大模型分别生成关键段落，所有片段使用剪映Pro完成音画同步与整体编排。</p>
+        <p>以人类进化为叙事主线，从早期高原地貌的猿类启程，穿过艺术与科技的关键跨跃，最终迈向深空，回望地球。</p>
+        <p>其中航天员回眸一帧，灵感来源于 NASA Artemis II 任务中 Orion spacecraft 飞船内 Christina Koch 的真实影像，象征人类在探索未知时的勇气与孤独。</p>
+      </div>
+      
       <h2 class="section-title">联系我</h2>
       <p class="section-subtitle">期待与您的合作与交流，我会尽快回复您的消息</p>
       
@@ -200,6 +207,26 @@ onUnmounted(() => {
 <style scoped>
 .contact {
   background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+}
+
+/* 视频说明文本 */
+.video-description {
+  width: 80vw;
+  max-width: 1200px;
+  margin: 0 auto 240px;
+  text-align: center;
+  padding: 0px 20px;
+}
+
+.video-description p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.video-description p:last-child {
+  margin-bottom: 0;
 }
 
 .contact-content {

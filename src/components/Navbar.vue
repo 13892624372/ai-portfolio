@@ -50,6 +50,7 @@
           </div>
           
           <a href="#experience" @click="closeMenu" class="nav-link">经历</a>
+          <a href="#dream" @click="closeMenu" class="nav-link">愿景</a>
           <a href="#contact" @click="closeMenu" class="nav-link">联系</a>
         </div>
         
@@ -78,22 +79,30 @@ const handleScroll = () => {
   const scrollY = window.scrollY
   isScrolled.value = scrollY > 50
   
-  // 获取 Hero 和 About 元素
+  // 获取 Hero 和 Dream 元素
   const heroElement = document.querySelector('.hero')
-  const aboutElement = document.querySelector('#about')
+  const dreamElement = document.querySelector('#dream')
   
-  if (heroElement && aboutElement) {
-    const heroHeight = heroElement.offsetHeight
-    const aboutTop = aboutElement.getBoundingClientRect().top
-    
-    // 当 About 区域触碰到视口顶部时显示导航栏
-    // 或者滚动超过 Hero 高度时也显示
-    if (aboutTop <= 0 || scrollY >= heroHeight - 100) {
-      isHidden.value = false
-    } else {
-      isHidden.value = true
-    }
+  if (!heroElement || !dreamElement) return
+  
+  const heroHeight = heroElement.offsetHeight
+  const dreamTop = dreamElement.getBoundingClientRect().top
+  const dreamHeight = dreamElement.offsetHeight
+  
+  // 在 Hero 区域内隐藏导航栏
+  if (scrollY < heroHeight - 100) {
+    isHidden.value = true
+    return
   }
+  
+  // 在 Dream 区域内隐藏导航栏
+  if (dreamTop <= 0 && dreamTop > -dreamHeight) {
+    isHidden.value = true
+    return
+  }
+  
+  // 其他区域显示导航栏
+  isHidden.value = false
 }
 
 const checkMobile = () => {

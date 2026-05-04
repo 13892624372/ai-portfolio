@@ -1,5 +1,8 @@
 <template>
   <section id="about" class="section about-me">
+    <!-- 动态背景层 -->
+    <div class="about-me-bg"></div>
+    
     <div class="container about-container">
       <h2 class="section-title">关于我</h2>
       <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
@@ -33,11 +36,73 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+let scrollTriggerInstance = null
+
+onMounted(() => {
+  // 创建滚动触发动画时间线
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.about-me',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  })
+
+  // 标题动画
+  tl.from('.about-me .section-title', {
+    y: 30,
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power2.out'
+  })
+  // 副标题动画
+  .from('.about-me .section-subtitle', {
+    y: 30,
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power2.out'
+  }, '-=0.4')
+  // 照片从左滑入
+  .from('.about-me .about-image', {
+    x: -50,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  }, '-=0.4')
+  // 名字标题
+  .from('.about-me .about-title', {
+    y: 40,
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power2.out'
+  }, '-=0.5')
+  // 描述文字逐段上滑
+  .from('.about-me .about-description', {
+    y: 30,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.15,
+    ease: 'power2.out'
+  }, '-=0.4')
+
+  scrollTriggerInstance = tl.scrollTrigger
+})
+
+onUnmounted(() => {
+  if (scrollTriggerInstance) {
+    scrollTriggerInstance.kill()
+  }
+})
 </script>
 
 <style scoped>
 .about-me {
-  background: var(--bg-dark);
   position: relative;
   z-index: 20;
   width: 80vw;
@@ -46,9 +111,48 @@
   padding-top: 180px;
 }
 
+/* 动态背景层 */
+.about-me-bg {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: url('/photo/Aboutme.jpg') center center / cover no-repeat;
+  animation: windEffect 8s ease-in-out infinite;
+  z-index: -2;
+}
+
+/* 风吹动效果动画 */
+@keyframes windEffect {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+  }
+  25% {
+    transform: scale(1.02) translate(-1%, 0.5%);
+  }
+  50% {
+    transform: scale(1.01) translate(0.5%, -0.5%);
+  }
+  75% {
+    transform: scale(1.03) translate(-0.5%, 0.5%);
+  }
+}
+
+.about-me::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
 .about-container {
   max-width: 1400px;
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -57,7 +161,7 @@
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  gap: 40px;
+  gap: 1px;
   align-items: start;
   flex: 1;
   overflow: hidden;
@@ -100,14 +204,16 @@
 .about-title {
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #f0f0f8;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   margin-bottom: 6px;
 }
 
 .about-description {
   font-size: 0.95rem;
   line-height: 1.7;
-  color: var(--text-secondary);
+  color: #f0f0f8;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   margin: 0;
 }
 
@@ -116,14 +222,20 @@
   font-weight: 700;
   text-align: center;
   margin-bottom: 6px;
-  color: var(--text-primary);
+  color: #f0f0f8;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   flex-shrink: 0;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
 }
 
 .section-subtitle {
   font-size: 1rem;
   text-align: center;
-  color: var(--text-secondary);
+  color: #f0f0f8;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   margin-bottom: 24px;
   flex-shrink: 0;
 }
@@ -155,6 +267,10 @@
   
   .section-title {
     font-size: 1.6rem;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background-clip: initial;
   }
   
   .section-subtitle {
