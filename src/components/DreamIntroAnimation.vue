@@ -64,7 +64,8 @@ const isVideoMuted = ref(false) // 视频默认不静音（用户已交互）
 const videoRef = ref(null)
 
 // 阿里云 OSS 视频地址配置
-const ALIYUN_OSS_URL = 'https://ai-portfolio-video4372.oss-cn-chengdu.aliyuncs.com/1.0%E7%89%88%E6%9C%AC.mp4'
+// 暂时禁用，使用本地视频（阿里云视频格式有问题）
+const ALIYUN_OSS_URL = '' // 'https://ai-portfolio-video4372.oss-cn-chengdu.aliyuncs.com/1.0%E7%89%88%E6%9C%AC.mp4'
 
 // 计算视频URL（优先使用阿里云 OSS，失败时回退到本地）
 const videoUrl = computed(() => {
