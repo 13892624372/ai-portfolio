@@ -23,7 +23,7 @@
         :src="videoUrl"
         autoplay
         playsinline
-        muted
+        :muted="isVideoMuted"
         preload="auto"
         @ended="onVideoEnded"
         @waiting="onVideoWaiting"
@@ -57,6 +57,7 @@ const isZooming = ref(false)
 const showWhiteCurtain = ref(false)
 const isPlayingVideo = ref(false) // 是否正在播放视频
 const videoLoading = ref(false) // 视频加载状态
+const isVideoMuted = ref(false) // 视频默认不静音（用户已交互）
 
 // Refs
 const videoRef = ref(null)
@@ -580,6 +581,18 @@ const onVideoCanPlay = () => {
   // 确保视频流畅播放
   if (videoRef.value) {
     videoRef.value.playbackRate = 1.0
+    // 尝试自动播放（静音状态下）
+    videoRef.value.play().catch(err => {
+      console.log('自动播放被阻止:', err)
+    })
+  }
+}
+
+// 切换视频静音状态
+const toggleVideoMute = () => {
+  if (videoRef.value) {
+    videoRef.value.muted = !videoRef.value.muted
+    isVideoMuted.value = videoRef.value.muted
   }
 }
 
