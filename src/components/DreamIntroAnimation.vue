@@ -29,6 +29,7 @@
         @waiting="onVideoWaiting"
         @playing="onVideoPlaying"
         @canplay="onVideoCanPlay"
+        @error="onVideoError"
       ></video>
       <!-- 加载指示器 -->
       <div v-if="videoLoading" class="video-loading">
@@ -555,6 +556,8 @@ const startAnimation = (clickPoint) => {
   setTimeout(() => {
     isActive.value = true
     isPlayingVideo.value = true // 自动播放视频
+    // 白色幕布渐隐，显示视频
+    showWhiteCurtain.value = false
     emit('animationComplete')
   }, 3000)
 }
@@ -578,21 +581,43 @@ const onVideoPlaying = () => {
 // 视频可以播放
 const onVideoCanPlay = () => {
   videoLoading.value = false
+  console.log('视频可以播放，准备播放...')
   // 确保视频流畅播放
   if (videoRef.value) {
     videoRef.value.playbackRate = 1.0
-    // 尝试自动播放（静音状态下）
-    videoRef.value.play().catch(err => {
-      console.log('自动播放被阻止:', err)
-    })
+    // 尝试播放
+    const playPromise = videoRef.value.play()
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        console.log('视频播放成功')
+      }).catch(err => {
+        console.error('视频播放失败:', err)
+        // 如果自动播放失败，尝试静音播放
+        videoRef.value.muted = true
+        videoRef.value.play().then(() => {
+          console.log('静音播放成功')
+        }).catch(err2 => {
+          console.error('静音播放也失败:', err2)
+        })
+      })
+    }
   }
 }
 
-// 切换视频静音状态
-const toggleVideoMute = () => {
-  if (videoRef.value) {
-    videoRef.value.muted = !videoRef.value.muted
-    isVideoMuted.value = videoRef.value.muted
+// 视频加载错误
+const onVideoError = (e) => {
+  console.error('视频加载错误:', e)
+  if (videoRef.value && videoRef.value.error) {
+    console.error('错误代码:', videoRef.value.error.code)
+    console.error('错误信息:', videoRef.value.error.message)
+  }
+  // 回退到本地视频
+  console.log('尝试回退到本地视频...')
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  const localUrl = `${baseUrl}photo/1.0版本.mp4`.replace(/\/+/g, '/')
+  if (videoRef.value && videoRef.value.src !== localUrl) {
+    videoRef.value.src = localUrl
+    videoRef.value.load()
   }
 }
 
