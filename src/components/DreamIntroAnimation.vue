@@ -24,18 +24,24 @@
         autoplay
         playsinline
         :muted="isVideoMuted"
-        preload="auto"
+        preload="metadata"
         @ended="onVideoEnded"
         @waiting="onVideoWaiting"
         @playing="onVideoPlaying"
         @canplay="onVideoCanPlay"
+        @canplaythrough="onVideoCanPlayThrough"
         @error="onVideoError"
+        @stalled="onVideoStalled"
       ></video>
       <!-- 加载指示器 -->
       <div v-if="videoLoading" class="video-loading">
         <div class="loading-spinner"></div>
-        <span>加载中...</span>
+        <span>{{ loadingText }}</span>
       </div>
+      <!-- 静音切换按钮 -->
+      <button v-if="isVideoMuted && !videoLoading" class="mute-toggle-btn" @click="toggleMute">
+        🔇 点击开启声音
+      </button>
     </div>
   </div>
 </template>
@@ -59,6 +65,8 @@ const showWhiteCurtain = ref(false)
 const isPlayingVideo = ref(false) // 是否正在播放视频
 const videoLoading = ref(false) // 视频加载状态
 const isVideoMuted = ref(false) // 视频默认不静音（用户已交互）
+const loadingText = ref('加载中...') // 加载提示文本
+const bufferedPercent = ref(0) // 缓冲百分比
 
 // Refs
 const videoRef = ref(null)
@@ -544,10 +552,11 @@ const startAnimation = (clickPoint) => {
     showWhiteCurtain.value = true
   }, 1800)
   
-  // 动画完成事件 - 自动播放视频
+  // 动画完成事件 - 准备播放视频
   setTimeout(() => {
     isActive.value = true
-    isPlayingVideo.value = true // 自动播放视频
+    isPlayingVideo.value = true // 显示视频容器
+    videoLoading.value = true // 显示加载中
     // 白色幕布渐隐，显示视频
     showWhiteCurtain.value = false
     emit('animationComplete')
@@ -587,9 +596,40 @@ const onVideoCanPlay = () => {
         console.log('视频播放成功')
       }).catch(err => {
         console.error('视频播放失败:', err)
+        // 如果播放失败，尝试静音播放（浏览器策略）
+        if (videoRef.value) {
+          videoRef.value.muted = true
+          isVideoMuted.value = true
+          videoRef.value.play().then(() => {
+            console.log('静音播放成功，用户可手动开启声音')
+          }).catch(() => {})
+        }
       })
     }
   }
+}
+
+// 视频可以流畅播放（缓冲足够）
+const onVideoCanPlayThrough = () => {
+  videoLoading.value = false
+  loadingText.value = '加载中...'
+  console.log('视频缓冲完成，可以流畅播放')
+  // 缓冲足够后开始播放
+  if (videoRef.value) {
+    videoRef.value.muted = false
+    videoRef.value.play().then(() => {
+      console.log('视频开始播放')
+    }).catch(err => {
+      console.error('播放失败:', err)
+    })
+  }
+}
+
+// 视频加载停滞
+const onVideoStalled = () => {
+  videoLoading.value = true
+  loadingText.value = '缓冲中...'
+  console.log('视频加载停滞，正在缓冲...')
 }
 
 // 视频加载错误
@@ -598,6 +638,15 @@ const onVideoError = (e) => {
   if (videoRef.value && videoRef.value.error) {
     console.error('错误代码:', videoRef.value.error.code)
     console.error('错误信息:', videoRef.value.error.message)
+  }
+}
+
+// 切换静音状态
+const toggleMute = () => {
+  if (videoRef.value) {
+    videoRef.value.muted = !videoRef.value.muted
+    isVideoMuted.value = videoRef.value.muted
+    console.log('静音状态:', isVideoMuted.value ? '静音' : '有声')
   }
 }
 
@@ -789,5 +838,28 @@ onUnmounted(() => {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 静音切换按钮 */
+.mute-toggle-btn {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.3s ease;
+}
+
+.mute-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-50%) scale(1.05);
 }
 </style>
