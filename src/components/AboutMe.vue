@@ -180,13 +180,18 @@ onUnmounted(() => {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 250px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-photo {
-  width: 280px;
-  height: 360px;
-  object-fit: cover;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  max-height: calc(100vh - 250px);
+  object-fit: contain;
   display: block;
   transition: transform 0.5s ease;
 }
@@ -258,9 +263,13 @@ onUnmounted(() => {
     gap: 40px;
   }
   
+  .image-wrapper {
+    max-height: calc(100vh - 280px);
+  }
+  
   .profile-photo {
-    width: 240px;
-    height: 320px;
+    max-width: 240px;
+    max-height: calc(100vh - 280px);
   }
   
   .about-title {
@@ -298,9 +307,13 @@ onUnmounted(() => {
     gap: 30px;
   }
   
+  .image-wrapper {
+    max-height: calc(100vh - 300px);
+  }
+  
   .profile-photo {
-    width: 220px;
-    height: 280px;
+    max-width: 220px;
+    max-height: calc(100vh - 300px);
   }
   
   .about-description {
