@@ -4,9 +4,6 @@
     <div class="about-me-bg"></div>
     
     <div class="container about-container">
-      <h2 class="section-title">关于我</h2>
-      <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
-
       <!-- 3D 卡片容器 -->
       <div 
         class="card-3d-wrapper"
@@ -17,6 +14,8 @@
           <div class="card-inner">
             <div class="card-glare" ref="glareRef"></div>
             <div class="card-content">
+              <h2 class="section-title">关于我</h2>
+              <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
               <div class="about-content">
                 <div class="about-image">
                   <div class="image-wrapper">
@@ -70,8 +69,8 @@ const handleMouseMove = (e) => {
   const centerX = rect.width / 2
   const centerY = rect.height / 2
   
-  const calcX = -(y - centerY) / 6
-  const calcY = (x - centerX) / 6
+  const calcX = -(y - centerY) / 10
+  const calcY = (x - centerX) / 10
   const percentage = (x / rect.width) * 100
   
   if (cardRef.value) {
@@ -273,13 +272,15 @@ onUnmounted(() => {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  padding: 40px;
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 30px 40px;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  overflow-y: auto;
 }
 
 .about-content {
@@ -412,7 +413,7 @@ onUnmounted(() => {
   }
   
   .card-content {
-    padding: 30px;
+    padding: 25px 30px;
   }
 }
 
@@ -444,7 +445,7 @@ onUnmounted(() => {
   }
   
   .card-content {
-    padding: 25px;
+    padding: 20px 25px;
   }
 }
 
@@ -502,7 +503,7 @@ onUnmounted(() => {
   }
   
   .card-content {
-    padding: 20px;
+    padding: 15px 20px;
     border-radius: 16px;
   }
   
@@ -586,7 +587,7 @@ onUnmounted(() => {
   }
   
   .card-content {
-    padding: 50px;
+    padding: 40px 50px;
   }
 }
 </style>
