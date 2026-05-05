@@ -308,9 +308,9 @@ const businessSkillsRight = computed(() => businessSkills.slice(7))
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(99, 102, 241, 0.08) 40%,
-    rgba(139, 92, 246, 0.15) 50%,
-    rgba(99, 102, 241, 0.08) 60%,
+    rgba(99, 102, 241, 0.04) 40%,
+    rgba(139, 92, 246, 0.075) 50%,
+    rgba(99, 102, 241, 0.04) 60%,
     transparent 70%
   );
   animation: liquidCrystal 8s ease-in-out infinite;
@@ -348,7 +348,7 @@ const businessSkillsRight = computed(() => businessSkills.slice(7))
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.06),
     transparent
   );
   animation: crystalShine 6s ease-in-out infinite;
@@ -377,9 +377,9 @@ const businessSkillsRight = computed(() => businessSkills.slice(7))
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(99, 102, 241, 0.12) 40%,
-    rgba(139, 92, 246, 0.22) 50%,
-    rgba(99, 102, 241, 0.12) 60%,
+    rgba(99, 102, 241, 0.06) 40%,
+    rgba(139, 92, 246, 0.11) 50%,
+    rgba(99, 102, 241, 0.06) 60%,
     transparent 70%
   );
 }

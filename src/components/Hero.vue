@@ -302,7 +302,7 @@ const initParallaxScroll = () => {
     
     // 只在首页（Hero区域）内应用视差效果
     if (scrollY <= heroHeight) {
-      const bgMove = scrollY * 0.23 // 速度系数 0.2
+      const bgMove = scrollY * 0.3 // 速度系数增大30%
       bgElement.style.transform = `translateY(${bgMove}px)`
       bgElement.style.opacity = '1'
     } else {

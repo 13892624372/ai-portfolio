@@ -6,20 +6,34 @@
       
       <!-- 工作经历卡片网格 -->
       <div class="experience-grid">
-        <AnimatedProfileCard
+        <div
           v-for="job in experiences"
           :key="job.id"
-          :title="job.title"
-          :company="job.company"
-          :company-initial="job.companyInitial"
-          :period="job.period"
-          :description="job.description"
-          :achievements="job.achievements"
-          :technologies="job.technologies"
-          :gradient="job.gradient"
-          :accent="job.accent"
-          width="100%"
-        />
+          class="card-3d-wrapper"
+          @mousemove="(e) => handleMouseMove(e, job.id)"
+          @mouseenter="(e) => handleMouseEnter(e, job.id)"
+          @mouseleave="(e) => handleMouseLeave(e, job.id)"
+        >
+          <div class="card-3d" :ref="el => cardRefs[job.id] = el">
+            <div class="card-inner">
+              <div class="card-glare" :ref="el => glareRefs[job.id] = el"></div>
+              <div class="card-content">
+                <AnimatedProfileCard
+                  :title="job.title"
+                  :company="job.company"
+                  :company-initial="job.companyInitial"
+                  :period="job.period"
+                  :description="job.description"
+                  :achievements="job.achievements"
+                  :technologies="job.technologies"
+                  :gradient="job.gradient"
+                  :accent="job.accent"
+                  width="100%"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div class="education-section">
@@ -28,57 +42,67 @@
           <div
             v-for="(edu, index) in education"
             :key="edu.id"
-            class="education-card"
-            :class="{ 'expanded': expandedEduIndex === index }"
-            @click="toggleEduExpand(index)"
+            class="edu-3d-wrapper"
+            @mousemove="(e) => handleEduMouseMove(e, edu.id)"
+            @mouseenter="(e) => handleEduMouseEnter(e, edu.id)"
+            @mouseleave="(e) => handleEduMouseLeave(e, edu.id)"
           >
-            <div class="edu-header">
-              <div class="edu-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3z"/>
-                  <path d="M12 12l-7-3.82"/>
-                  <path d="M12 12l7-3.82"/>
-                  <path d="M12 12v9"/>
-                </svg>
-              </div>
-              <div class="edu-content">
-                <h4 class="edu-degree">{{ edu.degree }}</h4>
-                <p class="edu-school">{{ edu.school }}</p>
-                <p class="edu-major">{{ edu.major }}</p>
-                <span class="edu-year">{{ edu.year }}</span>
-              </div>
-              <div class="edu-arrow">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="{ 'rotated': expandedEduIndex === index }">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </div>
-            </div>
-            
-            <div class="edu-expand" :class="{ 'show': expandedEduIndex === index }">
-              <div class="edu-expand-content">
-                <div class="edu-details">
-                  <h5 class="details-title">学习经历</h5>
-                  <ul class="details-list">
-                    <li v-for="detail in edu.details" :key="detail">{{ detail }}</li>
-                  </ul>
-                </div>
-                <div class="edu-campus">
-                  <h5 class="details-title">校园经历</h5>
-                  <ul class="details-list">
-                    <li v-for="item in edu.campus" :key="item">{{ item }}</li>
-                  </ul>
-                </div>
-                <div class="edu-courses">
-                  <h5 class="details-title">主修课程</h5>
-                  <div class="course-tags">
-                    <span v-for="course in edu.courses" :key="course" class="course-tag">{{ course }}</span>
+            <div class="edu-3d" :ref="el => eduCardRefs[edu.id] = el">
+              <div class="edu-inner">
+                <div class="education-card"
+                  :class="{ 'expanded': expandedEduIndex === index }"
+                  @click="toggleEduExpand(index)"
+                >
+                  <div class="edu-header">
+                    <div class="edu-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3z"/>
+                        <path d="M12 12l-7-3.82"/>
+                        <path d="M12 12l7-3.82"/>
+                        <path d="M12 12v9"/>
+                      </svg>
+                    </div>
+                    <div class="edu-content">
+                      <h4 class="edu-degree">{{ edu.degree }}</h4>
+                      <p class="edu-school">{{ edu.school }}</p>
+                      <p class="edu-major">{{ edu.major }}</p>
+                      <span class="edu-year">{{ edu.year }}</span>
+                    </div>
+                    <div class="edu-arrow">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" :class="{ 'rotated': expandedEduIndex === index }">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </div>
                   </div>
-                </div>
-                <div class="edu-achievements">
-                  <h5 class="details-title">在校成就</h5>
-                  <ul class="details-list">
-                    <li v-for="achievement in edu.achievements" :key="achievement">{{ achievement }}</li>
-                  </ul>
+                  
+                  <div class="edu-expand" :class="{ 'show': expandedEduIndex === index }">
+                    <div class="edu-expand-content">
+                      <div class="edu-details">
+                        <h5 class="details-title">学习经历</h5>
+                        <ul class="details-list">
+                          <li v-for="detail in edu.details" :key="detail">{{ detail }}</li>
+                        </ul>
+                      </div>
+                      <div class="edu-campus">
+                        <h5 class="details-title">校园经历</h5>
+                        <ul class="details-list">
+                          <li v-for="item in edu.campus" :key="item">{{ item }}</li>
+                        </ul>
+                      </div>
+                      <div class="edu-courses">
+                        <h5 class="details-title">主修课程</h5>
+                        <div class="course-tags">
+                          <span v-for="course in edu.courses" :key="course" class="course-tag">{{ course }}</span>
+                        </div>
+                      </div>
+                      <div class="edu-achievements">
+                        <h5 class="details-title">在校成就</h5>
+                        <ul class="details-list">
+                          <li v-for="achievement in edu.achievements" :key="achievement">{{ achievement }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,10 +114,101 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import AnimatedProfileCard from './AnimatedProfileCard.vue'
 
 const expandedEduIndex = ref(null)
+
+const cardRefs = reactive({})
+const glareRefs = reactive({})
+const isInsideCard = reactive({})
+
+const eduCardRefs = reactive({})
+const isInsideEduCard = reactive({})
+
+const handleMouseMove = (e, id) => {
+  const wrapper = e.currentTarget
+  const rect = wrapper.getBoundingClientRect()
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+  
+  const calcX = -(y - centerY) / 25
+  const calcY = (x - centerX) / 25
+  const percentage = (x / rect.width) * 100
+  
+  const cardRef = cardRefs[id]
+  const glareRef = glareRefs[id]
+  
+  if (cardRef) {
+    cardRef.style.transform = `perspective(1200px) rotateX(${calcX}deg) rotateY(${calcY}deg)`
+  }
+  if (glareRef) {
+    glareRef.style.setProperty('--per', `${percentage}%`)
+    glareRef.style.opacity = '1'
+  }
+}
+
+const handleMouseEnter = (e, id) => {
+  isInsideCard[id] = true
+}
+
+const handleMouseLeave = (e, id) => {
+  isInsideCard[id] = false
+  
+  setTimeout(() => {
+    if (!isInsideCard[id]) {
+      const cardRef = cardRefs[id]
+      const glareRef = glareRefs[id]
+      
+      if (cardRef) {
+        cardRef.style.transform = 'perspective(1200px) rotateX(0) rotateY(0)'
+      }
+      if (glareRef) {
+        glareRef.style.opacity = '0'
+      }
+    }
+  }, 100)
+}
+
+const handleEduMouseMove = (e, id) => {
+  const wrapper = e.currentTarget
+  const rect = wrapper.getBoundingClientRect()
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+  
+  const calcX = -(y - centerY) / 50
+  const calcY = (x - centerX) / 50
+  
+  const cardRef = eduCardRefs[id]
+  
+  if (cardRef) {
+    cardRef.style.transform = `perspective(1200px) rotateX(${calcX}deg) rotateY(${calcY}deg)`
+  }
+}
+
+const handleEduMouseEnter = (e, id) => {
+  isInsideEduCard[id] = true
+}
+
+const handleEduMouseLeave = (e, id) => {
+  isInsideEduCard[id] = false
+  
+  setTimeout(() => {
+    if (!isInsideEduCard[id]) {
+      const cardRef = eduCardRefs[id]
+      
+      if (cardRef) {
+        cardRef.style.transform = 'perspective(1200px) rotateX(0) rotateY(0)'
+      }
+    }
+  }, 100)
+}
 
 const toggleEduExpand = (index) => {
   expandedEduIndex.value = expandedEduIndex.value === index ? null : index
@@ -219,6 +334,57 @@ const education = [
   margin-right: auto;
 }
 
+/* 3D卡片样式 */
+.card-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  perspective: 1200px;
+}
+
+.card-3d {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.card-glare {
+  display: none;
+}
+
+.card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+/* 教育背景3D卡片样式 */
+.edu-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  perspective: 1200px;
+}
+
+.edu-3d {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.edu-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 @media (max-width: 1024px) {
   .experience-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -253,29 +419,114 @@ const education = [
 }
 
 .education-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  position: relative;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(240, 240, 245, 0.6) 0%, transparent 25%),
+    radial-gradient(circle at 80% 20%, rgba(235, 235, 240, 0.5) 0%, transparent 20%),
+    radial-gradient(circle at 60% 80%, rgba(245, 245, 250, 0.55) 0%, transparent 22%),
+    radial-gradient(circle at 30% 70%, rgba(230, 230, 235, 0.45) 0%, transparent 18%),
+    #fafafa;
   border-radius: 16px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(200, 200, 210, 0.4);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    0 8px 32px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.education-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(180, 185, 190, 0.3) 0%, transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(170, 175, 180, 0.25) 0%, transparent 30%),
+    radial-gradient(circle at 50% 50%, rgba(160, 165, 170, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 30% 80%, rgba(190, 195, 200, 0.22) 0%, transparent 28%),
+    radial-gradient(circle at 70% 25%, rgba(175, 180, 185, 0.28) 0%, transparent 32%);
+  animation: inkFloat 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes inkFloat {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translate(8%, 5%) rotate(1.5deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-5%, -8%) rotate(-1.5deg);
+    opacity: 0.85;
+  }
+  75% {
+    transform: translate(5%, 8%) rotate(1deg);
+    opacity: 0.95;
+  }
+}
+
+.education-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 15%, rgba(200, 200, 205, 0.4) 0%, transparent 25%),
+    radial-gradient(circle at 80% 85%, rgba(190, 190, 195, 0.35) 0%, transparent 28%),
+    radial-gradient(circle at 45% 55%, rgba(210, 210, 215, 0.3) 0%, transparent 32%),
+    radial-gradient(circle at 65% 30%, rgba(185, 185, 190, 0.38) 0%, transparent 26%);
+  animation: inkDiffuse 18s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes inkDiffuse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.15);
+  }
+  75% {
+    opacity: 0.95;
+    transform: scale(1.08);
+  }
 }
 
 .education-card:hover {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(245, 245, 250, 0.7) 0%, transparent 25%),
+    radial-gradient(circle at 80% 20%, rgba(240, 240, 245, 0.6) 0%, transparent 20%),
+    radial-gradient(circle at 60% 80%, rgba(250, 250, 255, 0.65) 0%, transparent 22%),
+    radial-gradient(circle at 30% 70%, rgba(235, 235, 240, 0.55) 0%, transparent 18%),
+    #ffffff;
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
+}
+
+.education-card:hover::before {
+  animation-duration: 10s;
+}
+
+.education-card:hover::after {
+  animation-duration: 15s;
 }
 
 .edu-header {

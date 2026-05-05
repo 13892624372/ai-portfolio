@@ -6,65 +6,81 @@
       
       <div class="projects-list">
         <!-- 项目 1 - AI智能简历助手 -->
-        <div id="project1" class="project-item" @click="openModal('project1', $event)">
-          <div class="project-header">
-            <div class="project-number">1</div>
-            <div class="project-info">
-              <h3 class="project-title">AI智能简历助手</h3>
-              <p class="project-subtitle">基于Vue3 + TypeScript的智能简历生成与优化平台，支持多模板、AI优化、PDF导出</p>
-            </div>
-            <div class="expand-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
+        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project1')" @mouseenter="handleProjectMouseEnter('project1')" @mouseleave="handleProjectMouseLeave('project1')">
+          <div id="project1" class="project-3d" @click="openModal('project1', $event)">
+            <div class="project-item">
+              <div class="project-header">
+                <div class="project-number">1</div>
+                <div class="project-info">
+                  <h3 class="project-title">AI智能简历助手</h3>
+                  <p class="project-subtitle">基于Vue3 + TypeScript的智能简历生成与优化平台，支持多模板、AI优化、PDF导出</p>
+                </div>
+                <div class="expand-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         
         <!-- 项目 2 - 影视大全网站 -->
-        <div id="project2" class="project-item" @click="openModal('project2', $event)">
-          <div class="project-header">
-            <div class="project-number">2</div>
-            <div class="project-info">
-              <h3 class="project-title">影视大全网站</h3>
-              <p class="project-subtitle">基于原生JS的在线影视资源聚合与播放平台，支持多数据源、HLS播放、CORS代理</p>
-            </div>
-            <div class="expand-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
+        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project2')" @mouseenter="handleProjectMouseEnter('project2')" @mouseleave="handleProjectMouseLeave('project2')">
+          <div id="project2" class="project-3d" @click="openModal('project2', $event)">
+            <div class="project-item">
+              <div class="project-header">
+                <div class="project-number">2</div>
+                <div class="project-info">
+                  <h3 class="project-title">影视大全网站</h3>
+                  <p class="project-subtitle">基于原生JS的在线影视资源聚合与播放平台，支持多数据源、HLS播放、CORS代理</p>
+                </div>
+                <div class="expand-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         
         <!-- 项目 3 - AI面试模拟器 -->
-        <div id="project3" class="project-item" @click="openModal('project3', $event)">
-          <div class="project-header">
-            <div class="project-number">3</div>
-            <div class="project-info">
-              <h3 class="project-title">AI面试模拟器+PRD</h3>
-              <p class="project-subtitle">上传你的简历和JD，体验个性化AI面试。基于Coze + DeepSeek + RAG搭建，支持自定义简历和岗位JD，动态生成面试问题</p>
-            </div>
-            <div class="expand-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
+        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project3')" @mouseenter="handleProjectMouseEnter('project3')" @mouseleave="handleProjectMouseLeave('project3')">
+          <div id="project3" class="project-3d" @click="openModal('project3', $event)">
+            <div class="project-item">
+              <div class="project-header">
+                <div class="project-number">3</div>
+                <div class="project-info">
+                  <h3 class="project-title">AI面试模拟器+PRD</h3>
+                  <p class="project-subtitle">上传你的简历和JD，体验个性化AI面试。基于Coze + DeepSeek + RAG搭建，支持自定义简历和岗位JD，动态生成面试问题</p>
+                </div>
+                <div class="expand-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         
         <!-- 项目 4 - 模拟器配套数据看板 -->
-        <div id="project4" class="project-item" @click="openModal('project4', $event)">
-          <div class="project-header">
-            <div class="project-number">4</div>
-            <div class="project-info">
-              <h3 class="project-title">模拟器配套数据看板</h3>
-              <p class="project-subtitle">AI面试模拟器用户反馈数据分析可视化平台，实时展示用户满意度、NPS值、用户画像等多维度数据</p>
-            </div>
-            <div class="expand-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
+        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project4')" @mouseenter="handleProjectMouseEnter('project4')" @mouseleave="handleProjectMouseLeave('project4')">
+          <div id="project4" class="project-3d" @click="openModal('project4', $event)">
+            <div class="project-item">
+              <div class="project-header">
+                <div class="project-number">4</div>
+                <div class="project-info">
+                  <h3 class="project-title">模拟器配套数据看板</h3>
+                  <p class="project-subtitle">AI面试模拟器用户反馈数据分析可视化平台，实时展示用户满意度、NPS值、用户画像等多维度数据</p>
+                </div>
+                <div class="expand-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -736,6 +752,46 @@ const isClosingModal = ref(false)
 const modalOrigin = ref({ x: 0, y: 0 })
 const isProject3Expanded = ref(false)
 
+const isInsideProjectCard = ref({})
+const projectCardRefs = ref({})
+
+const handleProjectMouseMove = (e, id) => {
+  const wrapper = e.currentTarget
+  const rect = wrapper.getBoundingClientRect()
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+  
+  const calcX = -(y - centerY) / 70
+  const calcY = (x - centerX) / 70
+  
+  const cardRef = document.querySelector(`#${id}`)
+  
+  if (cardRef) {
+    cardRef.style.transform = `perspective(1000px) rotateX(${calcX}deg) rotateY(${calcY}deg)`
+  }
+}
+
+const handleProjectMouseEnter = (id) => {
+  isInsideProjectCard.value[id] = true
+}
+
+const handleProjectMouseLeave = (id) => {
+  isInsideProjectCard.value[id] = false
+  
+  setTimeout(() => {
+    if (!isInsideProjectCard.value[id]) {
+      const cardRef = document.querySelector(`#${id}`)
+      
+      if (cardRef) {
+        cardRef.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)'
+      }
+    }
+  }, 100)
+}
+
 // 弹窗内容样式，用于从按钮位置生长动画
 const modalContentStyle = computed(() => {
   if (!modalOrigin.value.x && !modalOrigin.value.y) return {}
@@ -1240,6 +1296,17 @@ defineExpose({
   margin-top: 48px;
 }
 
+.project-3d-wrapper {
+  width: 100%;
+  perspective: 1000px;
+}
+
+.project-3d {
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
 .project-item {
   background: var(--bg-card);
   border-radius: 16px;
@@ -1250,10 +1317,9 @@ defineExpose({
   cursor: pointer;
 }
 
-.project-item:hover {
+.project-3d:hover .project-item {
   border-color: var(--primary-color);
   box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
-  transform: translateY(-2px);
 }
 
 .project-header {

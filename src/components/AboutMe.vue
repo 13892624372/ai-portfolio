@@ -15,8 +15,8 @@
             <div class="card-glare" ref="glareRef"></div>
             <div class="card-content">
               <h2 class="section-title">关于我</h2>
-              <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
-              <div class="about-content">
+              <p class="section-subtitle" style="margin-bottom: 4px;">以技术为根基，以产品思维驱动AI创新</p>
+              <div class="about-content" style="gap: 6px; margin-top: 0;">
                 <div class="about-image">
                   <div class="image-wrapper">
                     <img src="/photo/个人网站照片.jpg" alt="田雨" class="profile-photo" />
@@ -69,8 +69,8 @@ const handleMouseMove = (e) => {
   const centerX = rect.width / 2
   const centerY = rect.height / 2
   
-  const calcX = -(y - centerY) / 10
-  const calcY = (x - centerX) / 10
+  const calcX = -(y - centerY) / 30
+  const calcY = (x - centerX) / 30
   const percentage = (x / rect.width) * 100
   
   if (cardRef.value) {
@@ -107,25 +107,25 @@ onMounted(() => {
     }
   })
 
-  // 标题动画
-  tl.from('.about-me .section-title', {
+  // 卡片淡入
+  tl.from('.about-me .card-3d-wrapper', {
     y: 30,
     opacity: 0,
-    duration: 0.6,
+    duration: 0.8,
     ease: 'power2.out'
   })
-  // 副标题动画
-  .from('.about-me .section-subtitle', {
+  // 标题动画
+  .from('.about-me .section-title', {
     y: 30,
     opacity: 0,
     duration: 0.6,
     ease: 'power2.out'
   }, '-=0.4')
-  // 卡片淡入
-  .from('.about-me .card-3d-wrapper', {
+  // 副标题动画
+  .from('.about-me .section-subtitle', {
     y: 30,
     opacity: 0,
-    duration: 0.8,
+    duration: 0.6,
     ease: 'power2.out'
   }, '-=0.4')
   // 照片从左滑入
@@ -168,7 +168,7 @@ onUnmounted(() => {
   width: 80vw;
   height: 100vh;
   overflow: hidden;
-  padding-top: 180px;
+  padding: 0;
 }
 
 /* 动态背景层 */
@@ -221,11 +221,12 @@ onUnmounted(() => {
 
 /* 3D 卡片容器 */
 .card-3d-wrapper {
-  width: 100%;
-  height: calc(100% - 120px);
+  width: 88vw;
+  height: 110vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
+  transform: translateX(-4vw);
 }
 
 .card-3d {
@@ -238,59 +239,46 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .card-glare {
-  --per: 30%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  border-radius: 20px;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.2) calc(var(--per) - 20%),
-    rgba(255, 255, 255, 0.3) var(--per),
-    rgba(255, 255, 255, 0.2) calc(var(--per) + 20%),
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 10;
+  display: none;
 }
 
 .card-content {
   position: relative;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  padding: 30px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   overflow-y: auto;
+  padding-top: 25vh !important;
+  transform: translateX(-6vw);
 }
 
 .about-content {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 40px;
-  align-items: start;
+  display: grid !important;
+  grid-template-columns: 1fr 1.5fr !important;
+  gap: 4px !important;
+  row-gap: 4px !important;
+  align-items: flex-start !important;
+  justify-items: center !important;
   flex: 1;
   overflow: hidden;
   width: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .about-image {
@@ -298,6 +286,8 @@ onUnmounted(() => {
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .image-wrapper {
@@ -312,6 +302,8 @@ onUnmounted(() => {
   justify-content: center;
   flex-shrink: 0;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .profile-photo {
@@ -321,6 +313,8 @@ onUnmounted(() => {
   object-position: center top;
   display: block;
   transition: transform 0.5s ease;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .image-wrapper:hover .profile-photo {
@@ -330,8 +324,13 @@ onUnmounted(() => {
 .about-text {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px !important;
   overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 600px;
+  width: 90%;
+  transform: translateX(-10vw);
 }
 
 .about-title {
@@ -339,7 +338,9 @@ onUnmounted(() => {
   font-weight: 700;
   color: #f0f0f8;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  margin-bottom: 6px;
+  margin-bottom: 2px !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
 }
 
 .about-description {
@@ -347,14 +348,16 @@ onUnmounted(() => {
   line-height: 1.7;
   color: #f0f0f8;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .section-title {
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 6px;
+  margin-bottom: 2px !important;
+  margin-top: 0 !important;
   color: #f0f0f8;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   flex-shrink: 0;
@@ -362,6 +365,7 @@ onUnmounted(() => {
   -webkit-background-clip: initial;
   -webkit-text-fill-color: initial;
   background-clip: initial;
+  padding: 0 !important;
 }
 
 .section-subtitle {
@@ -369,15 +373,17 @@ onUnmounted(() => {
   text-align: center;
   color: #f0f0f8;
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  margin-bottom: 24px;
+  margin-bottom: 8px !important;
+  margin-top: 0 !important;
   flex-shrink: 0;
+  padding: 0 !important;
 }
 
 /* 1366px - 1440px 笔记本屏幕 */
 @media (max-width: 1440px) {
   .about-me {
     width: 100%;
-    padding-top: 120px;
+    padding: 60px 0;
   }
   
   .about-container {
@@ -387,7 +393,7 @@ onUnmounted(() => {
   
   .about-content {
     grid-template-columns: 1fr 2fr;
-    gap: 40px;
+    gap: 12px;
   }
   
   .image-wrapper {
@@ -410,17 +416,18 @@ onUnmounted(() => {
   
   .section-subtitle {
     font-size: 0.95rem;
+    margin-bottom: 7px;
   }
   
   .card-content {
-    padding: 25px 30px;
+    padding: 0 30px;
   }
 }
 
 /* 1024px - 1365px 小型笔记本 */
 @media (max-width: 1365px) {
   .about-me {
-    padding-top: 100px;
+    padding: 50px 0;
     height: auto;
     min-height: 100vh;
   }
@@ -445,7 +452,7 @@ onUnmounted(() => {
   }
   
   .card-content {
-    padding: 20px 25px;
+    padding: 0 25px;
   }
 }
 
@@ -465,19 +472,26 @@ onUnmounted(() => {
   
   .card-3d-wrapper {
     height: auto;
-    min-height: 500px;
+    min-height: auto;
   }
 }
 
 @media (max-width: 768px) {
   .about-me {
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding: 40px 0;
+    height: auto;
+    min-height: 100vh;
   }
   
   .about-container {
     width: 100%;
     padding: 0 16px;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    row-gap: 20px !important;
   }
   
   .about-title {
@@ -505,10 +519,20 @@ onUnmounted(() => {
   .card-content {
     padding: 15px 20px;
     border-radius: 16px;
+    transform: none !important;
+    padding-top: 15px !important;
+  }
+  
+  .about-text {
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
   
   .card-3d-wrapper {
     height: auto;
+    transform: none !important;
+    width: 100%;
   }
   
   /* 移动端禁用 3D 效果 */
@@ -519,12 +543,17 @@ onUnmounted(() => {
   .card-glare {
     display: none;
   }
+  
+  .image-wrapper {
+    width: 180px;
+    height: 225px;
+  }
 }
 
 /* 小屏手机 < 375px */
 @media (max-width: 375px) {
   .about-me {
-    padding-top: 40px;
+    padding: 30px 0;
   }
   
   .about-title {
@@ -552,7 +581,7 @@ onUnmounted(() => {
 /* 大屏设备 > 1920px */
 @media (min-width: 1920px) {
   .about-me {
-    padding-top: 200px;
+    padding: 100px 0;
   }
   
   .about-container {
