@@ -270,14 +270,14 @@ const businessSkillsRight = computed(() => businessSkills.slice(7))
 
 /* 标题样式 */
 .section-title {
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 4px 0;
 }
 
 .section-subtitle {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   margin: 0;
 }

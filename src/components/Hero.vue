@@ -210,12 +210,14 @@ const initIntroAnimation = () => {
   gsap.set('.scroll-indicator', { opacity: 0 })
   gsap.set('.music-player', { opacity: 0 })
 
-  // ========== 阶段一：手写 "Welcome in" (0 - 1.5s) ==========
+  // ========== 阶段一：手写 "Welcome in" (0 - 2.4s) ==========
+  // 停留 0.6 秒
+  // 时间线自然推进到 3.0s
   // 上半部分文字从左到右写出
   tl.to('.curtain-text-top', {
     opacity: 1,
     clipPath: 'inset(0 0% 0 0)',
-    duration: 0.9,
+    duration: 1.8,
     ease: 'power2.inOut'
   }, 0)
 
@@ -223,51 +225,51 @@ const initIntroAnimation = () => {
   tl.to('.curtain-text-bottom', {
     opacity: 1,
     clipPath: 'inset(0 0% 0 0)',
-    duration: 0.9,
+    duration: 1.8,
     ease: 'power2.inOut'
-  }, 0.4)
+  }, 0.6)
 
   // 停留 0.3 秒
   // 时间线自然推进到 1.5s
 
-  // ========== 阶段二：幕布上下拉开 + 首页内容渐显 (1.8 - 3.0s) ==========
+  // ========== 阶段二：幕布上下拉开 + 首页内容渐显 (3.0 - 4.8s) ==========
   // 使用 clip-path 实现幕布从中间向上下拉开的效果
   // 上幕布：从完整显示到只显示上半部分（下半部分被裁剪）
   tl.to(topCurtain, {
     clipPath: 'inset(0 0 100% 0)',
-    duration: 1.2,
+    duration: 1.8,
     ease: 'power3.inOut'
-  }, 1.8)
+  }, 3.0)
 
   // 下幕布：从完整显示到只显示下半部分（上半部分被裁剪）
   tl.to(bottomCurtain, {
     clipPath: 'inset(100% 0 0 0)',
-    duration: 1.2,
+    duration: 1.8,
     ease: 'power3.inOut'
-  }, 1.8)
+  }, 3.0)
 
   // 背景图在幕布刚开始拉开时就渐显
   tl.to(bgImage, {
     opacity: 1,
-    duration: 1.0,
+    duration: 1.5,
     ease: 'power2.out'
-  }, 1.8)
+  }, 3.0)
 
   // 首页主标题与幕布同时开始渐显，持续整个幕布拉开过程
   tl.to('.hero-content', {
     opacity: 1,
     y: 0,
-    duration: 1.2,
+    duration: 1.8,
     ease: 'power2.out'
-  }, 1.8)
+  }, 3.0)
 
-  // ========== 阶段四：滚动指示器、音乐播放器依次淡入 (2.5 - 3.3s) ==========
+  // ========== 阶段四：滚动指示器、音乐播放器依次淡入 (4.3 - 5.1s) ==========
   // 滚动指示器
   tl.to('.scroll-indicator', {
     opacity: 1,
     duration: 0.5,
     ease: 'power2.out'
-  }, 2.5)
+  }, 4.3)
 
   // 音乐播放器
   tl.to('.music-player', {
@@ -277,17 +279,17 @@ const initIntroAnimation = () => {
     onComplete: () => {
       showMusicPlayer.value = true
     }
-  }, 2.8)
+  }, 4.6)
 
-  // ========== 阶段五："Welcome to my..." 最晚淡入 (3.0 - 3.5s) ==========
+  // ========== 阶段五："Welcome to my..." 最晚淡入 (4.8 - 5.3s) ==========
   tl.to('.hero-welcome', {
     opacity: 1,
     duration: 0.5,
     ease: 'power2.out'
-  }, 3.0)
+  }, 4.8)
 
   // 动画完成后隐藏入场层
-  tl.set(overlay, { display: 'none' }, 3.5)
+  tl.set(overlay, { display: 'none' }, 5.3)
 }
 
 // 原生滚动监听实现反向视差（仅首页生效）

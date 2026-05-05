@@ -345,6 +345,7 @@ const education = [
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .card-inner {
@@ -377,6 +378,7 @@ const education = [
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .edu-inner {
