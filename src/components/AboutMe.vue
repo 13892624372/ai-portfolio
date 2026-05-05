@@ -7,28 +7,42 @@
       <h2 class="section-title">关于我</h2>
       <p class="section-subtitle">以技术为根基，以产品思维驱动AI创新</p>
 
-      <div class="about-content">
-        <div class="about-image">
-          <div class="image-wrapper">
-            <img src="/photo/个人网站照片.jpg" alt="田雨" class="profile-photo" />
-          </div>
-        </div>
+      <!-- 3D 卡片容器 -->
+      <div 
+        class="card-3d-wrapper"
+        @mousemove="handleMouseMove"
+        @mouseleave="handleMouseLeave"
+      >
+        <div class="card-3d" ref="cardRef">
+          <div class="card-inner">
+            <div class="card-glare" ref="glareRef"></div>
+            <div class="card-content">
+              <div class="about-content">
+                <div class="about-image">
+                  <div class="image-wrapper">
+                    <img src="/photo/个人网站照片.jpg" alt="田雨" class="profile-photo" />
+                  </div>
+                </div>
 
-        <div class="about-text">
-          <h3 class="about-title">我是田雨</h3>
-          <p class="about-description">
-            软件工程技术专业毕业生，毕业于西安信息职业大学。四年的技术学习让我深入理解软件开发的完整流程，
-            从需求分析、架构设计到前后端实现，具备将抽象想法转化为具体产品的工程能力。
-          </p>
-          <p class="about-description">
-            通过自主学习和项目实践，主导完成多个实战项目，涵盖Web应用、AI工具等领域，积累了丰富的项目经验。
-            对人工智能保持高度热情，系统学习机器学习、深度学习课程，持续关注GPT、Claude等大模型及AI Agent最新进展。
-          </p>
-          <p class="about-description">
-            我的核心优势在于：既能与开发团队进行深度技术对话，理解实现成本与技术边界；
-            又能从用户视角出发，挖掘真实需求并设计产品方案。期待加入贵司，
-            用技术背景赋能产品工作，在AI领域创造有价值的产品。
-          </p>
+                <div class="about-text">
+                  <h3 class="about-title">我是田雨</h3>
+                  <p class="about-description">
+                    软件工程技术专业毕业生，毕业于西安信息职业大学。四年的技术学习让我深入理解软件开发的完整流程，
+                    从需求分析、架构设计到前后端实现，具备将抽象想法转化为具体产品的工程能力。
+                  </p>
+                  <p class="about-description">
+                    通过自主学习和项目实践，主导完成多个实战项目，涵盖Web应用、AI工具等领域，积累了丰富的项目经验。
+                    对人工智能保持高度热情，系统学习机器学习、深度学习课程，持续关注GPT、Claude等大模型及AI Agent最新进展。
+                  </p>
+                  <p class="about-description">
+                    我的核心优势在于：既能与开发团队进行深度技术对话，理解实现成本与技术边界；
+                    又能从用户视角出发，挖掘真实需求并设计产品方案。期待加入贵司，
+                    用技术背景赋能产品工作，在AI领域创造有价值的产品。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -36,15 +50,55 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const cardRef = ref(null)
+const glareRef = ref(null)
 let scrollTriggerInstance = null
 
+// 处理鼠标移动事件
+const handleMouseMove = (e) => {
+  const wrapper = e.currentTarget
+  const rect = wrapper.getBoundingClientRect()
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+  
+  const calcX = -(y - centerY) / 6
+  const calcY = (x - centerX) / 6
+  const percentage = (x / rect.width) * 100
+  
+  if (cardRef.value) {
+    cardRef.value.style.transform = `perspective(1200px) rotateX(${calcX}deg) rotateY(${calcY}deg)`
+  }
+  if (glareRef.value) {
+    glareRef.value.style.setProperty('--per', `${percentage}%`)
+    glareRef.value.style.opacity = '1'
+  }
+}
+
+// 处理鼠标离开事件
+const handleMouseLeave = () => {
+  if (cardRef.value) {
+    cardRef.value.style.transform = 'perspective(1200px) rotateX(0) rotateY(0)'
+  }
+  if (glareRef.value) {
+    glareRef.value.style.opacity = '0'
+  }
+}
+
 onMounted(() => {
+  // 确保卡片初始状态正确
+  if (cardRef.value) {
+    cardRef.value.style.transform = 'perspective(1200px) rotateX(0) rotateY(0)'
+  }
+  
   // 创建滚动触发动画时间线
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -68,13 +122,20 @@ onMounted(() => {
     duration: 0.6,
     ease: 'power2.out'
   }, '-=0.4')
+  // 卡片淡入
+  .from('.about-me .card-3d-wrapper', {
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+  }, '-=0.4')
   // 照片从左滑入
   .from('.about-me .about-image', {
     x: -50,
     opacity: 0,
     duration: 0.8,
     ease: 'power2.out'
-  }, '-=0.4')
+  }, '-=0.2')
   // 名字标题
   .from('.about-me .about-title', {
     y: 40,
@@ -159,13 +220,76 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
+/* 3D 卡片容器 */
+.card-3d-wrapper {
+  width: 100%;
+  height: calc(100% - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-3d {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.card-glare {
+  --per: 30%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: 20px;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) calc(var(--per) - 20%),
+    rgba(255, 255, 255, 0.3) var(--per),
+    rgba(255, 255, 255, 0.2) calc(var(--per) + 20%),
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+}
+
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  gap: 1px;
+  gap: 40px;
   align-items: start;
   flex: 1;
   overflow: hidden;
+  width: 100%;
 }
 
 .about-image {
@@ -181,11 +305,12 @@ onUnmounted(() => {
   height: 300px;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-photo {
@@ -285,6 +410,10 @@ onUnmounted(() => {
   .section-subtitle {
     font-size: 0.95rem;
   }
+  
+  .card-content {
+    padding: 30px;
+  }
 }
 
 /* 1024px - 1365px 小型笔记本 */
@@ -313,6 +442,10 @@ onUnmounted(() => {
     font-size: 0.88rem;
     line-height: 1.6;
   }
+  
+  .card-content {
+    padding: 25px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -327,6 +460,11 @@ onUnmounted(() => {
   
   .about-text {
     text-align: center;
+  }
+  
+  .card-3d-wrapper {
+    height: auto;
+    min-height: 500px;
   }
 }
 
@@ -362,6 +500,24 @@ onUnmounted(() => {
   .section-subtitle {
     font-size: 0.9rem;
   }
+  
+  .card-content {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  
+  .card-3d-wrapper {
+    height: auto;
+  }
+  
+  /* 移动端禁用 3D 效果 */
+  .card-3d {
+    transform: none !important;
+  }
+  
+  .card-glare {
+    display: none;
+  }
 }
 
 /* 小屏手机 < 375px */
@@ -385,6 +541,10 @@ onUnmounted(() => {
   
   .section-subtitle {
     font-size: 0.85rem;
+  }
+  
+  .card-content {
+    padding: 15px;
   }
 }
 
@@ -423,6 +583,10 @@ onUnmounted(() => {
   
   .section-subtitle {
     font-size: 1.2rem;
+  }
+  
+  .card-content {
+    padding: 50px;
   }
 }
 </style>
