@@ -317,7 +317,7 @@
     <!-- Chat SDK 弹窗 - 使用 Teleport 传送到 body 层级 -->
     <Teleport to="body">
     <div class="interview-modal-overlay" v-if="showChatSDK" @click="closeChatSDK">
-      <div class="interview-modal-content chat-sdk-modal" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
+      <div class="interview-modal-content chat-sdk-modal" :class="{ 'fullscreen': isChatFullscreen }" :style="projectModalStyle" @click.stop @wheel.stop @touchmove.stop>
         <div class="interview-modal-actions" :class="{ 'floating': isChatFullscreen }">
           <button class="interview-modal-btn" @click="toggleChatFullscreen" :title="isChatFullscreen ? '退出全屏' : '全屏'">
             <svg v-if="!isChatFullscreen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1192,6 +1192,15 @@ const closeChatSDK = () => {
 
 const toggleChatFullscreen = () => {
   isChatFullscreen.value = !isChatFullscreen.value
+  
+  // 全屏切换后，重新调整 Chat SDK 大小
+  nextTick(() => {
+    setTimeout(() => {
+      if (chatClient && chatClient.resize) {
+        chatClient.resize()
+      }
+    }, 300)
+  })
 }
 
 // PRD导航相关方法
@@ -1863,6 +1872,14 @@ defineExpose({
   flex-direction: column;
 }
 
+.chat-sdk-modal.fullscreen {
+  max-width: 100vw;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  margin: 0;
+}
+
 .chat-sdk-modal .interview-modal-header {
   flex-shrink: 0;
   padding-bottom: 16px;
@@ -1880,17 +1897,11 @@ defineExpose({
   transition: all 0.3s ease;
 }
 
-.chat-sdk-container.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 3000;
+.chat-sdk-modal.fullscreen .chat-sdk-container {
+  flex: 1;
   border-radius: 0;
   border: none;
+  min-height: calc(100vh - 60px);
 }
 
 .interview-modal-actions.floating {
