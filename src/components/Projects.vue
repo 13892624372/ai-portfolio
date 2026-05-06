@@ -5,12 +5,32 @@
       <p class="section-subtitle">产品思维与技术实践</p>
       
       <div class="projects-list">
-        <!-- 项目 1 - AI智能简历助手 -->
+        <!-- 项目 1 - 个人作品网站 -->
+        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project0')" @mouseenter="handleProjectMouseEnter('project0')" @mouseleave="handleProjectMouseLeave('project0')">
+          <div id="project0" class="project-3d" @click="openModal('project0', $event)">
+            <div class="project-item">
+              <div class="project-header">
+                <div class="project-number">1</div>
+                <div class="project-info">
+                  <h3 class="project-title">个人作品网站</h3>
+                  <p class="project-subtitle">基于Vue3 + TypeScript开发的个人作品集展示网站，集成3D动画、响应式设计、视频展示等现代化特性</p>
+                </div>
+                <div class="expand-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目 2 - AI智能简历助手 -->
         <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project1')" @mouseenter="handleProjectMouseEnter('project1')" @mouseleave="handleProjectMouseLeave('project1')">
           <div id="project1" class="project-3d" @click="openModal('project1', $event)">
             <div class="project-item">
               <div class="project-header">
-                <div class="project-number">1</div>
+                <div class="project-number">2</div>
                 <div class="project-info">
                   <h3 class="project-title">AI智能简历助手</h3>
                   <p class="project-subtitle">基于Vue3 + TypeScript的智能简历生成与优化平台，支持多模板、AI优化、PDF导出</p>
@@ -24,27 +44,7 @@
             </div>
           </div>
         </div>
-        
-        <!-- 项目 2 - 影视大全网站 -->
-        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project2')" @mouseenter="handleProjectMouseEnter('project2')" @mouseleave="handleProjectMouseLeave('project2')">
-          <div id="project2" class="project-3d" @click="openModal('project2', $event)">
-            <div class="project-item">
-              <div class="project-header">
-                <div class="project-number">2</div>
-                <div class="project-info">
-                  <h3 class="project-title">影视大全网站</h3>
-                  <p class="project-subtitle">基于原生JS的在线影视资源聚合与播放平台，支持多数据源、HLS播放、CORS代理</p>
-                </div>
-                <div class="expand-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
+
         <!-- 项目 3 - AI面试模拟器 -->
         <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project3')" @mouseenter="handleProjectMouseEnter('project3')" @mouseleave="handleProjectMouseLeave('project3')">
           <div id="project3" class="project-3d" @click="openModal('project3', $event)">
@@ -64,7 +64,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- 项目 4 - 模拟器配套数据看板 -->
         <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project4')" @mouseenter="handleProjectMouseEnter('project4')" @mouseleave="handleProjectMouseLeave('project4')">
           <div id="project4" class="project-3d" @click="openModal('project4', $event)">
@@ -74,6 +74,26 @@
                 <div class="project-info">
                   <h3 class="project-title">模拟器配套数据看板</h3>
                   <p class="project-subtitle">AI面试模拟器用户反馈数据分析可视化平台，实时展示用户满意度、NPS值、用户画像等多维度数据</p>
+                </div>
+                <div class="expand-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目 5 - 资源聚合网站 -->
+        <div class="project-3d-wrapper" @mousemove="handleProjectMouseMove($event, 'project2')" @mouseenter="handleProjectMouseEnter('project2')" @mouseleave="handleProjectMouseLeave('project2')">
+          <div id="project2" class="project-3d" @click="openModal('project2', $event)">
+            <div class="project-item">
+              <div class="project-header">
+                <div class="project-number">5</div>
+                <div class="project-info">
+                  <h3 class="project-title">资源聚合网站</h3>
+                  <p class="project-subtitle">基于原生JS的在线影视资源聚合与播放平台，支持多数据源、HLS播放、CORS代理</p>
                 </div>
                 <div class="expand-icon">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -132,19 +152,19 @@
           </div>
           
           <div class="modal-actions">
-            <!-- 项目1、2、3的按钮 -->
+            <!-- 项目0、1、2、3、4的按钮 -->
             <template v-if="currentProject?.number === '1'">
-              <button @click="openProject1($event)" class="btn btn-primary">
+              <a :href="currentProject?.demoUrl" target="_blank" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>
                   <line x1="10" y1="14" x2="21" y2="3"></line>
                 </svg>
-                在线预览
-              </button>
+                访问网站
+              </a>
             </template>
             <template v-else-if="currentProject?.number === '2'">
-              <button @click="openProject2($event)" class="btn btn-primary">
+              <button @click="openProject1($event)" class="btn btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>
@@ -179,6 +199,16 @@
                   <line x1="9" y1="21" x2="9" y2="9"></line>
                 </svg>
                 查看数据看板
+              </button>
+            </template>
+            <template v-else-if="currentProject?.number === '5'">
+              <button @click="openProject2($event)" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                在线预览
               </button>
             </template>
             <a v-if="currentProject?.githubUrl" :href="currentProject.githubUrl" target="_blank" class="btn btn-secondary">
@@ -862,8 +892,31 @@ const activeSection = ref('')
 const prdContentRef = ref(null)
 
 const projectsData = {
-  project1: {
+  project0: {
     number: '1',
+    title: '个人作品网站',
+    subtitle: '基于Vue3 + TypeScript开发的个人作品集展示网站',
+    gradient: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+    description: '一个现代化的个人作品集展示网站，采用Vue3 + TypeScript技术栈开发，集成丰富的交互效果和视觉设计。网站包含首页背景视差滚动、3D卡片效果、GSAP动画效果、时间轴、技能可视化、项目作品展示、three.js 3D模型等多个模块，其中内嵌多个个人项目，可在本网站直接进行交互，全面展示个人技术能力和项目经验。',
+    features: [
+      '3D交互效果：项目卡片、工作经历卡片支持鼠标跟随3D旋转效果',
+      '视频背景首页：首页实现入场动画及背景视差滚动',
+      '响应式设计：完美适配桌面端、平板和移动端设备',
+      '技能数据可视化：使用GSAP实现动画展示技术能力和业务技能',
+      '时间轴展示：AI发展历程、工作经历和教育背景采用时间轴形式展示',
+      '项目弹窗：点击项目卡片弹出详情弹窗，通过iframe嵌入预览',
+      '3D模型展示：网站中集成three.js 地球3D模型展示，并支持点击地球触发动画实现视频播放',
+      'API接入：接入多个API，包括AI模型、地图服务等，实现功能扩展',
+      'GitHub Pages部署：使用GitHub Actions实现自动化部署'
+    ],
+    techStack: 'Vue3, TypeScript, Vite, GSAP, CSS3, GitHub Pages',
+    duration: '2025.05 - 至今',
+    tags: ['Vue3', 'TypeScript', '3D动画', '响应式设计', '作品集'],
+    demoUrl: 'https://13892624372.github.io/ai-portfolio/',
+    githubUrl: 'https://github.com/13892624372/ai-portfolio'
+  },
+  project1: {
+    number: '2',
     title: 'AI智能简历助手',
     subtitle: '基于Vue3 + TypeScript的智能简历生成与优化平台',
     gradient: 'linear-gradient(135deg, #ec4899 0%, #f472b6 100%)',
@@ -885,8 +938,8 @@ const projectsData = {
     githubUrl: 'https://github.com/13892624372/resume'
   },
   project2: {
-    number: '2',
-    title: '影视大全网站',
+    number: '5',
+    title: '资源聚合网站',
     subtitle: '基于原生JS的在线影视资源聚合与播放平台',
     gradient: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
     description: '一个功能完善的在线影视资源聚合平台，整合多个第三方数据源，提供电影、电视剧、综艺、动漫等海量影视内容的搜索、浏览和播放服务。采用原生JavaScript开发，通过公共CORS代理解决跨域问题，部署于GitHub Pages。',
@@ -1268,14 +1321,14 @@ const handlePrdScroll = () => {
 // 检查URL hash并自动打开对应的弹窗
 onMounted(() => {
   const hash = window.location.hash
-  if (hash === '#project1' || hash === '#project2' || hash === '#project3') {
+  if (hash === '#project0' || hash === '#project1' || hash === '#project2' || hash === '#project3' || hash === '#project4') {
     openModal(hash.replace('#', ''))
   }
-  
+
   // 监听hash变化
   window.addEventListener('hashchange', () => {
     const newHash = window.location.hash
-    if (newHash === '#project1' || newHash === '#project2' || newHash === '#project3' || newHash === '#project4') {
+    if (newHash === '#project0' || newHash === '#project1' || newHash === '#project2' || newHash === '#project3' || newHash === '#project4') {
       openModal(newHash.replace('#', ''))
     }
   })

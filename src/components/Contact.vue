@@ -6,7 +6,6 @@
         <p>本片由 Pika 2.2、Seedance 2.0、Kling 3.0 大模型分别生成关键段落，所有片段使用剪映Pro完成音画同步与整体编排。</p>
         <p>以人类进化为叙事主线，从早期高原地貌的猿类启程，穿过艺术与科技的关键跨跃，最终迈向深空，回望地球。</p>
         <p>其中航天员回眸一帧，灵感来源于 NASA Artemis II 任务中 Orion spacecraft 飞船内 Christina Koch 的真实影像，象征人类在探索未知时的勇气与孤独。</p>
-        <p>在当下的AI时代更应如此，努力向前走。</p>
       </div>
       
       <h2 class="section-title">联系我</h2>
