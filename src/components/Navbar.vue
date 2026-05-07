@@ -205,7 +205,7 @@ onUnmounted(() => {
   width: 36px;
   height: 36px;
   background: var(--bg-dark);
-  border: 1px solid var(--border-color);
+  border: none;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -215,7 +215,6 @@ onUnmounted(() => {
 }
 
 .logo:hover .logo-icon {
-  border-color: var(--primary-color);
   color: var(--primary-color);
 }
 

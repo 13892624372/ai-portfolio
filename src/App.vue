@@ -11,7 +11,7 @@
             <AboutMe />
           </div>
           <div class="horizontal-panel-medium about-ai-panel">
-            <AboutAI />
+            <AITimeline />
           </div>
           <div class="horizontal-panel-narrow model-radar-panel">
             <ModelRadar />
@@ -39,10 +39,11 @@ import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
 import Hero from './components/Hero.vue'
 import AboutMe from './components/AboutMe.vue'
-import AboutAI from './components/AboutAI.vue'
+
 import ModelRadar from './components/ModelRadar.vue'
 import Skills from './components/Skills.vue'
 import Projects from './components/Projects.vue'
+import AITimeline from './components/AITimeline.vue'
 import Experience from './components/Experience.vue'
 import Dream from './components/Dream.vue'
 import Contact from './components/Contact.vue'
@@ -77,31 +78,40 @@ onUnmounted(() => {
   }
 })
 
+// 横向滚动动画实例（用于子组件同步）
+let horizontalScrollTween = null
+
 // 横向滚动逻辑
 const initHorizontalScroll = () => {
   if (!horizontalContainer.value) return
-  
+
   const container = horizontalContainer.value
   const viewportWidth = window.innerWidth
-  // 总宽度：关于我(80vw) + 关于AI(110vw) + 大模型对比(80vw) + Skills(100vw) = 370vw
-  // 横向滚动距离：370vw - 100vw(视口) = 270vw
-  const scrollDistance = viewportWidth * 2.7
-  
-  // 创建横向滚动动画
-  horizontalScrollTrigger = ScrollTrigger.create({
-    trigger: '.horizontal-scroll-wrapper',
-    start: 'top top',
-    end: () => `+=${scrollDistance}`,
-    pin: true,
-    scrub: 1,
-    anticipatePin: 1,
-    onUpdate: (self) => {
-      // 根据滚动进度移动横向容器
-      gsap.set(container, {
-        x: -scrollDistance * self.progress
-      })
+  // 总宽度：关于我(80vw) + 关于AI(180vw) + 大模型对比(80vw) + Skills(100vw) = 440vw
+  // 横向滚动距离：440vw - 100vw(视口) = 340vw
+  const scrollDistance = viewportWidth * 3.4
+
+  // 创建横向滚动动画 tween
+  horizontalScrollTween = gsap.to(container, {
+    x: -scrollDistance,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.horizontal-scroll-wrapper',
+      start: 'top top',
+      end: () => `+=${scrollDistance}`,
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        // 触发全局事件，通知子组件滚动进度
+        window.dispatchEvent(new CustomEvent('horizontal-scroll', {
+          detail: { progress: self.progress, scrollDistance }
+        }))
+      }
     }
   })
+
+  horizontalScrollTrigger = horizontalScrollTween.scrollTrigger
 }
 </script>
 
@@ -122,7 +132,7 @@ const initHorizontalScroll = () => {
 
 .horizontal-scroll-container {
   display: flex;
-  width: 370vw; /* 关于我(80) + 关于AI(110) + 大模型对比(80) + Skills(100) = 370vw */
+  width: 440vw; /* 关于我(80) + 关于AI(180) + 大模型对比(80) + Skills(100) = 440vw */
   height: 100%;
   will-change: transform;
 }
@@ -135,7 +145,7 @@ const initHorizontalScroll = () => {
 }
 
 .horizontal-panel-medium {
-  width: 110vw;
+  width: 180vw;
   height: 100vh;
   flex-shrink: 0;
   overflow-y: auto;
